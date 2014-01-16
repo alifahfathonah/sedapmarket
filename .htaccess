@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteBase /marketing
+RewriteCond $1 !^(index\.php|download\.php|images|pdf|robots\.txt|css|js)
+RewriteRule ^(.*)$ index.php/$1 [L]
