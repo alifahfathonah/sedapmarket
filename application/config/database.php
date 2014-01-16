@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'marketing';
+$db['default']['username'] = 'sedap';
 $db['default']['password'] = '22801979';
-$db['default']['database'] = 'marketingdb';
+$db['default']['database'] = 'sedapmarketdb';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
