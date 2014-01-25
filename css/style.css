@@ -1,0 +1,16 @@
+@media (min-width:768px) {
+	/* Wrappers */
+
+	#wrapper-login {
+		padding-left: 0px;
+	}
+	
+	#wrapper-login  h1 {
+		text-align:center;
+	}
+	
+	#wrapper-login  .login {
+		width:33%;
+		margin: 0 auto 0 auto;
+	}
+}
