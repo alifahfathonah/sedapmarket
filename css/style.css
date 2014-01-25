@@ -25,4 +25,11 @@
 		text-align: center;
 	}
 	
+	.info {
+	}
+	
+	.info  label {
+		display:inline-table;
+		width:150px;
+	}
 }

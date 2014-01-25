@@ -22,6 +22,8 @@ class UserModel extends CI_Model {
             "user_email" => $data["user_email"],
             "user_pass" => sha1($data["user_pass"]),
         );
+		// echo debug($data);
+		// exit();
         $this->db->where($where);
         $this->db->select("user_email,user_name,user_pass,user_lastlogindate,group_id");
         $r = $this->db->get("users");
@@ -40,7 +42,7 @@ class UserModel extends CI_Model {
                         "remember"  => 0
                     )
                 );
-               
+               //echo debug($sess);
                 $this->update_lastlogindate($d["user_email"]);
                 $this->is_error 	= 0;
                 
@@ -266,6 +268,20 @@ class UserModel extends CI_Model {
             
     }
     
+	/**
+     * Check User E-Mail exist or  Not
+     */
+    public function email_check($email) {
+        $this->db->like("user_email",$email);    
+        $r = $this->db->get("users");    
+        if($r->num_rows() > 0) {
+                return true;
+        }
+        else
+                return false;
+            
+    }
+	
     /**
      * Check password
      */
