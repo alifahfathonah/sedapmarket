@@ -94,6 +94,17 @@ class UserModel extends CI_Model {
             setcookie("group_id",$_SESSION["group_id"],time()+3600);
     }
     
+	/**
+     * Removing Cookie
+     */
+    public function user_remove_cookie() {
+            setcookie("userkey","",time()-3600);
+			setcookie("uname","",time()-3600);
+            setcookie("email","",time()-3600);
+            setcookie("lastlgn","",time()-3600);
+            setcookie("group_id","",time()-3600);
+    }
+	
     /**
      * Check User Cookie
      */

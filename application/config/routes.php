@@ -39,6 +39,7 @@
 */
 
 $route["login"] 					= "user_controller/login";
+$route["logout"] 					= "user_controller/logout";
 $route['default_controller'] 		= "welcome";
 $route['404_override'] 				= '';
 
