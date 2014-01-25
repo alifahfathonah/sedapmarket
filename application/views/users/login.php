@@ -5,25 +5,25 @@
 
 <div class="row login">
 	<div class="alert alert-info alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		
 		Enter your user name and password below.
 	</div>
 </div>
 
 <div class="row login">
-	<form role="form">
+	<form role="form" method="post" action="<?php echo site_url('login') ?>">
 		<div class="form-group">
 			<label>User Name</label>
-			<input class="form-control">
+			<input class="form-control" type="text" name="username">
 			<p class="help-block">Example block-level help text here.</p>
 		</div>
 		<div class="form-group">
 			<label>Password</label>
-			<input class="form-control">
+			<input class="form-control" type="password">
 			<p class="help-block">Example block-level help text here.</p>
 		</div>
 		
-		<button type="submit" class="btn btn-default">Submit Button</button>
+		<button type="submit" class="btn btn-default">Login</button>
 	</form>
 </div>
 <?php $this->load->view('includes/footer'); ?>

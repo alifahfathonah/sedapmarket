@@ -19,20 +19,21 @@ class UserModel extends CI_Model {
     
     public function check_login($data) {
         $where = array (
-            "user_name" => $data["username"],
-            "user_pass" => sha1($data["userpass"]),
+            "user_email" => $data["user_email"],
+            "user_pass" => sha1($data["user_pass"]),
         );
         $this->db->where($where);
-        $this->db->select("user_name,user_pass,user_lastlogindate,group_id");
+        $this->db->select("user_email,user_name,user_pass,user_lastlogindate,group_id");
         $r = $this->db->get("users");
         
         if($r->num_rows() > 0) {
                 $d = $r->row_array();
-                $usrkey = sha1($data["username"].date("YmdHis"));
+                $usrkey = sha1($data["user_email"].date("YmdHis"));
                 $lastlgn = $d["user_lastlogindate"];
                 $sess = array (
                     "security" => array(
                         "userkey"   => $usrkey,
+						"email"     => $d["user_email"],
                         "uname"     => $d["user_name"],
                         "last"      => $lastlgn,
                         "group_id"  => $d["group_id"],
@@ -40,19 +41,19 @@ class UserModel extends CI_Model {
                     )
                 );
                
-                $this->update_lastlogindate($d["user_name"]);
+                $this->update_lastlogindate($d["user_email"]);
                 $this->is_error 	= 0;
                 
                 if($data["remember"]==1) {
                         $sess["security"]["remember"]	= 1;
-                        $this->user_create_cookie($usrkey,$d["user_name"],$lastlgn,$d["group_id"]);
+                        $this->user_create_cookie($usrkey,$d["user_email"],$d["user_name"],$lastlgn,$d["group_id"]);
                 }
                 
                 $this->session->set_userdata($sess);
         }
         else {
                 $this->is_error = 1;
-                $this->error_message = "Incorrect your user name or password";
+                $this->error_message = "Incorrect your email address or password";
         }
             
     }
@@ -60,8 +61,8 @@ class UserModel extends CI_Model {
     /**
      * Get User ID
      */
-    public function get_userid($username) {
-            $this->db->where('user_name',$usename);
+    public function get_userid($user_email) {
+            $this->db->where('user_email',$user_email);
             $this->db->select("user_id");
             $r = $this->db->get("users");
             $tmp	= $this->loadquery(1, $sql);
@@ -74,8 +75,8 @@ class UserModel extends CI_Model {
     /**
      * Updating Lastlogindate
      */
-    public function update_lastlogindate($uname) {
-        $this->db->where("user_name",$uname);
+    public function update_lastlogindate($email) {
+        $this->db->where("user_email",$email);
         $data = array(
             'user_lastlogindate' => date("Y-m-d H:i:s")
         );
@@ -85,9 +86,10 @@ class UserModel extends CI_Model {
     /**
      * Create Cookie
      */
-    public function user_create_cookie($usrkey,$uname,$lastlgn, $grp_id) {
+    public function user_create_cookie($usrkey,$email,$uname,$lastlgn, $grp_id) {
             setcookie("userkey",$usrkey,time()+3600);
-            setcookie("uname",$uname,time()+3600);
+			setcookie("uname",$uname,time()+3600);
+            setcookie("email",$email,time()+3600);
             setcookie("lastlgn",$_SESSION["last"],time()+3600);
             setcookie("group_id",$_SESSION["group_id"],time()+3600);
     }
@@ -98,7 +100,8 @@ class UserModel extends CI_Model {
     public function user_check_cookie() {
             if($_COOKIE["userkey"]) {
                     setcookie("userkey",$_COOKIE["userkey"],time()+3600);
-                    setcookie("uname",$_COOKIE["uname"],time()+3600);
+                    setcookie("email",$_COOKIE["email"],time()+3600);
+					setcookie("uname",$_COOKIE["uname"],time()+3600);
                     setcookie("lastlgn",$_COOKIE["lastlgn"],time()+3600);
                     setcookie("group_id",$_COOKIE["grp_id"],time()+3600);
                             
@@ -107,7 +110,8 @@ class UserModel extends CI_Model {
             }
             else if($_SESSION["userkey"]) {
                     setcookie("userkey",$_SESSION["userkey"],time()+3600);
-                    setcookie("uname",$_SESSION["uname"],time()+3600);
+                    setcookie("email",$_SESSION["email"],time()+3600);
+					setcookie("uname",$_SESSION["uname"],time()+3600);
                     setcookie("lastlgn",$_SESSION["lastlgn"],time()+3600);
                     setcookie("group_id",$_SESSION["group_id"],time()+3600);
                     
@@ -135,7 +139,7 @@ class UserModel extends CI_Model {
         $sess = $this->session->userdata("security");
         //Updating password 
         $where = array(
-            "user_name" => $sess["uname"]    
+            "user_email" => $sess["email"]    
         );
         $d = array("user_pass" => sha1($newpass));
         $this->db->where($where);
@@ -198,7 +202,8 @@ class UserModel extends CI_Model {
      */
     public function add_user($data) {
         $d = array(
-            "user_name"     => $data["user_name"],
+            "user_email"    => $data["user_email"],
+			"user_name"    	=> $data["user_name"],
             "user_pass"     => sha1($data["user_pass"]),
             "group_id"      => $data["group_id"]
         );
@@ -214,7 +219,8 @@ class UserModel extends CI_Model {
     public function update_user($data) {
         $this->db->where("user_id",$data["user_id"]);
         $d = array(
-            "user_name"     => $data["user_name"],
+            "user_email"     => $data["user_email"],
+			"user_name"    	=> $data["user_name"],
             "user_pass"     => sha1($data["user_pass"]),
             "group_id"      => $data["group_id"]
         );
@@ -239,7 +245,7 @@ class UserModel extends CI_Model {
      * Check User name unique or not
      */
     public function is_unique($uname) {
-        $this->db->like("user_name",$uname);    
+        $this->db->like("user_email",$uname);    
         $r = $this->db->get("users");    
         if($r->num_rows() > 0) {
                 return false;
@@ -254,11 +260,11 @@ class UserModel extends CI_Model {
      */
     public function is_password($pass) {
         $sess = $this->session->userdata("security");
-        $uname = $sess["uname"];
-        $this->db->where(array("user_name" => $uname, "user_pass" => sha1($pass)));
+        $email = $sess["email"];
+        $this->db->where(array("user_email" => $email, "user_pass" => sha1($pass)));
         $r = $this->db->get("users");
         //$d = $r->row_array();
-        //print_r(array("user_name" => $uname, "user_pass" => sha1($pass)));
+        //print_r(array("user_email" => $uname, "user_pass" => sha1($pass)));
         if($r->num_rows() > 0) {
                 return true;
         }
@@ -273,7 +279,7 @@ class UserModel extends CI_Model {
      */
     public function get_count($itm) {
         if($itm) {
-            $this->db->like("user_name",$itm);
+            $this->db->like("user_email",$itm);
         }
         return $this->db->count_all("`users`");
     }
