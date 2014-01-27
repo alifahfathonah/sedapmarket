@@ -226,6 +226,22 @@ class UserModel extends CI_Model {
         $this->error_message = "";
     }
     
+	/**
+     * Update User Profile
+     */
+    public function update_profile($data) {
+        $this->db->where("user_email",$data["user_email"]);
+        $d["user_name"] = $data["user_name"];
+		if($data["user_pass"]) {
+            $d["user_pass"] = sha1($data["user_pass"]);
+        }
+        $this->db->update("users",$d);
+		//echo debug($this->db->queries);
+        $this->is_error = 0;
+        $this->message = "Your Profile has been updated successfully";
+        $this->error_message = "";    
+    }
+	
     /**
      * Update User
      */

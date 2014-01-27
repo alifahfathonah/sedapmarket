@@ -14,8 +14,45 @@ class User_Controller extends App_Controller {
 	public function home()
 	{
 		//echo debug($this->session->all_userdata());
-		$this->load->view('users/home');
+		$this->load->view('users/home',$this->viewdata);
 	}
+	
+	/***
+	 * Edit Profile
+	 */
+	public function editprofile()
+    {
+		//echo debug($this->input->post());
+        $this->load->library("form_validation");
+        $sess = $this->session->userdata("security");
+        $this->viewdata["uname"] = $sess["uname"];
+        if($this->input->post('editbtn')) {
+            //$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_rules('user_name', 'Full Name', 'required|trim|xss_clean');
+            $this->form_validation->set_rules('user_pass', 'New Password', 'trim|min_length[6]|xss_clean');
+            //$this->form_validation->set_rules('confpass', 'Confirm Password', 'required|trim|matches[newpass]|xss_clean');
+            
+            if ($this->form_validation->run() == TRUE)
+            {
+                $data = $this->input->post();
+                
+                $this->UserModel->update_profile($data);   
+                $this->viewdata["is_error"] = $this->UserModel->is_error;
+                if($this->UserModel->is_error==1) {
+                    //echo $this->UserModel->error_message;
+                    $this->session->set_flashdata("error",$this->UserModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->UserModel->message);
+                }
+				redirect('profile/edit');
+            } 
+            
+        }
+        $this->load->view('users/editprofile',$this->viewdata);    
+    }
 	
 	/***
 	 * Login Form
@@ -45,7 +82,7 @@ class User_Controller extends App_Controller {
             }
 		}
 		
-		$this->load->view("users/login");
+		$this->load->view("users/login",$this->viewdata);
 	 }
 	 
 	 /***

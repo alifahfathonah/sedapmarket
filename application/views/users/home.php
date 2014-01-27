@@ -11,7 +11,7 @@
 $sess = $this->session->userdata("security"); 
 if($sess['last']!="0000-00-00 00:00:00") { 
 	$tmp = new DateTime($sess["last"]);
-	$last= $tmp->format("M d, Y");
+	$last= $tmp->format($this->siteconfig[1]["option_value"]);
 }	  
 else {
 	$last = "Never Login";
@@ -19,7 +19,7 @@ else {
 ?> 					
 					<p>
 						<label>Your User ID</label>
-						<?php echo $sess['uname'] ?>
+						<?php echo $sess['uname']." (<a href='mailto:".$sess['email']."'>".$sess['email']."</a>)" ?>
 					</p>
 					<p>
 						<label>Last Login Date</label>

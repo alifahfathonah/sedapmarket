@@ -6,7 +6,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Dashboard - Sedap Market</title>
+		<title><?php echo $sitetitle ?></title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="<?php echo site_url("css/bootstrap.css") ?>" rel="stylesheet">
@@ -31,7 +31,8 @@
 	</head>
 
 	<body>
-<?php if($this->uri->segment(1)=="login") { ?>
+<?php $sess = $this->session->userdata("security");
+	  if($this->uri->segment(1)=="login") { ?>
 		<div id="wrapper-login">
 <?php } 
 	  else { ?>	
@@ -47,7 +48,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.html">Sedap Market</a>
+					<a class="navbar-brand" href="index.html"><?php echo $sitetitle ?></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -121,9 +122,9 @@
 							</ul>
 						</li>
 						<li class="dropdown user-dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $sess['uname'] ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+								<li><a href="<?php echo site_url('profile/edit') ?>"><i class="fa fa-user"></i> Profile</a></li>
 								<li><a href="#"><i class="fa fa-envelope"></i> Inbox <span class="badge">7</span></a></li>
 								<li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
 								<li class="divider"></li>

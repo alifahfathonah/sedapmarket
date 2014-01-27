@@ -14,9 +14,9 @@ class App_Controller extends CI_Controller {
         // $this->viewdata["role"] = $role = $sess["group_id"];
         // $this->viewdata["tema"] = "user";
         
-        // $this->siteconfig = $this->OptionModel->get_config();
-        // //echo debug($this->siteconfig);
-        // $this->viewdata["sitetitle"] = $this->siteconfig[0]["option_value"];
+        $this->siteconfig = $this->OptionModel->get_config_all();
+		//echo debug($this->siteconfig);
+        $this->viewdata["sitetitle"] = $this->siteconfig[4]["option_value"];
         
         // if($role>1 && ($this->uri->segment(1)!="logout" && $this->uri->segment(1)!="login"))
            // redirect('home');
