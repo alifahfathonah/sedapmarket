@@ -7,14 +7,23 @@
 					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Information</h3>
 				</div>
 				<div class="panel-body info">
-<?php $sess = $this->session->userdata("security"); ?> 					
+<?php 
+$sess = $this->session->userdata("security"); 
+if($sess['last']!="0000-00-00 00:00:00") { 
+	$tmp = new DateTime($sess["last"]);
+	$last= $tmp->format("M d, Y");
+}	  
+else {
+	$last = "Never Login";
+}
+?> 					
 					<p>
 						<label>Your User ID</label>
 						<?php echo $sess['uname'] ?>
 					</p>
 					<p>
 						<label>Last Login Date</label>
-						<?php echo $sess['last'] ?>
+						<?php echo $last ?>
 					</p>
 				</div>
             </div>
