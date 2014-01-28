@@ -50,7 +50,7 @@ else { ?>
 							</tbody>
 							</table>
 							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="category_addbtnid" value="add" onclick="location.href='<?php echo site_url("category/add")?>'">Add</button>
+								<button type="button" class="btn btn-primary" name="category_addbtn" value="add" onclick="location.href='<?php echo site_url("category/add")?>'">Add</button>
 								<button type="submit" class="btn btn-primary" name="category_delbtn" id="category_delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 hal">	

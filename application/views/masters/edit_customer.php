@@ -2,7 +2,7 @@
 <div id="page-wrapper">	
 	<div class="row">
 		<div class="col-lg-12">
-			<h1>Customers</h1>
+			<h3>Customers</h3>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Edit Customer</h3>

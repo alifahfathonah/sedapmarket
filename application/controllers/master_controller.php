@@ -99,7 +99,7 @@ class Master_Controller extends App_Controller {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
-		if($this->input->post('cat_delbtn')) {
+		if($this->input->post('category_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
 				//echo debug($d);

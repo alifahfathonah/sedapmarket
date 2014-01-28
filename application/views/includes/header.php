@@ -73,8 +73,30 @@
 				});
 <?php		break;	
 		}
-	  }
+	  } 
+	  else if($this->uri->segment(1)=="category") {
 ?>		
+				$('#chkall').click(function () {    
+					 $('.chkbox').prop('checked', this.checked);    
+				});
+				
+				$("#category_delbtn").click(function() {
+					var tmp = $(".chkbox:checked");
+					console.log(tmp);
+					if(tmp.length > 0) {
+						if(confirm("Are you sure to delete?")) {
+							$("#frm1").submit();
+							return true;
+						}
+						return false;
+					}
+					else {
+						alert("Please choose item that you will delete")
+						return false;
+					}					
+				});
+<?php } ?>
+
 			});
 		</script>
 	</head>
