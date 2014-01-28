@@ -11,12 +11,14 @@ class MasterModel extends CI_Model {
 	/***
 	 * Get customers list
 	 */
-	public function get_customers_list($itm="",$p=0) {
+	public function get_customers_list($itm="",$p=0,$limit=10) {
 		if($itm) {
 			$this->db->where("cust_fullname LIKE '%".$itm."%'");
 		}
 		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
 		
+		$this->db->limit($limit,$p);
 		$r = $this->db->get('customers'); 
 		if($r) {
 			return $r->result_array();

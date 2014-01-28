@@ -40,7 +40,7 @@
 	}
 }
 
-.pagination {
+.hal, .hal ul {
 	text-align:right;
 	vertical-align:top;
 	margin:0;

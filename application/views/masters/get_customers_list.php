@@ -60,17 +60,13 @@ else { ?>
 								<button type="button" class="btn btn-primary" name="cust_addbtnid" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
 								<button type="submit" class="btn btn-primary" name="cust_delbtn" id="cust_delbtn" value="delete">Delete</button>
 							</div>
-							<div class="col-lg-6 pagination">	
-								<ul class="pagination pagination-sm">
-									<li class="disabled"><a href="#">&laquo;</a></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
-							</div>	
+							<div class="col-lg-6 hal">	
+								
+									<ul class="pagination pagination-sm">
+									<?php echo $page_link ?>
+									</ul>
+								</div
+			
 						</form>	
 					</div>
 				</div>

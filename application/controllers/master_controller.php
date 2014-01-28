@@ -107,7 +107,7 @@ class Master_Controller extends App_Controller {
 	/***
 	 * Get Customer List
 	 */
-	public function get_customers_list($itm="",$p=0) {
+	public function get_customers_list($p=0) {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
@@ -131,15 +131,28 @@ class Master_Controller extends App_Controller {
 		}
 		
 		$limit = $this->siteconfig[3]["value"]; 
+		
 		$config['base_url'] = site_url('customer/list');
 		$config['total_rows'] = $this->MasterModel->get_customers_count($itm);
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 3;
-
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		//$config['anchor_class'] = "";	
 		$this->pagination->initialize($config);
 		
 		$this->viewdata["page_link"] = $this->pagination->create_links();
-		$this->viewdata["custlist"] = $this->MasterModel->get_customers_list($itm,$p);
+		$this->viewdata["custlist"] = $this->MasterModel->get_customers_list($itm,$p,$limit);
 		$this->load->view('masters/get_customers_list',$this->viewdata);
 	}
 	
