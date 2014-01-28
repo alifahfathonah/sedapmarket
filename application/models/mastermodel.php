@@ -63,6 +63,8 @@ class MasterModel extends CI_Model {
 			"cust_regdate" 			=> $data["cust_regdate"],
 			"cust_fullname" 		=> $data["cust_fullname"],
 			"cust_address" 			=> $data["cust_address"],
+			"cust_city" 			=> $data["cust_city"],
+			"cust_state" 			=> $data["cust_state"],
 			"cust_phonenumber" 		=> $data["cust_phonenumber"],
 			"cust_faxnumber" 		=> $data["cust_faxnumber"],
 			"cust_mobilenumber" 	=> $data["cust_mobilenumber"],
@@ -82,11 +84,14 @@ class MasterModel extends CI_Model {
 		$d = array (
 			"cust_fullname" 		=> $data["cust_fullname"],
 			"cust_address" 			=> $data["cust_address"],
+			"cust_city" 			=> $data["cust_city"],
+			"cust_state" 			=> $data["cust_state"],
 			"cust_phonenumber" 		=> $data["cust_phonenumber"],
 			"cust_faxnumber" 		=> $data["cust_faxnumber"],
 			"cust_mobilenumber" 	=> $data["cust_mobilenumber"],
 			"cust_emailaddress" 	=> $data["cust_emailaddress"],
 		);
+		//echo debug($d);
 		$this->db->update("customers",$d);
 		$this->is_error = 0;
         $this->message = "Customer has been updated successfully";

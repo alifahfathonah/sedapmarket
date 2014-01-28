@@ -22,6 +22,8 @@ class Master_Controller extends App_Controller {
 			$this->form_validation->set_rules('cust_regdate', 'Register Date', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_fullname', 'Customer Full Name', 'required|trim|xss_clean');
             $this->form_validation->set_rules('cust_address', 'Customer Address', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_city', 'Customer City', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_state', 'Customer State', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_phonenumber', 'Customer Phone number', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_faxnumber', 'Customer Fax number', 'trim|xss_clean');
 			$this->form_validation->set_rules('cust_mobilenumber', 'Customer Mobile number', 'trim|xss_clean');
@@ -55,17 +57,18 @@ class Master_Controller extends App_Controller {
 	}
 	
 	/***
-	 * Add Customer List
+	 * Edit Customer List
 	 */
 	public function edit_customer($id) {
 		$this->load->library("form_validation");
 		//echo debug($this->siteconfig[1]["option_value"]);
-		
+		$this->load->model("MasterModel");
 		if($this->input->post("editbtn")) {
-			$this->load->model("MasterModel");
 			$this->form_validation->set_rules('cust_regdate', 'Register Date', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_fullname', 'Customer Full Name', 'required|trim|xss_clean');
             $this->form_validation->set_rules('cust_address', 'Customer Address', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_city', 'Customer City', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_state', 'Customer State', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_phonenumber', 'Customer Phone number', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_faxnumber', 'Customer Fax number', 'trim|xss_clean');
 			$this->form_validation->set_rules('cust_mobilenumber', 'Customer Mobile number', 'trim|xss_clean');
@@ -73,6 +76,7 @@ class Master_Controller extends App_Controller {
 			if ($this->form_validation->run() == TRUE)
             {
 				 $data = $this->input->post();
+				 $data["cust_id"] = $id;	
                 
                 $this->MasterModel->edit_customer($data);   
                 $this->viewdata["is_error"] = $this->MasterModel->is_error;
@@ -85,7 +89,7 @@ class Master_Controller extends App_Controller {
                     //$this->session->unset_flashdata("error");
                     $this->session->set_flashdata("message",$this->MasterModel->message);
                 }
-				redirect('customer/edit');
+				redirect('customer/edit/'.$id);
 			}
 		}
 		
@@ -122,41 +126,4 @@ class Master_Controller extends App_Controller {
 	
 	/*** Product ***/
 	
-	public function edit_customer() {
-		$this->load->library('form_validation');
-		if($this->input->post("editbtn")) { 
-			//$this->form_validation->set_rules('user_name', 'Full Name', 'required|trim|xss_clean');
-			//$this->form_validation->set_rules('user_pass', 'New Password', 'trim|min_length[6]|xss_clean');
-			//$this->form_validation->set_rules('confpass', 'Confirm Password', 'required|trim|matches[newpass]|xss_clean');
-		
-			//if ($this->form_validation->run() == TRUE) {
-				$tmp = $this->input->post();
-				$i=0;
-                foreach($tmp["option_name"] as $t) {
-					$data = array(
-						"option_name"	=> $t,
-						"option_value"	=> $tmp["option_value"][$i]	
-					);
-					//echo debug($data);
-					$this->OptionModel->update_config($data);   
-					$i++;
-				}	
-                $this->viewdata["is_error"] = $this->OptionModel->is_error;
-                if($this->OptionModel->is_error==1) {
-                    //echo $this->OptionModel->error_message;
-                    $this->session->set_flashdata("error",$this->OptionModel->error_message);
-                    //$this->session->unset_flashdata("message");
-                }
-                else {
-                    //$this->session->unset_flashdata("error");
-                    $this->session->set_flashdata("message",$this->OptionModel->message);
-                }
-				redirect('setup');
-			//}
-		
-		}
-		
-		$this->viewdata["setuplist"] = $this->OptionModel->get_config_detail();
-		$this->load->view('setup',$this->viewdata);
-	}
 }	

@@ -33,6 +33,16 @@
 							<?php echo (form_error("cust_address",'<p class="help-block">','</p>'))?form_error("cust_address",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer address.</p>'; ?>		
 						</div>
 						<div class="form-group">
+							<label>City</label>
+							<input class="form-control" name="cust_city" value="<?php echo $cust["cust_city"] ?>">
+							<?php echo (form_error("cust_city",'<p class="help-block">','</p>'))?form_error("cust_city",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer City.</p>'; ?>		
+						</div>
+						<div class="form-group">
+							<label>State</label>
+							<input class="form-control" name="cust_state" value="<?php echo $cust["cust_state"] ?>">
+							<?php echo (form_error("cust_state",'<p class="help-block">','</p>'))?form_error("cust_state",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer State.</p>'; ?>		
+						</div>
+						<div class="form-group">
 							<label>Phone Number</label>
 							<textarea class="form-control" rows="3" name="cust_phonenumber"><?php echo $cust["cust_phonenumber"] ?></textarea>
 							<?php echo (form_error("cust_phonenumber",'<p class="help-block">','</p>'))?form_error("cust_phonenumber",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer phone number.</p>'; ?>		

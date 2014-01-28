@@ -29,13 +29,13 @@ if($custlist) {
 	foreach($custlist as $cust) {
 ?> 	
 								<tr>
-									<td><input type="checkbox" name="chkbox[]" class="chkbox" value=""></td>
-									<td>/blog/post.html</td>
-									<td>1233</td>
-									<td>93.2%</td>
-									<td>$126.34</td>
-									<td>$126.34</td>
-									<td>$126.34</td>
+									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cust["cust_id"] ?>"></td>
+									<td><a href="<?php echo site_url('customer/edit/'.$cust["cust_id"]) ?>"><?php echo $cust["cust_fullname"] ?></a></td>
+									<td><?php echo $cust["cust_address"] ?></td>
+									<td><?php echo $cust["cust_city"] ?></td>
+									<td><?php echo $cust["cust_state"] ?></td>
+									<td><?php echo $cust["cust_phonenumber"] ?></td>
+									<td><?php echo $cust["cust_emailaddress"] ?></td>
 								</tr>
 <?php 
 	}
@@ -50,7 +50,7 @@ else { ?>
 							</tbody>
 							</table>
 							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="cust_addbtn" value="add">Add</button>
+								<button type="button" class="btn btn-primary" name="cust_addbtn" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
 								<button type="submit" class="btn btn-primary" name="cust_delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 pagination">	
