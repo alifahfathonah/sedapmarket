@@ -8,12 +8,19 @@
 					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Customer List</h3>
 				</div>
 				<div class="panel-body info">
-					<div class="table-responsive">
-						<form role="form" method="post" action="<?php echo site_url('customer/list') ?>">
+<?php $msg = $this->session->flashdata("message");
+	  if($msg) { ?>					
+					<div class="alert alert-dismissable alert-success">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						  <?php echo $msg ?>
+						
+					</div>	
+<?php } ?>					
+						<form role="form" method="post" action="<?php echo site_url('customer/list') ?>" id="frm1">
 							<table class="table table-bordered table-hover tablesorter">
 								<thead>
 									<tr>
-										<th><input type="checkbox" name="chkall" value="1"> <i class="fa fa-sort"></i></th>
+										<th><input type="checkbox" name="chkall" id="chkall" value="1"> <i class="fa fa-sort"></i></th>
 										<th>Customer Name <i class="fa fa-sort"></i></th>
 										<th>Address <i class="fa fa-sort"></i></th>
 										<th>City <i class="fa fa-sort"></i></th>
@@ -50,8 +57,8 @@ else { ?>
 							</tbody>
 							</table>
 							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="cust_addbtn" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
-								<button type="submit" class="btn btn-primary" name="cust_delbtn" value="delete">Delete</button>
+								<button type="button" class="btn btn-primary" name="cust_addbtnid" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
+								<button type="submit" class="btn btn-primary" name="cust_delbtn" id="cust_delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 pagination">	
 								<ul class="pagination pagination-sm">

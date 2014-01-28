@@ -49,7 +49,30 @@
 				$(".datef").datepick({
 					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
 				});
-<?php 	}
+			
+<?php 		break;
+			case "list": ?>
+				$('#chkall').click(function () {    
+					 $('.chkbox').prop('checked', this.checked);    
+				});
+				
+				$("#cust_delbtn").click(function() {
+					var tmp = $(".chkbox:checked");
+					console.log(tmp);
+					if(tmp.length > 0) {
+						if(confirm("Are you sure to delete?")) {
+							$("#frm1").submit();
+							return true;
+						}
+						return false;
+					}
+					else {
+						alert("Please choose item that you will delete")
+						return false;
+					}					
+				});
+<?php		break;	
+		}
 	  }
 ?>		
 			});

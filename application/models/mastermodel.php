@@ -102,7 +102,7 @@ class MasterModel extends CI_Model {
 	 * Delete Customer
 	 */
 	public function delete_customer($data) {
-		$this->db->where('cust_id',$data["cust_id"]);
+		$this->db->where('cust_id',$data);
 		$this->db->delete("customers",$d);
 		$this->is_error = 0;
         $this->message = "Customer has been deleted successfully";

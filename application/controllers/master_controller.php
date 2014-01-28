@@ -111,6 +111,25 @@ class Master_Controller extends App_Controller {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
+		if($this->input->post('cust_delbtn')) {
+			$data = $this->input->post();
+			foreach($data["chkbox"] as $d) {
+				//echo debug($d);
+				$this->MasterModel->delete_customer($d);
+			}
+			if($this->MasterModel->is_error==1) {
+				//echo $this->MasterModel->error_message;
+				$this->session->set_flashdata("error",$this->MasterModel->error_message);
+				//$this->session->unset_flashdata("message");
+			}
+			else {
+				//$this->session->unset_flashdata("error");
+				$this->session->set_flashdata("message",$this->MasterModel->message);
+			}
+			redirect('customer/list');
+			
+		}
+		
 		$limit = $this->siteconfig[3]["value"]; 
 		$config['base_url'] = site_url('customer/list');
 		$config['total_rows'] = $this->MasterModel->get_customers_count($itm);
