@@ -49,5 +49,5 @@
 		</div>
 	</div>  
 
-<div>
+</div>
 <?php $this->load->view('includes/footer'); ?>

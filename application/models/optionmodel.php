@@ -11,5 +11,13 @@ class OptionModel extends CI_Model {
 	 */
 	public function get_config_all() {
 		return $this->db->get('configuration')->result_array(); 
-	}	
+	}
+	
+	/***
+	 * Get Configuration
+	 */
+	public function get_config_detail() {
+		$this->db->order_by('urut');
+		return $this->db->get('configuration')->result_array(); 
+	}
 }

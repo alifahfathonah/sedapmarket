@@ -38,6 +38,7 @@
 |
 */
 //General
+$route["setup"] 					= "option_controller/edit_setup";
 $route["profile/edit"] 				= "user_controller/editprofile";
 $route["home"] 						= "user_controller/home";
 $route["login"] 					= "user_controller/login";
