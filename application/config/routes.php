@@ -37,6 +37,12 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+//Category
+$route["category/edit/(:num)"] 			= "master_controller/edit_category/$1";
+$route["category/add"] 					= "master_controller/add_category";
+$route["category/list/(:num)"] 			= "master_controller/get_category_list/$1";
+$route["category/list"] 				= "master_controller/get_category_list";
+
 //Customer
 $route["customer/edit/(:num)"] 			= "master_controller/edit_customer/$1";
 $route["customer/add"] 					= "master_controller/add_customer";

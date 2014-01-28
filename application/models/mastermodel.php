@@ -6,6 +6,61 @@ class MasterModel extends CI_Model {
     var $error_message = "";
     var $message = "";
 	
+	/*** Category ***/
+	/***
+	 * Add Category
+	 */
+	public function add_category($data) {
+		$d = array (
+			"category_name" 		=> $data["category_name"],
+			"category_desc" 		=> $data["category_desc"],
+		);
+		$this->db->insert("category",$d);
+		$this->is_error = 0;
+        $this->message = "Category has been added successfully";
+        $this->error_message = "";
+	}
+	
+	
+	public function get_category_list($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("category_name LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$r = $this->db->get('category'); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get customers Count
+	 */
+	public function get_category_count($itm="") {
+		if($itm) {
+			$where =" WHERE category_name LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('category '.$where);
+	}
+	
+	/***
+	 * Delete Category
+	 */
+	public function delete_category($data) {
+		$this->db->where('category_id',$data);
+		$this->db->delete("category",$d);
+		$this->is_error = 0;
+        $this->message = "Category has been deleted successfully";
+        $this->error_message = "";
+	}
+
+	
 	/*** Customer ***/
 	
 	/***

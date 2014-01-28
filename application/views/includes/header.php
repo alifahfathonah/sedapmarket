@@ -103,8 +103,8 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav side-nav">
-						<li class="active"><a href="<?php echo site_url('home') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-						<li class="dropdown">
+						<li <?php echo ($this->uri->segment(1)=="home")?'class="active"':'' ?>><a href="<?php echo site_url('home') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+						<li class="dropdown <?php echo ($this->uri->segment(1)=="customer")?"active":"" ?>" >
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Master Data <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
 							<li><a href="<?php echo site_url('customer/list') ?>">Customer</a></li>

@@ -65,7 +65,7 @@ else { ?>
 									<ul class="pagination pagination-sm">
 									<?php echo $page_link ?>
 									</ul>
-								</div
+								</div>
 			
 						</form>	
 					</div>

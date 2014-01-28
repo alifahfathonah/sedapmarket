@@ -8,6 +8,100 @@ class Master_Controller extends App_Controller {
 		//$this->load->view('users/login');
 	}
 	
+	/*** Category ***/
+	/***
+	 * Add Customer List
+	 */
+	public function add_category() {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		
+		if($this->input->post("addbtn")) {
+			$this->load->model("MasterModel");
+			$this->form_validation->set_rules('category_name', 'Category Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('category_desc', 'Description', 'required|trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				 $data = $this->input->post();
+                
+                $this->MasterModel->add_category($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('category/add');
+			}
+		}
+		
+		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
+			$tmp = substr($this->siteconfig[1]["option_value"],0,7);
+		else
+			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
+			
+		$this->viewdata["formatdate"] = $tmp;
+		$this->load->view('masters/add_category',$this->viewdata);
+	}
+	
+	/***
+	 * Get Category List
+	 */
+	public function get_category_list($p=0) {
+		$this->load->library("pagination");
+		$this->load->model("MasterModel");
+		
+		if($this->input->post('cat_delbtn')) {
+			$data = $this->input->post();
+			foreach($data["chkbox"] as $d) {
+				//echo debug($d);
+				$this->MasterModel->delete_category($d);
+			}
+			if($this->MasterModel->is_error==1) {
+				//echo $this->MasterModel->error_message;
+				$this->session->set_flashdata("error",$this->MasterModel->error_message);
+				//$this->session->unset_flashdata("message");
+			}
+			else {
+				//$this->session->unset_flashdata("error");
+				$this->session->set_flashdata("message",$this->MasterModel->message);
+			}
+			redirect('category/list');
+			
+		}
+		
+		$limit = $this->siteconfig[3]["value"]; 
+		
+		$config['base_url'] 	= site_url('category/list');
+		$config['total_rows'] 	= $this->MasterModel->get_category_count($itm);
+		$config['per_page'] 	= $limit;
+		$config['uri_segment'] 	= 3;
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		//$config['anchor_class'] = "";	
+		$this->pagination->initialize($config);
+		
+		$this->viewdata["page_link"] = $this->pagination->create_links();
+		$this->viewdata["custlist"] = $this->MasterModel->get_category_list($itm,$p,$limit);
+		$this->load->view('masters/get_category_list',$this->viewdata);
+	}
+	
+	
 	/*** Customer ***/
 	
 	/***
