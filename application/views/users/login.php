@@ -28,7 +28,7 @@
 			<p class="help-block"><?php echo form_error("user_pass",'<p class="errors">','</p>') ?></p>
 		</div>
 		
-		<button type="submit" class="btn btn-default" name="loginbtn" value="login">Login</button>
+		<button type="submit" class="btn btn-primary" name="loginbtn" value="login">Login</button>
 	</form>
 </div>
 <?php $this->load->view('includes/footer'); ?>

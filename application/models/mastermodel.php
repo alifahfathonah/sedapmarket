@@ -1,16 +1,24 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class OptionModel extends CI_Model {
+class MasterModel extends CI_Model {
     var $is_error = 0;
     var $error_message = "";
     var $message = "";
 	
+	/*** Customer ***/
+	
 	/***
-	 * Get Configuration
+	 * Get customers list
 	 */
-	public function get_config_all() {
-		return $this->db->get('configuration')->result_array(); 
+	public function get_customers_list() {
+		$r = $this->db->get('customers'); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/***

@@ -1,14 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH."/controllers/app_controller.php";
-class Option_Controller extends App_Controller {
+class Master_Controller extends App_Controller {
 	
 	public function index()
 	{
 		//$this->load->view('users/login');
 	}
 	
-	public function edit_setup() {
+	/*** Customer ***/
+	
+	/***
+	 * Get Customer List
+	 */
+	public function get_customers_list() {
+		$this->load->library("pagination");
+		$this->load->model("MasterModel");
+		$this->viewdata["custlist"] = $this->MasterModel->get_customers_list();
+		$this->load->view('masters/get_customers_list');
+	}
+	
+	/*** Product ***/
+	
+	public function edit_customer() {
 		$this->load->library('form_validation');
 		if($this->input->post("editbtn")) { 
 			//$this->form_validation->set_rules('user_name', 'Full Name', 'required|trim|xss_clean');

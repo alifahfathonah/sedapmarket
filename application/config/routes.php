@@ -37,6 +37,10 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+//Customer
+$route["customer/list/(:num)"] 			= "master_controller/get_customers_list/$1";
+$route["customer/list"] 				= "master_controller/get_customers_list";
+
 //General
 $route["setup"] 					= "option_controller/edit_setup";
 $route["profile/edit"] 				= "user_controller/editprofile";

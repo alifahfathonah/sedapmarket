@@ -1,6 +1,12 @@
 .errors {
 		color:#ff0000;
 }
+
+.empty {
+	text-align:center;
+	color:#ff0000;
+	font-weight:bold;
+}
 	
 @media (min-width:768px) {
 	/* Wrappers */

@@ -34,7 +34,7 @@
 							<?php echo (form_error("user_pass",'<p class="help-block">','</p>'))?form_error("user_pass",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your new password. Leave blank if you don\'t change your password </p>'; ?>		
 							
 						</div>
-						<button type="submit" class="btn btn-default" name="editbtn" value="update">Update</button>
+						<button type="submit" class="btn btn-primary" name="editbtn" value="update">Update</button>
 					</form>
 <?php } else { ?>
 					<div class="alert alert-dismissable alert-success">

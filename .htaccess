@@ -1,3 +1,5 @@
+php_value date.timezone "Asia/Jakarta"
+
 RewriteEngine on
 RewriteBase /sedapmarket
 RewriteCond $1 !^(index\.php|download\.php|images|pdf|robots\.txt|css|js)

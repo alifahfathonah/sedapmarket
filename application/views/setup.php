@@ -32,16 +32,16 @@
 							<?php echo (form_error("option_value[]",'<p class="help-block">','</p>'))?form_error("option_value[]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
 						</div>
 <?php 				break;
-					case "FAVICON": ?>
-						<div class="form-group">
+					//case "FAVICON": ?>
+					<!--	<div class="form-group">
 							<label>
 								<input type="hidden" name="option_name[]" value="<?php echo $setup["option_name"]?>">
 								<?php echo $setup["option_title"]?>
 							</label>
 							<input name="option_value[]" type="file"  value="">
 							<?php echo (form_error("option_value[]",'<p class="help-block">','</p>'))?form_error("option_value[]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
-						</div>
-<?php				break;	
+						</div> -->
+<?php				//break;	
 					case "FORMATDATE": ?>
 						<div class="form-group">
 							<label>
@@ -49,14 +49,16 @@
 								<?php echo $setup["option_title"]?>
 							</label>
 							<select class="form-control" name="option_value[]">
-							  <option>1</option>
+							  <option value="M d, Y H:i:s" <?php echo ($setup["option_value"]=="M d, Y H:i:s")?"selected='seklected'":"" ?> ><?php echo date("M d, Y H:i:s") ?></option>
+								<option value="Y-m-d H:i:s" <?php echo ($setup["option_value"]=="Y-m-d H:i:s")?"selected='seklected'":"" ?>><?php echo date("Y-m-d H:i:s") ?></option>
 							</select>
 							<?php echo (form_error("option_value[]",'<p class="help-block">','</p>'))?form_error("option_value[]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
 						</div>
 <?php				break;	
 				}
 			}
-		} ?>						
+		} ?>			
+						<button type="submit" class="btn btn-primary" value="Update" name="editbtn">Update</button>			
 					</form>
 <?php } else { ?>
 					<div class="alert alert-dismissable alert-success">
