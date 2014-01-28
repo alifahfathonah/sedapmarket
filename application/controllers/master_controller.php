@@ -10,7 +10,7 @@ class Master_Controller extends App_Controller {
 	
 	/*** Category ***/
 	/***
-	 * Add Customer List
+	 * Add Category List
 	 */
 	public function add_category() {
 		$this->load->library("form_validation");
@@ -19,7 +19,7 @@ class Master_Controller extends App_Controller {
 		if($this->input->post("addbtn")) {
 			$this->load->model("MasterModel");
 			$this->form_validation->set_rules('category_name', 'Category Name', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('category_desc', 'Description', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('category_desc', 'Description', 'trim|xss_clean');
 			
 			if ($this->form_validation->run() == TRUE)
             {
@@ -47,6 +47,49 @@ class Master_Controller extends App_Controller {
 			
 		$this->viewdata["formatdate"] = $tmp;
 		$this->load->view('masters/add_category',$this->viewdata);
+	}
+	
+	/***
+	 * Edit Category List
+	 */
+	public function edit_category($id) {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("editbtn")) {
+			
+			$this->form_validation->set_rules('category_name', 'Category Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('category_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+				$data["category_id"] = $id;	
+                $this->MasterModel->edit_category($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('category/edit/'.$id);
+			}
+		}
+		
+		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
+			$tmp = substr($this->siteconfig[1]["option_value"],0,7);
+		else
+			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
+			
+		$this->viewdata["formatdate"] = $tmp;
+		$this->viewdata["cat_id"] = $id;
+		$this->viewdata["cat"] = $this->MasterModel->get_category_detail($id);
+		//echo debug($this->viewdata["cat"]);
+		$this->load->view('masters/edit_category',$this->viewdata);
 	}
 	
 	/***
@@ -97,7 +140,7 @@ class Master_Controller extends App_Controller {
 		$this->pagination->initialize($config);
 		
 		$this->viewdata["page_link"] = $this->pagination->create_links();
-		$this->viewdata["custlist"] = $this->MasterModel->get_category_list($itm,$p,$limit);
+		$this->viewdata["catlist"] = $this->MasterModel->get_category_list($itm,$p,$limit);
 		$this->load->view('masters/get_category_list',$this->viewdata);
 	}
 	

@@ -34,7 +34,7 @@
 					<div class="alert alert-dismissable alert-success">
 						  <?php echo $msg ?>
 						  <script>
-							window.setTimeout('location.href="<?php echo site_url('customer/list') ?>"',3000);
+							window.setTimeout('location.href="<?php echo site_url('category/list') ?>"',3000);
 						  </script>
 					</div>
 <?php } ?>										

@@ -108,6 +108,7 @@
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Master Data <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
 							<li><a href="<?php echo site_url('customer/list') ?>">Customer</a></li>
+							<li><a href="<?php echo site_url('category/list') ?>">Category</a></li>
 							<li><a href="#">Product</a></li>
 						  </ul>
 						</li>

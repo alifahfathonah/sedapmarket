@@ -21,7 +21,24 @@ class MasterModel extends CI_Model {
         $this->error_message = "";
 	}
 	
+	/***
+	 * Edit Category
+	 */
+	public function edit_category($data) {
+		$this->db->where('category_id',$data['category_id']);
+		$d = array (
+			"category_name" 		=> $data["category_name"],
+			"category_desc" 		=> $data["category_desc"],
+		);
+		$this->db->update("category",$d);
+		$this->is_error = 0;
+        $this->message = "Category has been updated successfully";
+        $this->error_message = "";
+	}
 	
+	/***
+	 * Get Category List
+	 */
 	public function get_category_list($itm="",$p=0,$limit=10) {
 		if($itm) {
 			$this->db->where("category_name LIKE '%".$itm."%'");
@@ -33,6 +50,20 @@ class MasterModel extends CI_Model {
 		$r = $this->db->get('category'); 
 		if($r) {
 			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Category detail
+	 */
+	public function get_category_detail($data) {
+		$this->db->where("category_id",$data);
+		$r = $this->db->get('category'); 
+		if($r) {
+			return $r->row_array();
 		}
 		else {
 			return false;
