@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 28, 2014 at 04:09 PM
+-- Generation Time: Jan 28, 2014 at 04:39 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -33,13 +33,6 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_desc` text NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`category_id`, `category_name`, `category_desc`) VALUES
-(1, 'ssss2', 'sss');
 
 -- --------------------------------------------------------
 
@@ -126,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_name` varchar(255) NOT NULL,
   `kemasan` enum('','Yes','No') NOT NULL,
   `stock` int(11) NOT NULL DEFAULT '0',
-  `harga` bigint(20) NOT NULL DEFAULT '0',
+  `price` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -152,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_pass`, `user_name`, `user_lastlogindate`, `group_id`) VALUES
-(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-01-28 10:27:52', 1);
+(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-01-28 22:28:22', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
