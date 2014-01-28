@@ -38,6 +38,7 @@
 |
 */
 //Customer
+$route["customer/edit/(:num)"] 			= "master_controller/edit_customer/$1";
 $route["customer/add"] 					= "master_controller/add_customer";
 $route["customer/list/(:num)"] 			= "master_controller/get_customers_list/$1";
 $route["customer/list"] 				= "master_controller/get_customers_list";

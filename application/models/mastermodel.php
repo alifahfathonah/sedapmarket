@@ -30,7 +30,7 @@ class MasterModel extends CI_Model {
 	 * Get customers detail
 	 */
 	public function get_customer_detail($id) {
-		$this->db->where("cust_id",$id)
+		$this->db->where("cust_id",$id);
 		$r = $this->db->get('customers'); 
 		if($r) {
 			return $r->row_array();

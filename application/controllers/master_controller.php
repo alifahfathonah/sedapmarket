@@ -11,13 +11,14 @@ class Master_Controller extends App_Controller {
 	/*** Customer ***/
 	
 	/***
-	 * Get Customer List
+	 * Add Customer List
 	 */
 	public function add_customer() {
 		$this->load->library("form_validation");
 		//echo debug($this->siteconfig[1]["option_value"]);
 		
 		if($this->input->post("addbtn")) {
+			$this->load->model("MasterModel");
 			$this->form_validation->set_rules('cust_regdate', 'Register Date', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_fullname', 'Customer Full Name', 'required|trim|xss_clean');
             $this->form_validation->set_rules('cust_address', 'Customer Address', 'required|trim|xss_clean');
@@ -52,6 +53,53 @@ class Master_Controller extends App_Controller {
 		$this->viewdata["formatdate"] = $tmp;
 		$this->load->view('masters/add_customer',$this->viewdata);
 	}
+	
+	/***
+	 * Add Customer List
+	 */
+	public function edit_customer($id) {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		
+		if($this->input->post("editbtn")) {
+			$this->load->model("MasterModel");
+			$this->form_validation->set_rules('cust_regdate', 'Register Date', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_fullname', 'Customer Full Name', 'required|trim|xss_clean');
+            $this->form_validation->set_rules('cust_address', 'Customer Address', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_phonenumber', 'Customer Phone number', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_faxnumber', 'Customer Fax number', 'trim|xss_clean');
+			$this->form_validation->set_rules('cust_mobilenumber', 'Customer Mobile number', 'trim|xss_clean');
+			$this->form_validation->set_rules('cust_emailaddress', 'Customer E-Mail Address', 'trim|valid_email|xss_clean');
+			if ($this->form_validation->run() == TRUE)
+            {
+				 $data = $this->input->post();
+                
+                $this->MasterModel->edit_customer($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('customer/edit');
+			}
+		}
+		
+		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
+			$tmp = substr($this->siteconfig[1]["option_value"],0,7);
+		else
+			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
+			
+		$this->viewdata["formatdate"] = $tmp;
+		$this->viewdata["cust_id"] = $id;
+		$this->viewdata["cust"] = $this->MasterModel->get_customer_detail($id);
+		$this->load->view('masters/edit_customer',$this->viewdata);
+	}
+	
 	/***
 	 * Get Customer List
 	 */

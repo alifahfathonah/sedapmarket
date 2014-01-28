@@ -5,7 +5,7 @@
 			<h1>Customers</h1>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Add Customer</h3>
+					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Edit Customer</h3>
 				</div>
 				<div class="panel-body info">
 <?php $msg = $this->session->flashdata('message');
@@ -16,44 +16,44 @@
 						  <?php echo $err ?>
 					</div>
 <?php   } ?>					
-					<form role="form" method="post" action="<?php echo site_url('customer/add') ?>">
+					<form role="form" method="post" action="<?php echo site_url('customer/edit/'.$cust_id) ?>">
 						<div class="form-group">
 							<label>Register Date</label>
-							<input class="form-control datef" name="cust_regdate" readonly="readonly" value="<?php echo date($formatdate) ?>">
+							<input class="form-control datef" name="cust_regdate" readonly="readonly" value="<?php echo $cust["cust_regdate"] ?>">
 							<p class="help-block">This date is Current Date. You can change register date.</p>
 						</div>
 						<div class="form-group">
 							<label>Full Name</label>
-							<input class="form-control" name="cust_fullname" value="<?php echo set_value("cust_fullname")?>">
+							<input class="form-control" name="cust_fullname" value="<?php echo $cust["cust_fullname"] ?>">
 							<?php echo (form_error("cust_fullname",'<p class="help-block">','</p>'))?form_error("cust_fullname",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer full name.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>Address</label>
-							<textarea class="form-control" rows="3" name="cust_address"><?php echo set_value("cust_address")?></textarea>
+							<textarea class="form-control" rows="3" name="cust_address"><?php echo $cust["cust_address"] ?></textarea>
 							<?php echo (form_error("cust_address",'<p class="help-block">','</p>'))?form_error("cust_address",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer address.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>Phone Number</label>
-							<textarea class="form-control" rows="3" name="cust_phonenumber"><?php echo set_value("cust_phonenumber")?></textarea>
+							<textarea class="form-control" rows="3" name="cust_phonenumber"><?php echo $cust["cust_phonenumber"] ?></textarea>
 							<?php echo (form_error("cust_phonenumber",'<p class="help-block">','</p>'))?form_error("cust_phonenumber",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer phone number.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>Fax Number</label>
-							<textarea class="form-control" rows="3" name="cust_faxnumber"><?php echo set_value("cust_faxnumber")?></textarea>
+							<textarea class="form-control" rows="3" name="cust_faxnumber"><?php echo $cust["cust_faxnumber"] ?></textarea>
 							<?php echo (form_error("cust_faxnumber",'<p class="help-block">','</p>'))?form_error("cust_faxnumber",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer Fax number.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>Mobile Number</label>
-							<textarea class="form-control" rows="3" name="cust_mobilenumber"><?php echo set_value("cust_mobilenumber")?></textarea>
+							<textarea class="form-control" rows="3" name="cust_mobilenumber"><?php echo $cust["cust_mobilenumber"] ?></textarea>
 							<?php echo (form_error("cust_mobilenumber",'<p class="help-block">','</p>'))?form_error("cust_mobilenumber",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer Mobile number.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>E-Mail Address</label>
-							<input class="form-control" name="cust_emailaddress" value="<?php echo set_value("cust_emailaddress")?>">
+							<input class="form-control" name="cust_emailaddress" value="<?php echo $cust["cust_emailaddress"] ?>">
 							<?php echo (form_error("cust_emailaddress",'<p class="help-block">','</p>'))?form_error("cust_emailaddress",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer E-Mail Address.</p>'; ?>		
 						</div>
 						
-						<button type="submit" class="btn btn-primary" name="addbtn" value="add">Add</button>
+						<button type="submit" class="btn btn-primary" name="editbtn" value="update">Update</button>
 					</form>
 <?php } else { ?>
 					<div class="alert alert-dismissable alert-success">
