@@ -38,17 +38,18 @@
 |
 */
 //Customer
+$route["customer/add"] 					= "master_controller/add_customer";
 $route["customer/list/(:num)"] 			= "master_controller/get_customers_list/$1";
 $route["customer/list"] 				= "master_controller/get_customers_list";
 
 //General
-$route["setup"] 					= "option_controller/edit_setup";
-$route["profile/edit"] 				= "user_controller/editprofile";
-$route["home"] 						= "user_controller/home";
-$route["login"] 					= "user_controller/login";
-$route["logout"] 					= "user_controller/logout";
-$route['default_controller'] 		= "welcome";
-$route['404_override'] 				= '';
+$route["setup"] 						= "option_controller/edit_setup";
+$route["profile/edit"] 					= "user_controller/editprofile";
+$route["home"] 							= "user_controller/home";
+$route["login"] 						= "user_controller/login";
+$route["logout"] 						= "user_controller/logout";
+$route['default_controller'] 			= "welcome";
+$route['404_override'] 					= '';
 
 
 /* End of file routes.php */

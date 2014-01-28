@@ -11,7 +11,12 @@ class MasterModel extends CI_Model {
 	/***
 	 * Get customers list
 	 */
-	public function get_customers_list() {
+	public function get_customers_list($itm="",$p=0) {
+		if($itm) {
+			$this->db->where("cust_fullname LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		
 		$r = $this->db->get('customers'); 
 		if($r) {
 			return $r->result_array();
@@ -22,24 +27,80 @@ class MasterModel extends CI_Model {
 	}
 	
 	/***
-	 * Get Configuration
+	 * Get customers detail
 	 */
-	public function get_config_detail() {
-		$this->db->order_by('urut');
-		return $this->db->get('configuration')->result_array(); 
+	public function get_customer_detail($id) {
+		$this->db->where("cust_id",$id)
+		$r = $this->db->get('customers'); 
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/***
-	 * Update Configuration
+	 * Get customers Count
 	 */
-	public function update_config($data) {
-		$this->db->where('option_name',$data["option_name"]);
+	public function get_customers_count($itm="") {
+		if($itm) {
+			$where =" WHERE cust_fullname LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('customers '.$where);
+	}
+	
+	/***
+	 * Add Customer
+	 */
+	public function add_customer($data) {
+		if($data["cust_regdate"]) {
+			$tmp = new DateTime($data["cust_regdate"]);
+			$data["cust_regdate"] = $tmp->format("Y-m-d");
+		}
+		
 		$d = array (
-			"option_value" => $data["option_value"]
+			"cust_regdate" 			=> $data["cust_regdate"],
+			"cust_fullname" 		=> $data["cust_fullname"],
+			"cust_address" 			=> $data["cust_address"],
+			"cust_phonenumber" 		=> $data["cust_phonenumber"],
+			"cust_faxnumber" 		=> $data["cust_faxnumber"],
+			"cust_mobilenumber" 	=> $data["cust_mobilenumber"],
+			"cust_emailaddress" 	=> $data["cust_emailaddress"],
 		);
-		$this->db->update("configuration",$d);
+		$this->db->insert("customers",$d);
 		$this->is_error = 0;
-        $this->message = "Settings has been changed successfully";
+        $this->message = "Customer has been added successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Edit Customer
+	 */
+	public function edit_customer($data) {
+		$this->db->where('cust_id',$data["cust_id"]);
+		$d = array (
+			"cust_fullname" 		=> $data["cust_fullname"],
+			"cust_address" 			=> $data["cust_address"],
+			"cust_phonenumber" 		=> $data["cust_phonenumber"],
+			"cust_faxnumber" 		=> $data["cust_faxnumber"],
+			"cust_mobilenumber" 	=> $data["cust_mobilenumber"],
+			"cust_emailaddress" 	=> $data["cust_emailaddress"],
+		);
+		$this->db->update("customers",$d);
+		$this->is_error = 0;
+        $this->message = "Customer has been updated successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Delete Customer
+	 */
+	public function delete_customer($data) {
+		$this->db->where('cust_id',$data["cust_id"]);
+		$this->db->delete("customers",$d);
+		$this->is_error = 0;
+        $this->message = "Customer has been deleted successfully";
         $this->error_message = "";
 	}
 }

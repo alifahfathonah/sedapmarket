@@ -39,3 +39,9 @@
 		width:150px;
 	}
 }
+
+.pagination {
+	text-align:right;
+	vertical-align:top;
+	margin:0;
+}

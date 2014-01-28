@@ -28,6 +28,32 @@
 		<script src="<?php echo site_url("js/morris/chart-data-morris.js") ?>"></script>
 		<script src="<?php echo site_url("js/tablesorter/jquery.tablesorter.js") ?>"></script>
 		<script src="<?php echo site_url("js/tablesorter/tables.js") ?>"></script>
+		
+		<!-- DatePicker Plugins -->
+<?php   
+		if($this->uri->segment(1)=="customer") {
+		switch($this->uri->segment(2)) {
+			case "add":
+			case "edit": ?>
+		<link rel="stylesheet" href="<?php echo site_url("js/datepicker/jquery.datepick.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/datepicker/jquery.datepick.js") ?>"></script>
+<?php 	}
+	  }
+?>
+		<script type="text/javascript">
+			$(function() {
+<?php if($this->uri->segment(1)=="customer") {
+		switch($this->uri->segment(2)) {
+			case "add":
+			case "edit": ?>
+				$(".datef").datepick({
+					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
+				});
+<?php 	}
+	  }
+?>		
+			});
+		</script>
 	</head>
 
 	<body>
