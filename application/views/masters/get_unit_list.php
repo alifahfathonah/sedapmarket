@@ -5,7 +5,7 @@
 			<h3>Products</h3>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Product Category List</h3>
+					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Unit List</h3>
 				</div>
 				<div class="panel-body info">
 <?php $msg = $this->session->flashdata("message");
@@ -16,25 +16,26 @@
 						
 					</div>	
 <?php } ?>					
-						<form role="form" method="post" action="<?php echo site_url('category/list') ?>" id="frm1">
+						<form role="form" method="post" action="<?php echo site_url('unit/list') ?>" id="frm1">
 							<table class="table table-bordered table-hover tablesorter">
 								<thead>
 									<tr>
 										<th><input type="checkbox" name="chkall" id="chkall" value="1"> <i class="fa fa-sort"></i></th>
-										<th>Category Name <i class="fa fa-sort"></i></th>
+										<th>Unit Name <i class="fa fa-sort"></i></th>
 										<th>Description <i class="fa fa-sort"></i></th>
 									</tr>
 								</thead>
 								<tbody>
 								
 <?php 
-if($catlist) {
-	foreach($catlist as $cat) {
+if($unitlist) {
+	foreach($unitlist as $u) {
+		//echo debug($u);
 ?> 	
 								<tr>
-									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cat["category_id"] ?>"></td>
-									<td><a href="<?php echo site_url('category/edit/'.$cat["category_id"]) ?>"><?php echo $cat["category_name"] ?></a></td>
-									<td><?php echo $cat["category_desc"] ?></td>
+									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $u["unit_id"] ?>"></td>
+									<td><a href="<?php echo site_url('unit/edit/'.$u["unit_id"]) ?>"><?php echo $u["unit_name"] ?></a></td>
+									<td><?php echo $u["unit_desc"] ?></td>
 									
 								</tr>
 <?php 
@@ -50,8 +51,8 @@ else { ?>
 							</tbody>
 							</table>
 							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="category_addbtn" value="add" onclick="location.href='<?php echo site_url("category/add")?>'">Add</button>
-								<button type="submit" class="btn btn-primary" name="category_delbtn" id="delbtn" value="delete">Delete</button>
+								<button type="button" class="btn btn-primary" name="unit_addbtn" value="add" onclick="location.href='<?php echo site_url("unit/add")?>'">Add</button>
+								<button type="submit" class="btn btn-primary" name="unit_delbtn" id="delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 hal">	
 								<ul class="pagination pagination-sm">

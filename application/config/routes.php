@@ -37,6 +37,18 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+//Unit
+$route["unit/edit/(:num)"] 			= "master_controller/edit_unit/$1";
+$route["unit/add"] 					= "master_controller/add_unit";
+$route["unit/list/(:num)"] 			= "master_controller/get_units_list/$1";
+$route["unit/list"] 				= "master_controller/get_units_list";
+
+//Products
+$route["products/edit/(:num)"] 			= "master_controller/edit_product/$1";
+$route["products/add"] 					= "master_controller/add_product";
+$route["products/list/(:num)"] 			= "master_controller/get_products_list/$1";
+$route["products/list"] 				= "master_controller/get_products_list";
+
 //Category
 $route["category/edit/(:num)"] 			= "master_controller/edit_category/$1";
 $route["category/add"] 					= "master_controller/add_category";

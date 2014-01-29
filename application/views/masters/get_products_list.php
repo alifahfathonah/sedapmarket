@@ -31,23 +31,23 @@
 								<tbody>
 								
 <?php 
-if($catlist) {
-	foreach($catlist as $cat) {
+if($prodlist) {
+	foreach($prodlist as $prod) {
 ?> 	
 								<tr>
 									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $prod["product_id"] ?>"></td>
 									<td><?php echo $prod["category_name"] ?></td>
-									<td><a href="<?php echo site_url('product/edit/'.$prod["product_id"]) ?>"><?php echo $prod["product_name"] ?></a></td>
-									<td><?php echo $prod["kemasan"] ?></td>
-									<td><?php echo $prod["stock"] ?></td>
-									<td><?php echo $prod["price"] ?></td>
+									<td><a href="<?php echo site_url('products/edit/'.$prod["product_id"]) ?>"><?php echo $prod["product_name"] ?></a></td>
+									<td><?php echo $prod["product_kemasan"] ?></td>
+									<td style="text-align:right"><?php echo number_format($prod["product_stock"]) ?></td>
+									<td style="text-align:right"><?php echo number_format($prod["product_price"]) ?></td>
 								</tr>
 <?php 
 	}
 } 
 else { ?>
 								<tr>
-									<td colspan="3" class="empty">Not Found</td>
+									<td colspan="6" class="empty">Not Found</td>
 								</tr>
 <?php 
 	}	
@@ -55,8 +55,8 @@ else { ?>
 							</tbody>
 							</table>
 							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="product_addbtn" value="add" onclick="location.href='<?php echo site_url("category/add")?>'">Add</button>
-								<button type="submit" class="btn btn-primary" name="product_delbtn" id="product_delbtn" value="delete">Delete</button>
+								<button type="button" class="btn btn-primary" name="product_addbtn" value="add" onclick="location.href='<?php echo site_url("products/add")?>'">Add</button>
+								<button type="submit" class="btn btn-primary" name="product_delbtn" id="delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 hal">	
 								<ul class="pagination pagination-sm">

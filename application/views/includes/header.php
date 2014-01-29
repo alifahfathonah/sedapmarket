@@ -42,7 +42,28 @@
 ?>
 		<script type="text/javascript">
 			$(function() {
-<?php if($this->uri->segment(1)=="customer") {
+				$('#chkall').click(function () {    
+					 $('.chkbox').prop('checked', this.checked);    
+				});
+<?php if($this->uri->segment(2)=="list") { ?>				
+				$("#delbtn").click(function() {
+					var tmp = $(".chkbox:checked");
+					console.log(tmp);
+					if(tmp.length > 0) {
+						if(confirm("Are you sure to delete?")) {
+							$("#frm1").submit();
+							return true;
+						}
+						return false;
+					}
+					else {
+						alert("Please choose item that you will delete")
+						return false;
+					}					
+				});
+				
+<?php } 
+	  if($this->uri->segment(1)=="customer") {
 		switch($this->uri->segment(2)) {
 			case "add":
 			case "edit": ?>
@@ -51,50 +72,12 @@
 				});
 			
 <?php 		break;
-			case "list": ?>
-				$('#chkall').click(function () {    
-					 $('.chkbox').prop('checked', this.checked);    
-				});
 				
-				$("#cust_delbtn").click(function() {
-					var tmp = $(".chkbox:checked");
-					console.log(tmp);
-					if(tmp.length > 0) {
-						if(confirm("Are you sure to delete?")) {
-							$("#frm1").submit();
-							return true;
-						}
-						return false;
-					}
-					else {
-						alert("Please choose item that you will delete")
-						return false;
-					}					
-				});
-<?php		break;	
 		}
 	  } 
 	  else if($this->uri->segment(1)=="category") {
 ?>		
-				$('#chkall').click(function () {    
-					 $('.chkbox').prop('checked', this.checked);    
-				});
-				
-				$("#category_delbtn").click(function() {
-					var tmp = $(".chkbox:checked");
-					console.log(tmp);
-					if(tmp.length > 0) {
-						if(confirm("Are you sure to delete?")) {
-							$("#frm1").submit();
-							return true;
-						}
-						return false;
-					}
-					else {
-						alert("Please choose item that you will delete")
-						return false;
-					}					
-				});
+
 <?php } ?>
 
 			});
@@ -131,7 +114,8 @@
 						  <ul class="dropdown-menu">
 							<li><a href="<?php echo site_url('customer/list') ?>">Customer</a></li>
 							<li><a href="<?php echo site_url('category/list') ?>">Category</a></li>
-							<li><a href="#">Product</a></li>
+							<li><a href="<?php echo site_url('unit/list') ?>">Unit</a></li>
+							<li><a href="<?php echo site_url('products/list') ?>">Products</a></li>
 						  </ul>
 						</li>
 						<!--<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>

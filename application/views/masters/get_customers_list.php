@@ -21,6 +21,7 @@
 								<thead>
 									<tr>
 										<th><input type="checkbox" name="chkall" id="chkall" value="1"> <i class="fa fa-sort"></i></th>
+										<th>Type <i class="fa fa-sort"></i></th>
 										<th>Customer Name <i class="fa fa-sort"></i></th>
 										<th>Address <i class="fa fa-sort"></i></th>
 										<th>City <i class="fa fa-sort"></i></th>
@@ -34,9 +35,17 @@
 <?php 
 if($custlist) {
 	foreach($custlist as $cust) {
+		$t="";		
+		if($cust["cust_type"]=="D") {
+			$t = "Distributor";
+		}
+		else if($cust["cust_type"]=="M") {
+			$t = "Morden Market";
+		}
 ?> 	
 								<tr>
 									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cust["cust_id"] ?>"></td>
+									<td><?php echo $t ?></td>
 									<td><a href="<?php echo site_url('customer/edit/'.$cust["cust_id"]) ?>"><?php echo $cust["cust_fullname"] ?></a></td>
 									<td><?php echo $cust["cust_address"] ?></td>
 									<td><?php echo $cust["cust_city"] ?></td>
@@ -58,7 +67,7 @@ else { ?>
 							</table>
 							<div class="col-lg-6">
 								<button type="button" class="btn btn-primary" name="cust_addbtnid" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
-								<button type="submit" class="btn btn-primary" name="cust_delbtn" id="cust_delbtn" value="delete">Delete</button>
+								<button type="submit" class="btn btn-primary" name=delbtn" id="delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 hal">	
 								

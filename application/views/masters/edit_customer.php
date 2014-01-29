@@ -23,6 +23,20 @@
 							<p class="help-block">This date is Current Date. You can change register date.</p>
 						</div>
 						<div class="form-group">
+							<label>Type</label>
+							<div class="radio">
+								<label>
+									<input type="radio" name="cust_type" value="D" <?php echo (!$cust['cust_type'] || $cust['cust_type']=='D')?"checked='checked'":"" ?>> Distributor
+								</label>	
+							</div>	
+							<div class="radio">
+								<label>
+									<input type="radio" name="cust_type" value="M" <?php echo ($cust['cust_type']=='M')?"checked='checked'":"" ?> > Modern Market 
+								</label>
+							</div>	
+							<p class="help-block">This date is Current Date. You can change register date.</p>
+						</div>
+						<div class="form-group">
 							<label>Full Name</label>
 							<input class="form-control" name="cust_fullname" value="<?php echo $cust["cust_fullname"] ?>">
 							<?php echo (form_error("cust_fullname",'<p class="help-block">','</p>'))?form_error("cust_fullname",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer full name.</p>'; ?>		

@@ -6,7 +6,192 @@ class MasterModel extends CI_Model {
     var $error_message = "";
     var $message = "";
 	
+	/*** Products ***/
+	
+	/***
+	 * Add Product
+	 */
+	public function add_product($data) {
+		$d = array (
+			"category_id" 		=> $data["category_id"],
+			"product_name" 		=> $data["product_name"],
+			"product_kemasan" 	=> $data["product_kemasan"],
+			"product_stock" 	=> $data["product_stock"],
+			"product_price" 	=> $data["product_price"],
+		);
+		$this->db->insert("products",$d);
+		$this->is_error = 0;
+        $this->message = "Product has been added successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Edit Product
+	 */
+	public function edit_product($data) {
+		$d = array (
+			"category_id" 		=> $data["category_id"],
+			"product_name" 		=> $data["product_name"],
+			"product_kemasan" 	=> $data["product_kemasan"],
+			"product_stock" 	=> $data["product_stock"],
+			"product_price" 	=> $data["product_price"],
+		);
+		$this->db->update("products",$d);
+		$this->is_error = 0;
+        $this->message = "Product has been updated successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Get Products List
+	 */
+	public function get_products_list($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("product_name LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$this->db->select('a.*,b.category_name'); 
+		$this->db->from('products a'); 
+		$this->db->join('category b','b.category_id = a.category_id','left'); 
+		$r = $this->db->get(); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Products List
+	 */
+	public function get_product_detail($data) {
+		$this->db->where('a.product_id',$data);
+		$this->db->select('a.*, b.category_name');
+		$this->db->from('products a');
+		$this->db->join('category b','b.category_id=a.category_id','left');
+		$r = $this->db->get(); 
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Product Count
+	 */
+	public function get_product_count($itm="") {
+		if($itm) {
+			$where =" WHERE product_name LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('products '.$where);
+	}
+	
+	/***
+	 * Delete products
+	 */
+	public function delete_product($data) {
+		$this->db->where('product_id',$data);
+		$this->db->delete("products",$d);
+		$this->is_error = 0;
+        $this->message = "Product has been deleted successfully";
+        $this->error_message = "";
+	}
+	
+	/*** Unit ***/
+	
+	/***
+	 * Add Unit
+	 */
+	public function add_unit($data) {
+		$d = array (
+			"unit_name" 		=> $data["unit_name"],
+			"unit_desc" 		=> $data["unit_desc"],
+		);
+		$this->db->insert("unit",$d);
+		$this->is_error = 0;
+        $this->message = "Unit has been added successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Edit Unit
+	 */
+	public function edit_unit($data) {
+		$this->db->where('unit_id',$data['unit_id']);
+		$d = array (
+			"unit_name" 			=> $data["unit_name"],
+			"unit_desc" 			=> $data["unit_desc"],
+		);
+		$this->db->update("unit",$d);
+		$this->is_error = 0;
+        $this->message = "Unit has been updated successfully";
+        $this->error_message = "";
+	}
+	
+	
+	/***
+	 * Get Unit List
+	 */
+	public function get_unit_list($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("unit_name LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$r = $this->db->get('unit'); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Unit Count
+	 */
+	public function get_unit_count($itm="") {
+		if($itm) {
+			$where =" WHERE unit_name LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('unit '.$where);
+	}
+	
+	/***
+	 * Delete Unit
+	 */
+	public function delete_unit($data) {
+		$this->db->where('unit_id',$data);
+		$this->db->delete("unit",$d);
+		$this->is_error = 0;
+        $this->message = "Unit has been deleted successfully";
+        $this->error_message = "";
+	}
+
+	/***
+	 * Get Category detail
+	 */
+	public function get_unit_detail($data) {
+		$this->db->where("unit_id",$data);
+		$r = $this->db->get('unit'); 
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/*** Category ***/
+	
 	/***
 	 * Add Category
 	 */
@@ -34,6 +219,19 @@ class MasterModel extends CI_Model {
 		$this->is_error = 0;
         $this->message = "Category has been updated successfully";
         $this->error_message = "";
+	}
+	
+	/***
+	 * Get Category Into form
+	 */
+	public function get_category() {
+		$r = $this->db->get('category'); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/***
@@ -71,7 +269,7 @@ class MasterModel extends CI_Model {
 	}
 	
 	/***
-	 * Get customers Count
+	 * Get Category Count
 	 */
 	public function get_category_count($itm="") {
 		if($itm) {
@@ -148,6 +346,7 @@ class MasterModel extends CI_Model {
 		}
 		
 		$d = array (
+			"cust_type" 			=> $data["cust_type"],
 			"cust_regdate" 			=> $data["cust_regdate"],
 			"cust_fullname" 		=> $data["cust_fullname"],
 			"cust_address" 			=> $data["cust_address"],
@@ -170,6 +369,7 @@ class MasterModel extends CI_Model {
 	public function edit_customer($data) {
 		$this->db->where('cust_id',$data["cust_id"]);
 		$d = array (
+			"cust_type" 			=> $data["cust_type"],
 			"cust_fullname" 		=> $data["cust_fullname"],
 			"cust_address" 			=> $data["cust_address"],
 			"cust_city" 			=> $data["cust_city"],
