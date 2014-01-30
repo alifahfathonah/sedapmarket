@@ -146,7 +146,7 @@ class Master_Controller extends App_Controller {
 			$this->form_validation->set_rules('product_stock', 'Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('unit_id', 'Unit', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_price', 'Price', 'required|trim|integer|xss_clean');
-			
+			$this->form_validation->set_rules('product_disc', 'Discount', 'trim|xss_clean');
 			if ($this->form_validation->run() == TRUE)
             {
 				$data = $this->input->post();
@@ -186,6 +186,7 @@ class Master_Controller extends App_Controller {
 			$this->form_validation->set_rules('product_stock', 'Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('unit_id', 'Unit', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_price', 'Price', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('product_disc', 'Discount', 'trim|xss_clean');
 			
 			if ($this->form_validation->run() == TRUE)
             {

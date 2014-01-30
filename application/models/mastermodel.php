@@ -19,6 +19,7 @@ class MasterModel extends CI_Model {
 			"product_stock" 	=> $data["product_stock"],
 			"unit_id" 			=> $data["unit_id"],
 			"product_price" 	=> $data["product_price"],
+			"product_disc" 		=> $data["product_disc"],
 		);
 		$this->db->insert("products",$d);
 		$this->is_error = 0;
@@ -37,6 +38,7 @@ class MasterModel extends CI_Model {
 			"product_stock" 	=> $data["product_stock"],
 			"unit_id" 			=> $data["unit_id"],
 			"product_price" 	=> $data["product_price"],
+			"product_disc" 		=> $data["product_disc"],
 		);
 		$this->db->update("products",$d);
 		$this->is_error = 0;

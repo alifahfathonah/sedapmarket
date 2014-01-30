@@ -78,6 +78,11 @@
 							<input class="form-control" name="product_price" value="<?php echo set_value('product_price') ?>">
 							<?php echo (form_error("product_price",'<p class="help-block">','</p>'))?form_error("product_price",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Price.</p>'; ?>		
 						</div>
+						<div class="form-group">
+							<label>Discount</label><br>
+							<input class="form-control smallInput InputLine" name="product_disc" value="<?php echo (!set_value('product_disc'))?0:set_value('product_disc') ?>"> %
+							<?php echo (form_error("product_disc",'<p class="help-block">','</p>'))?form_error("product_disc",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Disc.</p>'; ?>		
+						</div>
 						<button type="submit" class="btn btn-primary" name="addbtn" value="add">Add</button>
 					</form>
 <?php } else { ?>
