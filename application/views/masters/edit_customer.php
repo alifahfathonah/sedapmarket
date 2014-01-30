@@ -75,6 +75,20 @@
 							<?php echo (form_error("region_id",'<p class="help-block">','</p>'))?form_error("region_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Region.</p>'; ?>		
 						</div>
 						<div class="form-group">
+							<label> Shipping fee By </label>
+							<div class="radio">
+								<label>
+									<input type="radio" name="cust_payby" value="I" <?php echo (!$cust['cust_payby'] || $cust['cust_payby']=='I')?"checked='checked'":"" ?>> Company
+								</label>	
+							</div>	
+							<div class="radio">
+								<label>
+									<input type="radio" name="cust_payby" value="C" <?php echo ($cust['cust_payby']=='C')?"checked='checked'":"" ?> > Customer 
+								</label>
+							</div>	
+							<p class="help-block">Enter Shipping fee.</p>
+						</div>
+						<div class="form-group">
 							<label>Phone Number</label>
 							<textarea class="form-control" rows="3" name="cust_phonenumber"><?php echo $cust["cust_phonenumber"] ?></textarea>
 							<?php echo (form_error("cust_phonenumber",'<p class="help-block">','</p>'))?form_error("cust_phonenumber",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer phone number.</p>'; ?>		

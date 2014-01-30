@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2014 at 08:42 AM
+-- Generation Time: Jan 30, 2014 at 09:12 AM
 -- Server version: 5.5.34
 -- PHP Version: 5.4.22
 
@@ -32,14 +32,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_name` varchar(255) NOT NULL,
   `category_desc` text NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`category_id`, `category_name`, `category_desc`) VALUES
-(1, 'Kecap Manis', '');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -84,20 +77,14 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `cust_city` varchar(255) NOT NULL,
   `cust_state` varchar(255) NOT NULL,
   `region_id` int(11) NOT NULL,
+  `cust_payby` enum('','I','C') NOT NULL,
   `cust_phonenumber` varchar(50) NOT NULL,
   `cust_faxnumber` varchar(50) NOT NULL,
   `cust_mobilenumber` varchar(50) NOT NULL,
   `cust_emailaddress` varchar(100) NOT NULL,
   `cust_regdate` date NOT NULL,
   PRIMARY KEY (`cust_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`cust_id`, `cust_type`, `cust_fullname`, `cust_npwp`, `cust_address`, `cust_city`, `cust_state`, `region_id`, `cust_phonenumber`, `cust_faxnumber`, `cust_mobilenumber`, `cust_emailaddress`, `cust_regdate`) VALUES
-(1, 'D', 'aaa', 'aaa', 'aaa', 'aaa', 'aaa', 1, 'aaaa', '', '', '', '2014-01-30');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -130,14 +117,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_price` bigint(20) NOT NULL DEFAULT '0',
   `product_disc` float(5,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `product_kemasan`, `product_stock`, `unit_id`, `product_price`, `product_disc`) VALUES
-(1, 1, 'Bingo', 'Yes', 100, 1, 10000, 0.00);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -151,14 +131,7 @@ CREATE TABLE IF NOT EXISTS `region` (
   `region_name` varchar(255) NOT NULL,
   `region_desc` text NOT NULL,
   PRIMARY KEY (`region_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `region`
---
-
-INSERT INTO `region` (`region_id`, `region_name`, `region_desc`) VALUES
-(1, 'Jakarta', '');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -172,14 +145,7 @@ CREATE TABLE IF NOT EXISTS `unit` (
   `unit_name` varchar(255) NOT NULL,
   `unit_desc` text,
   PRIMARY KEY (`unit_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `unit`
---
-
-INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_desc`) VALUES
-(1, 'botol', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -196,14 +162,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_lastlogindate` datetime NOT NULL,
   `group_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_pass`, `user_name`, `user_lastlogindate`, `group_id`) VALUES
-(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-01-30 08:21:03', 1);
+(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-01-30 08:21:03', 1),
+(2, 'lusiana27@yahoo.com', 'e85ca3eb7b80f152a776e22dbb6d8bee25f90020', 'Admin', '0000-00-00 00:00:00', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
