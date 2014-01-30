@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2014 at 06:29 AM
+-- Generation Time: Jan 30, 2014 at 08:42 AM
 -- Server version: 5.5.34
 -- PHP Version: 5.4.22
 
@@ -79,16 +79,25 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `cust_id` int(11) NOT NULL AUTO_INCREMENT,
   `cust_type` enum('','D','M') NOT NULL,
   `cust_fullname` varchar(255) NOT NULL,
+  `cust_npwp` varchar(255) NOT NULL,
   `cust_address` text NOT NULL,
   `cust_city` varchar(255) NOT NULL,
   `cust_state` varchar(255) NOT NULL,
+  `region_id` int(11) NOT NULL,
   `cust_phonenumber` varchar(50) NOT NULL,
   `cust_faxnumber` varchar(50) NOT NULL,
   `cust_mobilenumber` varchar(50) NOT NULL,
   `cust_emailaddress` varchar(100) NOT NULL,
   `cust_regdate` date NOT NULL,
   PRIMARY KEY (`cust_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`cust_id`, `cust_type`, `cust_fullname`, `cust_npwp`, `cust_address`, `cust_city`, `cust_state`, `region_id`, `cust_phonenumber`, `cust_faxnumber`, `cust_mobilenumber`, `cust_emailaddress`, `cust_regdate`) VALUES
+(1, 'D', 'aaa', 'aaa', 'aaa', 'aaa', 'aaa', 1, 'aaaa', '', '', '', '2014-01-30');
 
 -- --------------------------------------------------------
 
@@ -129,6 +138,27 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `product_kemasan`, `product_stock`, `unit_id`, `product_price`, `product_disc`) VALUES
 (1, 1, 'Bingo', 'Yes', 100, 1, 10000, 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `region`
+--
+
+DROP TABLE IF EXISTS `region`;
+CREATE TABLE IF NOT EXISTS `region` (
+  `region_id` int(11) NOT NULL AUTO_INCREMENT,
+  `region_name` varchar(255) NOT NULL,
+  `region_desc` text NOT NULL,
+  PRIMARY KEY (`region_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `region`
+--
+
+INSERT INTO `region` (`region_id`, `region_name`, `region_desc`) VALUES
+(1, 'Jakarta', '');
 
 -- --------------------------------------------------------
 
