@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2014 at 04:42 AM
+-- Generation Time: Jan 30, 2014 at 06:29 AM
 -- Server version: 5.5.34
 -- PHP Version: 5.4.22
 
@@ -32,7 +32,14 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_name` varchar(255) NOT NULL,
   `category_desc` text NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `category_name`, `category_desc`) VALUES
+(1, 'Kecap Manis', '');
 
 -- --------------------------------------------------------
 
@@ -112,8 +119,16 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_stock` int(11) NOT NULL DEFAULT '0',
   `unit_id` int(11) NOT NULL,
   `product_price` bigint(20) NOT NULL DEFAULT '0',
+  `product_disc` float(5,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `product_kemasan`, `product_stock`, `unit_id`, `product_price`, `product_disc`) VALUES
+(1, 1, 'Bingo', 'Yes', 100, 1, 10000, 0.00);
 
 -- --------------------------------------------------------
 
@@ -127,7 +142,14 @@ CREATE TABLE IF NOT EXISTS `unit` (
   `unit_name` varchar(255) NOT NULL,
   `unit_desc` text,
   PRIMARY KEY (`unit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `unit`
+--
+
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_desc`) VALUES
+(1, 'botol', NULL);
 
 -- --------------------------------------------------------
 
