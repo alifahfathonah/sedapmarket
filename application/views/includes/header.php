@@ -110,14 +110,21 @@
 					<ul class="nav navbar-nav side-nav">
 						<li <?php echo ($this->uri->segment(1)=="home")?'class="active"':'' ?>><a href="<?php echo site_url('home') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 						<li class="dropdown <?php echo ($this->uri->segment(1)=="customer")?"active":"" ?>" >
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Master Data <b class="caret"></b></a>
-						  <ul class="dropdown-menu">
-							<li><a href="<?php echo site_url('customer/list') ?>">Customer</a></li>
-							<li><a href="<?php echo site_url('category/list') ?>">Category</a></li>
-							<li><a href="<?php echo site_url('products/list') ?>">Products</a></li>
-							<li><a href="<?php echo site_url('unit/list') ?>">Unit</a></li>
-							<li><a href="<?php echo site_url('region/list') ?>">Region</a></li>
-						  </ul>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Customer Data <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo site_url('customer/add') ?>">Add Customer</a></li>
+								<li><a href="<?php echo site_url('customer/list') ?>">Customer List</a></li>
+								<li><a href="<?php echo site_url('') ?>">Set Price</a></li>
+								<li><a href="<?php echo site_url('region/list') ?>">Region</a></li>
+							</ul>
+						</li>
+						<li class="dropdown <?php echo ($this->uri->segment(1)=="products")?"active":"" ?>" >
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Master Data <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo site_url('category/list') ?>">Category</a></li>
+								<li><a href="<?php echo site_url('products/list') ?>">Products</a></li>
+								<li><a href="<?php echo site_url('unit/list') ?>">Unit</a></li>
+							</ul>
 						</li>
 						<!--<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>
 						<li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>

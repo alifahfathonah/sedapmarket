@@ -29,6 +29,7 @@
 										<th>State <i class="fa fa-sort"></i></th>
 										<th>Phone Number <i class="fa fa-sort"></i></th>
 										<th>Region <i class="fa fa-sort"></i></th>
+										<th>#</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -54,13 +55,14 @@ if($custlist) {
 									<td><?php echo $cust["cust_state"] ?></td>
 									<td><?php echo $cust["cust_phonenumber"] ?></td>
 									<td><?php echo $cust["region_name"] ?></td>
+									<td><a href ="#" title="Set price and discount here"><img src="<?php echo site_url('images/set_price.png') ?>"></a></td>
 								</tr>
 <?php 
 	}
 } 
 else { ?>
 								<tr>
-									<td colspan="8" class="empty">Not Found</td>
+									<td colspan="9" class="empty">Not Found</td>
 								</tr>
 <?php 
 	}	
