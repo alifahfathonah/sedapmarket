@@ -37,6 +37,13 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+
+//Region
+$route["region/edit/(:num)"] 		= "master_controller/edit_region/$1";
+$route["region/add"] 				= "master_controller/add_region";
+$route["region/list/(:num)"] 		= "master_controller/get_regions_list/$1";
+$route["region/list"] 				= "master_controller/get_regions_list";
+
 //Unit
 $route["unit/edit/(:num)"] 			= "master_controller/edit_unit/$1";
 $route["unit/add"] 					= "master_controller/add_unit";

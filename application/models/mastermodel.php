@@ -6,6 +6,107 @@ class MasterModel extends CI_Model {
     var $error_message = "";
     var $message = "";
 	
+	/*** Unit ***/
+	
+	/***
+	 * Add Region
+	 */
+	public function add_region($data) {
+		$d = array (
+			"region_name" 		=> $data["region_name"],
+			"region_desc" 		=> $data["region_desc"],
+		);
+		$this->db->insert("region",$d);
+		$this->is_error = 0;
+        $this->message = "Region has been added successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Edit Unit
+	 */
+	public function edit_region($data) {
+		$this->db->where('region_id',$data['region_id']);
+		$d = array (
+			"region_name" 			=> $data["region_name"],
+			"region_desc" 			=> $data["region_desc"],
+		);
+		$this->db->update("region",$d);
+		$this->is_error = 0;
+        $this->message = "Region has been updated successfully";
+        $this->error_message = "";
+	}
+	
+	
+	/***
+	 * Get Region List
+	 */
+	public function get_region_list($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("region_name LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$r = $this->db->get('region'); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Region Count
+	 */
+	public function get_region_count($itm="") {
+		if($itm) {
+			$where =" WHERE region_name LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('region '.$where);
+	}
+	
+	/***
+	 * Delete Region
+	 */
+	public function delete_region($data) {
+		$this->db->where('region_id',$data);
+		$this->db->delete("region",$d);
+		$this->is_error = 0;
+        $this->message = "Region has been deleted successfully";
+        $this->error_message = "";
+	}
+
+	/***
+	 * Get Region detail
+	 */
+	public function get_region_detail($data) {
+		$this->db->where("region_id",$data);
+		$r = $this->db->get('region'); 
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Region Into form
+	 */
+	public function get_region() {
+		$r = $this->db->get('region'); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/*** Products ***/
 	
 	/***
@@ -322,7 +423,10 @@ class MasterModel extends CI_Model {
 		$limit=(!$limit)?10:$limit;
 		
 		$this->db->limit($limit,$p);
-		$r = $this->db->get('customers'); 
+		$this->db->select("a.*, b.region_name");
+		$this->db->from('customers a'); 
+		$this->db->join('region b','a.region_id=b.region_id','left'); 
+		$r = $this->db->get(); 
 		if($r) {
 			return $r->result_array();
 		}
@@ -336,7 +440,10 @@ class MasterModel extends CI_Model {
 	 */
 	public function get_customer_detail($id) {
 		$this->db->where("cust_id",$id);
-		$r = $this->db->get('customers'); 
+		$this->db->select("a.*, b.region_name");
+		$this->db->from('customers a'); 
+		$this->db->join('region b','a.region_id=b.region_id','left'); 
+		$r = $this->db->get(); 
 		if($r) {
 			return $r->row_array();
 		}
@@ -366,11 +473,13 @@ class MasterModel extends CI_Model {
 		
 		$d = array (
 			"cust_type" 			=> $data["cust_type"],
+			"cust_npwp" 			=> $data["cust_npwp"],
 			"cust_regdate" 			=> $data["cust_regdate"],
 			"cust_fullname" 		=> $data["cust_fullname"],
 			"cust_address" 			=> $data["cust_address"],
 			"cust_city" 			=> $data["cust_city"],
 			"cust_state" 			=> $data["cust_state"],
+			"region_id" 			=> $data["region_id"],
 			"cust_phonenumber" 		=> $data["cust_phonenumber"],
 			"cust_faxnumber" 		=> $data["cust_faxnumber"],
 			"cust_mobilenumber" 	=> $data["cust_mobilenumber"],
@@ -389,10 +498,12 @@ class MasterModel extends CI_Model {
 		$this->db->where('cust_id',$data["cust_id"]);
 		$d = array (
 			"cust_type" 			=> $data["cust_type"],
+			"cust_npwp" 			=> $data["cust_npwp"],
 			"cust_fullname" 		=> $data["cust_fullname"],
 			"cust_address" 			=> $data["cust_address"],
 			"cust_city" 			=> $data["cust_city"],
 			"cust_state" 			=> $data["cust_state"],
+			"region_id" 			=> $data["region_id"],
 			"cust_phonenumber" 		=> $data["cust_phonenumber"],
 			"cust_faxnumber" 		=> $data["cust_faxnumber"],
 			"cust_mobilenumber" 	=> $data["cust_mobilenumber"],

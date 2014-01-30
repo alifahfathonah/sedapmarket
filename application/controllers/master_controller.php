@@ -8,6 +8,131 @@ class Master_Controller extends App_Controller {
 		//$this->load->view('users/login');
 	}
 	
+	/*** Region ***/
+	/***
+	 * Add Region
+	 */
+	public function add_region() {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("addbtn")) {
+			$this->form_validation->set_rules('region_name', 'Region Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('region_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+                $this->MasterModel->add_region($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('region/add');
+			}
+		}
+			
+		//echo debug($this->viewdata["catlist"]);
+		$this->load->view('masters/add_region',$this->viewdata);
+	}
+	
+	/***
+	 * Edit Region
+	 */
+	public function edit_region($id) {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("editbtn")) {
+			$this->form_validation->set_rules('region_name', 'Region Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('region_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+				$data["region_id"] = $id;
+                $this->MasterModel->edit_region($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('region/edit/'.$id);
+			}
+		}
+			
+		$this->viewdata["region_id"] = $id;
+		$this->viewdata["region"] = $this->MasterModel->get_region_detail($id);
+		//echo debug($this->viewdata["catlist"]);
+		$this->load->view('masters/edit_region',$this->viewdata);
+	}
+	
+	
+	/***
+	 * Get Region List
+	 */
+	public function get_regions_list($p=0) {
+		$this->load->library("pagination");
+		$this->load->model("MasterModel");
+		
+		if($this->input->post('region_delbtn')) {
+			$data = $this->input->post();
+			foreach($data["chkbox"] as $d) {
+				//echo debug($d);
+				$this->MasterModel->delete_unit($d);
+			}
+			if($this->MasterModel->is_error==1) {
+				//echo $this->MasterModel->error_message;
+				$this->session->set_flashdata("error",$this->MasterModel->error_message);
+				//$this->session->unset_flashdata("message");
+			}
+			else {
+				//$this->session->unset_flashdata("error");
+				$this->session->set_flashdata("message",$this->MasterModel->message);
+			}
+			redirect('region/list');
+			
+		}
+		
+		$limit = $this->siteconfig[2]["option_value"]; 
+		//echo debug($this->siteconfig);
+		$config['base_url'] 	= site_url('region/list');
+		$config['total_rows'] 	= $this->MasterModel->get_region_count($itm);
+		$config['per_page'] 	= $limit;
+		$config['uri_segment'] 	= 3;
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		//$config['anchor_class'] = "";	
+		$this->pagination->initialize($config);
+		
+		$this->viewdata["page_link"] = $this->pagination->create_links();
+		$this->viewdata["regionlist"] = $this->MasterModel->get_region_list($itm,$p,$limit);
+		//echo debug($this->viewdata["regionlist"]);
+		$this->load->view('masters/get_region_list',$this->viewdata);
+	}
+	
+	
 	/*** Unit ***/
 	/***
 	 * Add Unit
@@ -105,7 +230,7 @@ class Master_Controller extends App_Controller {
 			
 		}
 		
-		$limit = $this->siteconfig[3]["value"]; 
+		$limit = $this->siteconfig[2]["option_value"]; 
 		
 		$config['base_url'] 	= site_url('unit/list');
 		$config['total_rows'] 	= $this->MasterModel->get_unit_count($itm);
@@ -241,7 +366,7 @@ class Master_Controller extends App_Controller {
 			
 		}
 		
-		$limit = $this->siteconfig[3]["value"]; 
+		$limit = $this->siteconfig[2]["option_value"]; 
 		
 		$config['base_url'] 	= site_url('products/list');
 		$config['total_rows'] 	= $this->MasterModel->get_product_count($itm);
@@ -368,7 +493,7 @@ class Master_Controller extends App_Controller {
 			
 		}
 		
-		$limit = $this->siteconfig[3]["value"]; 
+		$limit = $this->siteconfig[2]["option_value"]; 
 		
 		$config['base_url'] 	= site_url('category/list');
 		$config['total_rows'] 	= $this->MasterModel->get_category_count($itm);
@@ -402,15 +527,17 @@ class Master_Controller extends App_Controller {
 	public function add_customer() {
 		$this->load->library("form_validation");
 		//echo debug($this->siteconfig[1]["option_value"]);
-		
+		$this->load->model("MasterModel");
 		if($this->input->post("addbtn")) {
-			$this->load->model("MasterModel");
+			
 			$this->form_validation->set_rules('cust_regdate', 'Register Date', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_type', 'Customer Type', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('cust_fullname', 'Customer Full Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_npwp', 'NPWP Number', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_fullname', 'Contact Person', 'required|trim|xss_clean');
             $this->form_validation->set_rules('cust_address', 'Customer Address', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_city', 'Customer City', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_state', 'Customer State', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('region_id', 'Region', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_phonenumber', 'Customer Phone number', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_faxnumber', 'Customer Fax number', 'trim|xss_clean');
 			$this->form_validation->set_rules('cust_mobilenumber', 'Customer Mobile number', 'trim|xss_clean');
@@ -432,6 +559,7 @@ class Master_Controller extends App_Controller {
                 }
 				redirect('customer/add');
 			}
+	
 		}
 		
 		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
@@ -440,6 +568,7 @@ class Master_Controller extends App_Controller {
 			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
 			
 		$this->viewdata["formatdate"] = $tmp;
+		$this->viewdata["regionlist"] = $this->MasterModel->get_region();
 		$this->load->view('masters/add_customer',$this->viewdata);
 	}
 	
@@ -453,10 +582,12 @@ class Master_Controller extends App_Controller {
 		if($this->input->post("editbtn")) {
 			$this->form_validation->set_rules('cust_regdate', 'Register Date', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_type', 'Customer Type', 'required|trim|xss_clean');	
-			$this->form_validation->set_rules('cust_fullname', 'Customer Full Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('cust_npwp', 'NPWP Number', 'required|trim|xss_clean');	
+			$this->form_validation->set_rules('cust_fullname', 'Contact Person', 'required|trim|xss_clean');
             $this->form_validation->set_rules('cust_address', 'Customer Address', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_city', 'Customer City', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_state', 'Customer State', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('region_id', 'Region', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_phonenumber', 'Customer Phone number', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('cust_faxnumber', 'Customer Fax number', 'trim|xss_clean');
 			$this->form_validation->set_rules('cust_mobilenumber', 'Customer Mobile number', 'trim|xss_clean');
@@ -488,6 +619,7 @@ class Master_Controller extends App_Controller {
 			
 		$this->viewdata["formatdate"] = $tmp;
 		$this->viewdata["cust_id"] = $id;
+		$this->viewdata["regionlist"] = $this->MasterModel->get_region();
 		$this->viewdata["cust"] = $this->MasterModel->get_customer_detail($id);
 		$this->load->view('masters/edit_customer',$this->viewdata);
 	}
@@ -518,7 +650,7 @@ class Master_Controller extends App_Controller {
 			
 		}
 		
-		$limit = $this->siteconfig[3]["value"]; 
+		$limit = $this->siteconfig[2]["option_value"]; 
 		
 		$config['base_url'] = site_url('customer/list');
 		$config['total_rows'] = $this->MasterModel->get_customers_count($itm);

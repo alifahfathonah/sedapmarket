@@ -22,12 +22,13 @@
 									<tr>
 										<th><input type="checkbox" name="chkall" id="chkall" value="1"> <i class="fa fa-sort"></i></th>
 										<th>Type <i class="fa fa-sort"></i></th>
+										<th>NPWP Number <i class="fa fa-sort"></i></th>
 										<th>Customer Name <i class="fa fa-sort"></i></th>
 										<th>Address <i class="fa fa-sort"></i></th>
 										<th>City <i class="fa fa-sort"></i></th>
 										<th>State <i class="fa fa-sort"></i></th>
 										<th>Phone Number <i class="fa fa-sort"></i></th>
-										<th>E-mail Address <i class="fa fa-sort"></i></th>
+										<th>Region <i class="fa fa-sort"></i></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -46,19 +47,20 @@ if($custlist) {
 								<tr>
 									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cust["cust_id"] ?>"></td>
 									<td><?php echo $t ?></td>
+									<td><?php echo $cust["cust_npwp"] ?></td>
 									<td><a href="<?php echo site_url('customer/edit/'.$cust["cust_id"]) ?>"><?php echo $cust["cust_fullname"] ?></a></td>
 									<td><?php echo $cust["cust_address"] ?></td>
 									<td><?php echo $cust["cust_city"] ?></td>
 									<td><?php echo $cust["cust_state"] ?></td>
 									<td><?php echo $cust["cust_phonenumber"] ?></td>
-									<td><?php echo $cust["cust_emailaddress"] ?></td>
+									<td><?php echo $cust["region_name"] ?></td>
 								</tr>
 <?php 
 	}
 } 
 else { ?>
 								<tr>
-									<td colspan="7" class="empty">Not Found</td>
+									<td colspan="8" class="empty">Not Found</td>
 								</tr>
 <?php 
 	}	

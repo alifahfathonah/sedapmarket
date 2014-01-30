@@ -34,12 +34,17 @@
 									<input type="radio" name="cust_type" value="M" <?php echo ($cust['cust_type']=='M')?"checked='checked'":"" ?> > Modern Market 
 								</label>
 							</div>	
-							<p class="help-block">This date is Current Date. You can change register date.</p>
+							<p class="help-block"><p class="help-block">Please choose Customer Type.</p></p>
 						</div>
 						<div class="form-group">
-							<label>Full Name</label>
+							<label>Contact Person</label>
 							<input class="form-control" name="cust_fullname" value="<?php echo $cust["cust_fullname"] ?>">
 							<?php echo (form_error("cust_fullname",'<p class="help-block">','</p>'))?form_error("cust_fullname",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer full name.</p>'; ?>		
+						</div>
+						<div class="form-group">
+							<label>NPWP Number</label>
+							<input class="form-control" name="cust_npwp" value="<?php echo $cust["cust_npwp"] ?>">
+							<?php echo (form_error("cust_npwp",'<p class="help-block">','</p>'))?form_error("cust_npwp",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter NPWP Number.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>Address</label>
@@ -55,6 +60,19 @@
 							<label>State</label>
 							<input class="form-control" name="cust_state" value="<?php echo $cust["cust_state"] ?>">
 							<?php echo (form_error("cust_state",'<p class="help-block">','</p>'))?form_error("cust_state",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter your customer State.</p>'; ?>		
+						</div>
+						<div class="form-group">
+							<label>Region</label>
+							<select class="form-control" name="region_id">
+								<option value="">Please Choose</option>
+<?php if($regionlist) { 
+		foreach($regionlist as $region) { ?>
+								<option value="<?php echo $region["region_id"] ?>" <?php echo ($cust["region_id"]==$region["region_id"])?"selected='selected'":"" ?>><?php echo $region["region_name"] ?></option>
+<?php 	}
+	  }		
+?>								
+							</select>
+							<?php echo (form_error("region_id",'<p class="help-block">','</p>'))?form_error("region_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Region.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>Phone Number</label>
