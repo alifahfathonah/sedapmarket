@@ -24,7 +24,7 @@
 										<th>Category Name <i class="fa fa-sort"></i></th>
 										<th>Product Name <i class="fa fa-sort"></i></th>
 										<th>Kemasan <i class="fa fa-sort"></i></th>
-										<th>Stock <i class="fa fa-sort"></i></th>
+										<th colspan="2">Stock <i class="fa fa-sort"></i></th>
 										<th>Harga <i class="fa fa-sort"></i></th>
 									</tr>
 								</thead>
@@ -40,6 +40,7 @@ if($prodlist) {
 									<td><a href="<?php echo site_url('products/edit/'.$prod["product_id"]) ?>"><?php echo $prod["product_name"] ?></a></td>
 									<td><?php echo $prod["product_kemasan"] ?></td>
 									<td style="text-align:right"><?php echo number_format($prod["product_stock"]) ?></td>
+									<td style="text-align:left"><?php echo $prod["unit_name"] ?></td>
 									<td style="text-align:right"><?php echo number_format($prod["product_price"]) ?></td>
 								</tr>
 <?php 

@@ -67,7 +67,7 @@ $route["profile/edit"] 					= "user_controller/editprofile";
 $route["home"] 							= "user_controller/home";
 $route["login"] 						= "user_controller/login";
 $route["logout"] 						= "user_controller/logout";
-$route['default_controller'] 			= "welcome";
+$route['default_controller'] 			= "user_controller/home";
 $route['404_override'] 					= '';
 
 

@@ -114,8 +114,8 @@
 						  <ul class="dropdown-menu">
 							<li><a href="<?php echo site_url('customer/list') ?>">Customer</a></li>
 							<li><a href="<?php echo site_url('category/list') ?>">Category</a></li>
-							<li><a href="<?php echo site_url('unit/list') ?>">Unit</a></li>
 							<li><a href="<?php echo site_url('products/list') ?>">Products</a></li>
+							<li><a href="<?php echo site_url('unit/list') ?>">Unit</a></li>
 						  </ul>
 						</li>
 						<!--<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>

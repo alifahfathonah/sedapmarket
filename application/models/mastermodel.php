@@ -17,6 +17,7 @@ class MasterModel extends CI_Model {
 			"product_name" 		=> $data["product_name"],
 			"product_kemasan" 	=> $data["product_kemasan"],
 			"product_stock" 	=> $data["product_stock"],
+			"unit_id" 			=> $data["unit_id"],
 			"product_price" 	=> $data["product_price"],
 		);
 		$this->db->insert("products",$d);
@@ -34,6 +35,7 @@ class MasterModel extends CI_Model {
 			"product_name" 		=> $data["product_name"],
 			"product_kemasan" 	=> $data["product_kemasan"],
 			"product_stock" 	=> $data["product_stock"],
+			"unit_id" 			=> $data["unit_id"],
 			"product_price" 	=> $data["product_price"],
 		);
 		$this->db->update("products",$d);
@@ -53,9 +55,10 @@ class MasterModel extends CI_Model {
 		$limit=(!$limit)?10:$limit;
 		
 		$this->db->limit($limit,$p);
-		$this->db->select('a.*,b.category_name'); 
+		$this->db->select('a.*,b.category_name, c.unit_name'); 
 		$this->db->from('products a'); 
 		$this->db->join('category b','b.category_id = a.category_id','left'); 
+		$this->db->join('unit c','c.unit_id = a.unit_id','left'); 
 		$r = $this->db->get(); 
 		if($r) {
 			return $r->result_array();
@@ -70,9 +73,10 @@ class MasterModel extends CI_Model {
 	 */
 	public function get_product_detail($data) {
 		$this->db->where('a.product_id',$data);
-		$this->db->select('a.*, b.category_name');
+		$this->db->select('a.*, b.category_name, c.unit_id');
 		$this->db->from('products a');
 		$this->db->join('category b','b.category_id=a.category_id','left');
+		$this->db->join('unit c','c.unit_id = a.unit_id','left'); 
 		$r = $this->db->get(); 
 		if($r) {
 			return $r->row_array();
@@ -177,13 +181,26 @@ class MasterModel extends CI_Model {
 	}
 
 	/***
-	 * Get Category detail
+	 * Get Unit detail
 	 */
 	public function get_unit_detail($data) {
 		$this->db->where("unit_id",$data);
 		$r = $this->db->get('unit'); 
 		if($r) {
 			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Unit Into form
+	 */
+	public function get_unit() {
+		$r = $this->db->get('unit'); 
+		if($r) {
+			return $r->result_array();
 		}
 		else {
 			return false;

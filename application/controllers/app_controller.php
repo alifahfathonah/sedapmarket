@@ -6,13 +6,13 @@ class App_Controller extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-        // $sess = $this->session->userdata("security");
-        // if(!$sess["userkey"] && substr($this->uri->segment(1),0,3)!="log") {
-           // redirect('login'); 
-        // }
-        // $this->viewdata["uname"] = $sess["uname"];
-        // $this->viewdata["role"] = $role = $sess["group_id"];
-        // $this->viewdata["tema"] = "user";
+        $sess = $this->session->userdata("security");
+        if(!$sess["userkey"] && substr($this->uri->segment(1),0,3)!="log") {
+			redirect('login'); 
+        }	
+        $this->viewdata["uname"] = $sess["uname"];
+        $this->viewdata["role"] = $role = $sess["group_id"];
+        $this->viewdata["tema"] = "user";
         
         $this->siteconfig = $this->OptionModel->get_config_all();
 		//echo debug($this->siteconfig);

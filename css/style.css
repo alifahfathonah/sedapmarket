@@ -45,3 +45,15 @@
 	vertical-align:top;
 	margin:0;
 }
+
+.smallInput {
+	width:100px;
+}
+
+.mediumInput {
+	width:200px;
+}
+
+.InputLine {
+	display:inline-block;
+}

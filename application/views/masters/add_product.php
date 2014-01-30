@@ -15,7 +15,17 @@
 					<div class="alert alert-dismissable alert-success">
 						  <?php echo $err ?>
 					</div>
-<?php   } ?>					
+<?php   } 
+		if(form_error("product_stock",'<p class="help-block">','</p>')) {
+			$ket = form_error("product_stock",'<p class="help-block errors">','</p>');
+		}
+		else if(form_error("unit_id",'<p class="help-block">','</p>')) {
+			$ket = form_error("unit_id",'<p class="help-block errors">','</p>');
+		}
+		else {
+			$ket = '<p class="help-block">Enter Product Stock.</p>';
+		}	
+?>					
 					<form role="form" method="post" action="<?php echo site_url('products/add') ?>">
 						<div class="form-group">
 							<label>Category Name</label>
@@ -50,9 +60,18 @@
 							<?php echo (form_error("product_kemasan",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):'<p class="help-block">Do your product kemasan?</p>'; ?>		
 						</div>
 						<div class="form-group">
-							<label>Stock</label>
-							<input class="form-control" name="product_stock" value="<?php echo set_value('product_stock') ?>">
-							<?php echo (form_error("product_stock",'<p class="help-block">','</p>'))?form_error("product_stock",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Stock.</p>'; ?>		
+							<label>Stock</label><br>
+							<input class="form-control smallInput InputLine" name="product_stock" value="<?php echo set_value('product_stock') ?>">
+							<select class="form-control mediumInput InputLine" name="unit_id" style="display:inline">
+								<option value="">Please Choose Unit</option>
+<?php if($unitlist) { 
+		foreach($unitlist as $unit) { ?>
+								<option value="<?php echo $unit["unit_id"] ?>" <?php echo (set_value("unit_id")==$unit["unit_id"])?"selected='selected'":"" ?>><?php echo $unit["unit_name"] ?></option>
+<?php 	}
+	  }		
+?>								
+							</select>
+							<?php echo $ket; ?>		
 						</div>
 						<div class="form-group">
 							<label>Price</label>

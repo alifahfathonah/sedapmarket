@@ -144,6 +144,7 @@ class Master_Controller extends App_Controller {
 			$this->form_validation->set_rules('product_name', 'Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_kemasan', 'Kemasan', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_stock', 'Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('unit_id', 'Unit', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_price', 'Price', 'required|trim|integer|xss_clean');
 			
 			if ($this->form_validation->run() == TRUE)
@@ -166,6 +167,7 @@ class Master_Controller extends App_Controller {
 			
 		$this->viewdata["formatdate"] = $tmp;
 		$this->viewdata["catlist"] = $this->MasterModel->get_category();
+		$this->viewdata["unitlist"] = $this->MasterModel->get_unit();
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/add_product',$this->viewdata);
 	}
@@ -182,6 +184,7 @@ class Master_Controller extends App_Controller {
 			$this->form_validation->set_rules('product_name', 'Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_kemasan', 'Kemasan', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_stock', 'Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('unit_id', 'Unit', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_price', 'Price', 'required|trim|integer|xss_clean');
 			
 			if ($this->form_validation->run() == TRUE)
@@ -206,6 +209,7 @@ class Master_Controller extends App_Controller {
 		$this->viewdata["product_id"] = $id;
 		$this->viewdata["prod"] = $this->MasterModel->get_product_detail($id);
 		$this->viewdata["catlist"] = $this->MasterModel->get_category();
+		$this->viewdata["unitlist"] = $this->MasterModel->get_unit();
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/edit_product',$this->viewdata);
 	}
