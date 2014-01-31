@@ -8,6 +8,140 @@ class Master_Controller extends App_Controller {
 		//$this->load->view('users/login');
 	}
 	
+	/*** Set Price ***/
+	/***
+	 * Add Set Price
+	 */
+	public function add_setprice() {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("addbtn")) {
+			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('product_name', 'Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('price', 'Price', 'required|integer|xss_clean');
+			$this->form_validation->set_rules('disc1', 'Discount 1', 'integer|xss_clean');
+			$this->form_validation->set_rules('disc2', 'Discount 2', 'integer|xss_clean');
+			$this->form_validation->set_rules('disc3', 'Discount 3', 'integer|xss_clean');
+			$this->form_validation->set_rules('region_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+                $this->MasterModel->add_set_price($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('customer/price/add');
+			}
+		}
+			
+		//echo debug($this->viewdata["catlist"]);
+		$this->load->view('masters/add_cust_price',$this->viewdata);
+	}
+	
+	/***
+	 * Edit Set Price
+	 */
+	public function edit_setprice($id) {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("editbtn")) {
+			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('product_name', 'Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('price', 'Price', 'required|integer|xss_clean');
+			$this->form_validation->set_rules('disc1', 'Discount 1', 'integer|xss_clean');
+			$this->form_validation->set_rules('disc2', 'Discount 2', 'integer|xss_clean');
+			$this->form_validation->set_rules('disc3', 'Discount 3', 'integer|xss_clean');
+			$this->form_validation->set_rules('region_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+				$data["region_id"] = $id;
+                $this->MasterModel->edit_setprice($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('customer/price/edit/'.$id);
+			}
+		}
+			
+		$this->viewdata["price_id"] = $id;
+		$this->viewdata["price"] = $this->MasterModel->get_setprice_detail($id);
+		//echo debug($this->viewdata["catlist"]);
+		$this->load->view('masters/edit_cust_price',$this->viewdata);
+	}
+	
+	
+	/***
+	 * Get Set Price List
+	 */
+	public function get_setprice_list($p=0) {
+		$this->load->library("pagination");
+		$this->load->model("MasterModel");
+		
+		if($this->input->post('price_delbtn')) {
+			$data = $this->input->post();
+			foreach($data["chkbox"] as $d) {
+				//echo debug($d);
+				$this->MasterModel->delete_setprice($d);
+			}
+			if($this->MasterModel->is_error==1) {
+				//echo $this->MasterModel->error_message;
+				$this->session->set_flashdata("error",$this->MasterModel->error_message);
+				//$this->session->unset_flashdata("message");
+			}
+			else {
+				//$this->session->unset_flashdata("error");
+				$this->session->set_flashdata("message",$this->MasterModel->message);
+			}
+			redirect('customer/price/list');
+			
+		}
+		
+		$limit = $this->siteconfig[2]["option_value"]; 
+		//echo debug($this->siteconfig);
+		$config['base_url'] 	= site_url('region/list');
+		$config['total_rows'] 	= $this->MasterModel->get_setprice_count($itm);
+		$config['per_page'] 	= $limit;
+		$config['uri_segment'] 	= 3;
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		//$config['anchor_class'] = "";	
+		$this->pagination->initialize($config);
+		
+		$this->viewdata["page_link"] = $this->pagination->create_links();
+		$this->viewdata["pricelist"] = $this->MasterModel->get_setprice_list($itm,$p,$limit);
+		//echo debug($this->viewdata["regionlist"]);
+		$this->load->view('masters/get_region_list',$this->viewdata);
+	}
+	
 	/*** Region ***/
 	/***
 	 * Add Region

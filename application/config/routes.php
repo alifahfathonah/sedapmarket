@@ -38,44 +38,50 @@
 |
 */
 
+//Set Price
+$route["customer/price/edit/(:num)"] 		= "master_controller/edit_setprice/$1";
+$route["customer/price/add"] 				= "master_controller/add_setprice";
+$route["customer/price/list/(:num)"] 		= "master_controller/get_setprice_list/$1";
+$route["customer/price/list"] 				= "master_controller/get_setprice_list";
+
 //Region
-$route["region/edit/(:num)"] 		= "master_controller/edit_region/$1";
-$route["region/add"] 				= "master_controller/add_region";
-$route["region/list/(:num)"] 		= "master_controller/get_regions_list/$1";
-$route["region/list"] 				= "master_controller/get_regions_list";
+$route["region/edit/(:num)"] 				= "master_controller/edit_region/$1";
+$route["region/add"] 						= "master_controller/add_region";
+$route["region/list/(:num)"] 				= "master_controller/get_regions_list/$1";
+$route["region/list"] 						= "master_controller/get_regions_list";
 
 //Unit
-$route["unit/edit/(:num)"] 			= "master_controller/edit_unit/$1";
-$route["unit/add"] 					= "master_controller/add_unit";
-$route["unit/list/(:num)"] 			= "master_controller/get_units_list/$1";
-$route["unit/list"] 				= "master_controller/get_units_list";
+$route["unit/edit/(:num)"] 					= "master_controller/edit_unit/$1";
+$route["unit/add"] 							= "master_controller/add_unit";
+$route["unit/list/(:num)"] 					= "master_controller/get_units_list/$1";
+$route["unit/list"] 						= "master_controller/get_units_list";
 
 //Products
-$route["products/edit/(:num)"] 			= "master_controller/edit_product/$1";
-$route["products/add"] 					= "master_controller/add_product";
-$route["products/list/(:num)"] 			= "master_controller/get_products_list/$1";
-$route["products/list"] 				= "master_controller/get_products_list";
+$route["products/edit/(:num)"] 				= "master_controller/edit_product/$1";
+$route["products/add"] 						= "master_controller/add_product";
+$route["products/list/(:num)"] 				= "master_controller/get_products_list/$1";
+$route["products/list"] 					= "master_controller/get_products_list";
 
 //Category
-$route["category/edit/(:num)"] 			= "master_controller/edit_category/$1";
-$route["category/add"] 					= "master_controller/add_category";
-$route["category/list/(:num)"] 			= "master_controller/get_category_list/$1";
-$route["category/list"] 				= "master_controller/get_category_list";
+$route["category/edit/(:num)"] 				= "master_controller/edit_category/$1";
+$route["category/add"] 						= "master_controller/add_category";
+$route["category/list/(:num)"] 				= "master_controller/get_category_list/$1";
+$route["category/list"] 					= "master_controller/get_category_list";
 
 //Customer
-$route["customer/edit/(:num)"] 			= "master_controller/edit_customer/$1";
-$route["customer/add"] 					= "master_controller/add_customer";
-$route["customer/list/(:num)"] 			= "master_controller/get_customers_list/$1";
-$route["customer/list"] 				= "master_controller/get_customers_list";
+$route["customer/edit/(:num)"] 				= "master_controller/edit_customer/$1";
+$route["customer/add"] 						= "master_controller/add_customer";
+$route["customer/list/(:num)"] 				= "master_controller/get_customers_list/$1";
+$route["customer/list"] 					= "master_controller/get_customers_list";
 
 //General
-$route["setup"] 						= "option_controller/edit_setup";
-$route["profile/edit"] 					= "user_controller/editprofile";
-$route["home"] 							= "user_controller/home";
-$route["login"] 						= "user_controller/login";
-$route["logout"] 						= "user_controller/logout";
-$route['default_controller'] 			= "user_controller/home";
-$route['404_override'] 					= '';
+$route["setup"] 							= "option_controller/edit_setup";
+$route["profile/edit"] 						= "user_controller/editprofile";
+$route["home"] 								= "user_controller/home";
+$route["login"] 							= "user_controller/login";
+$route["logout"] 							= "user_controller/logout";
+$route['default_controller'] 				= "user_controller/home";
+$route['404_override'] 						= '';
 
 
 /* End of file routes.php */
