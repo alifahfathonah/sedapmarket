@@ -12,10 +12,10 @@ class Master_Controller extends App_Controller {
 	/***
 	 * Add Set Price
 	 */
-	public function add_setprice() {
+	public function add_setprice($id) {
 		$this->load->library("form_validation");
 		//echo debug($this->siteconfig[1]["option_value"]);
-		$this->load->model("MasterModel");
+		$this->load->model("OrderModel");
 		if($this->input->post("addbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'required|trim|xss_clean');
@@ -28,21 +28,23 @@ class Master_Controller extends App_Controller {
 			if ($this->form_validation->run() == TRUE)
             {
 				$data = $this->input->post();
-                $this->MasterModel->add_set_price($data);   
-                $this->viewdata["is_error"] = $this->MasterModel->is_error;
-                if($this->MasterModel->is_error==1) {
-                    //echo $this->MasterModel->error_message;
-                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+				$data["cust_id"] = $id; 
+                $this->OrderModel->add_set_price($data);   
+                $this->viewdata["is_error"] = $this->OrderModel->is_error;
+                if($this->OrderModel->is_error==1) {
+                    //echo $this->OrderModel->error_message;
+                    $this->session->set_flashdata("error",$this->OrderModel->error_message);
                     //$this->session->unset_flashdata("message");
                 }
                 else {
                     //$this->session->unset_flashdata("error");
-                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                    $this->session->set_flashdata("message",$this->OrderModel->message);
                 }
 				redirect('customer/price/add');
 			}
 		}
 			
+		$this->viewdata["cust_id"] = $id;
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/add_cust_price',$this->viewdata);
 	}
@@ -50,10 +52,10 @@ class Master_Controller extends App_Controller {
 	/***
 	 * Edit Set Price
 	 */
-	public function edit_setprice($id) {
+	public function edit_setprice($id,$price_id) {
 		$this->load->library("form_validation");
 		//echo debug($this->siteconfig[1]["option_value"]);
-		$this->load->model("MasterModel");
+		$this->load->model("OrderModel");
 		if($this->input->post("editbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'required|trim|xss_clean');
@@ -66,24 +68,25 @@ class Master_Controller extends App_Controller {
 			if ($this->form_validation->run() == TRUE)
             {
 				$data = $this->input->post();
-				$data["region_id"] = $id;
-                $this->MasterModel->edit_setprice($data);   
-                $this->viewdata["is_error"] = $this->MasterModel->is_error;
-                if($this->MasterModel->is_error==1) {
+				$data["price_id"] = $price_id;
+				$data["cust_id"] = $id; 
+                $this->OrderModel->edit_setprice($data);   
+                $this->viewdata["is_error"] = $this->OrderModel->is_error;
+                if($this->OrderModel->is_error==1) {
                     //echo $this->MasterModel->error_message;
-                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    $this->session->set_flashdata("error",$this->OrderModel->error_message);
                     //$this->session->unset_flashdata("message");
                 }
                 else {
                     //$this->session->unset_flashdata("error");
-                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                    $this->session->set_flashdata("message",$this->OrderModel->message);
                 }
 				redirect('customer/price/edit/'.$id);
 			}
 		}
 			
 		$this->viewdata["price_id"] = $id;
-		$this->viewdata["price"] = $this->MasterModel->get_setprice_detail($id);
+		$this->viewdata["price"] = $this->OrderModel->get_setprice_detail($id);
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/edit_cust_price',$this->viewdata);
 	}
@@ -94,22 +97,22 @@ class Master_Controller extends App_Controller {
 	 */
 	public function get_setprice_list($p=0) {
 		$this->load->library("pagination");
-		$this->load->model("MasterModel");
+		$this->load->model("OrderModel");
 		
 		if($this->input->post('price_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
 				//echo debug($d);
-				$this->MasterModel->delete_setprice($d);
+				$this->OrderModel->delete_setprice($d);
 			}
-			if($this->MasterModel->is_error==1) {
+			if($this->OrderModel->is_error==1) {
 				//echo $this->MasterModel->error_message;
-				$this->session->set_flashdata("error",$this->MasterModel->error_message);
+				$this->session->set_flashdata("error",$this->OrderModel->error_message);
 				//$this->session->unset_flashdata("message");
 			}
 			else {
 				//$this->session->unset_flashdata("error");
-				$this->session->set_flashdata("message",$this->MasterModel->message);
+				$this->session->set_flashdata("message",$this->OrderModel->message);
 			}
 			redirect('customer/price/list');
 			
@@ -118,7 +121,7 @@ class Master_Controller extends App_Controller {
 		$limit = $this->siteconfig[2]["option_value"]; 
 		//echo debug($this->siteconfig);
 		$config['base_url'] 	= site_url('region/list');
-		$config['total_rows'] 	= $this->MasterModel->get_setprice_count($itm);
+		$config['total_rows'] 	= $this->OrderModel->get_setprice_count($itm);
 		$config['per_page'] 	= $limit;
 		$config['uri_segment'] 	= 3;
 		$config['prev_tag_open'] = '<li>';
@@ -137,7 +140,7 @@ class Master_Controller extends App_Controller {
 		$this->pagination->initialize($config);
 		
 		$this->viewdata["page_link"] = $this->pagination->create_links();
-		$this->viewdata["pricelist"] = $this->MasterModel->get_setprice_list($itm,$p,$limit);
+		$this->viewdata["pricelist"] = $this->OrderModel->get_setprice_list($itm,$p,$limit);
 		//echo debug($this->viewdata["regionlist"]);
 		$this->load->view('masters/get_region_list',$this->viewdata);
 	}
@@ -764,7 +767,7 @@ class Master_Controller extends App_Controller {
 	public function get_customers_list($p=0) {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
-		
+		//echo debug($this->input->post());
 		if($this->input->post('cust_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {

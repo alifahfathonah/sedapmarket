@@ -6,6 +6,7 @@ class App_Controller extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
+		
         $sess = $this->session->userdata("security");
         if(!$sess["userkey"] && substr($this->uri->segment(1),0,3)!="log") {
 			redirect('login'); 

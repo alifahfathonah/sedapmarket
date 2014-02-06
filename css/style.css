@@ -57,3 +57,13 @@
 .InputLine {
 	display:inline-block;
 }
+
+.product_name {
+	width:90%;
+	display:inline;
+}
+
+.disc {
+	width:75px;
+	display:inline;
+}

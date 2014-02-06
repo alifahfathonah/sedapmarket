@@ -21,8 +21,11 @@
 								<thead>
 									<tr>
 										<th><input type="checkbox" name="chkall" id="chkall" value="1"> <i class="fa fa-sort"></i></th>
-										<th>Region Name <i class="fa fa-sort"></i></th>
-										<th>Description <i class="fa fa-sort"></i></th>
+										<th>Product Name <i class="fa fa-sort"></i></th>
+										<th>Price <i class="fa fa-sort"></i></th>
+										<th>Discount 1 <i class="fa fa-sort"></i></th>
+										<th>Discount 2 <i class="fa fa-sort"></i></th>
+										<th>Discount 3 <i class="fa fa-sort"></i></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -33,17 +36,19 @@ if($regionlist) {
 	foreach($regionlist as $region) {
 ?> 	
 								<tr>
-									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $region["region_id"] ?>"></td>
-									<td><a href="<?php echo site_url('region/edit/'.$region["region_id"]) ?>"><?php echo $region["region_name"] ?></a></td>
-									<td><?php echo $region["region_desc"] ?></td>
-									
+									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $price["price_id"] ?>"></td>
+									<td><a href="<?php echo site_url('customer/price/'.$price["price_id"]) ?>"><?php echo $price["product_name"] ?></a></td>
+									<td><?php echo $price["price"] ?></td>
+									<td><?php echo $price["disc1"] ?></td>
+									<td><?php echo $price["disc2"] ?></td>
+									<td><?php echo $price["disc3"] ?></td>
 								</tr>
 <?php 
 	}
 } 
 else { ?>
 								<tr>
-									<td colspan="3" class="empty">Not Found</td>
+									<td colspan="6" class="empty">Not Found</td>
 								</tr>
 <?php 
 	}	
@@ -51,8 +56,8 @@ else { ?>
 							</tbody>
 							</table>
 							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="region_addbtn" value="add" onclick="location.href='<?php echo site_url("region/add")?>'">Add</button>
-								<button type="submit" class="btn btn-primary" name="region_delbtn" id="delbtn" value="delete">Delete</button>
+								<button type="button" class="btn btn-primary" name="price_addbtn" value="add" onclick="location.href='<?php echo site_url("region/add")?>'">Add</button>
+								<button type="submit" class="btn btn-primary" name="price_delbtn" id="delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 hal">	
 								<ul class="pagination pagination-sm">

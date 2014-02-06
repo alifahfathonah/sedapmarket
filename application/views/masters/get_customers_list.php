@@ -55,7 +55,7 @@ if($custlist) {
 									<td><?php echo $cust["cust_state"] ?></td>
 									<td><?php echo $cust["cust_phonenumber"] ?></td>
 									<td><?php echo $cust["region_name"] ?></td>
-									<td><a href ="#" title="Set price and discount here"><img src="<?php echo site_url('images/set_price.png') ?>"></a></td>
+									<td><a href ="#" title="Set price and discount here"><img src="<?php echo site_url('images/static/set_price.png') ?>"></a></td>
 								</tr>
 <?php 
 	}
@@ -71,7 +71,7 @@ else { ?>
 							</table>
 							<div class="col-lg-6">
 								<button type="button" class="btn btn-primary" name="cust_addbtnid" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
-								<button type="submit" class="btn btn-primary" name=delbtn" id="delbtn" value="delete">Delete</button>
+								<button type="submit" class="btn btn-primary" name="cust_delbtn" id="delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 hal">	
 								
