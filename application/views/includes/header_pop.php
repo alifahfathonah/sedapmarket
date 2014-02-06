@@ -20,9 +20,11 @@
 			$(function() { 
 				$(".sendvalue").click(function() { 
 					var tmp = $(this).attr('id');
-					console.log(tmp);
-					parent.frm1.product_id.value="1";
-					parent.frm1.product_name.value="2";
+					t = tmp.split("##");
+					parent.frm1.product_id.value=t[0];
+					parent.frm1.product_name.value=t[1];
+					parent.frm1.price.value=t[2];
+					parent.$.colorbox.close();
 					return false;
 				});
 			});

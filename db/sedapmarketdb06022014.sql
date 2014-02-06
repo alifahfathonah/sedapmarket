@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 4.0.9
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Jan 28, 2014 at 04:39 PM
--- Server version: 5.5.16
--- PHP Version: 5.3.8
+-- Host: 127.0.0.1
+-- Generation Time: Feb 06, 2014 at 12:16 PM
+-- Server version: 5.5.34
+-- PHP Version: 5.4.22
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -32,7 +32,15 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_name` varchar(255) NOT NULL,
   `category_desc` text NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `category_name`, `category_desc`) VALUES
+(1, 'Kecap', ''),
+(2, 'sambal', '');
 
 -- --------------------------------------------------------
 
@@ -70,27 +78,54 @@ INSERT INTO `configuration` (`option_name`, `option_title`, `option_value`, `opt
 DROP TABLE IF EXISTS `customers`;
 CREATE TABLE IF NOT EXISTS `customers` (
   `cust_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cust_type` enum('','D','M') NOT NULL,
   `cust_fullname` varchar(255) NOT NULL,
+  `cust_npwp` varchar(255) NOT NULL,
   `cust_address` text NOT NULL,
   `cust_city` varchar(255) NOT NULL,
   `cust_state` varchar(255) NOT NULL,
+  `region_id` int(11) NOT NULL,
+  `cust_payby` enum('','I','C') NOT NULL,
   `cust_phonenumber` varchar(50) NOT NULL,
   `cust_faxnumber` varchar(50) NOT NULL,
   `cust_mobilenumber` varchar(50) NOT NULL,
   `cust_emailaddress` varchar(100) NOT NULL,
   `cust_regdate` date NOT NULL,
   PRIMARY KEY (`cust_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`cust_id`, `cust_fullname`, `cust_address`, `cust_city`, `cust_state`, `cust_phonenumber`, `cust_faxnumber`, `cust_mobilenumber`, `cust_emailaddress`, `cust_regdate`) VALUES
-(1, 'Andre Sutarko', 'jhjhjh', 'sss', 'sss', 'hjhjh', '', '', '', '2014-01-28'),
-(2, 'sss', 'ss', '', '', 'ssss', '', '', '', '2014-01-28'),
-(6, 'ww', 'w', 'ww', 'ww', 'www', '', '', '', '2014-01-28'),
-(7, 'gg', 'ggg', 'ggg', 'gg', 'ggg', '', '', '', '2014-01-28');
+INSERT INTO `customers` (`cust_id`, `cust_type`, `cust_fullname`, `cust_npwp`, `cust_address`, `cust_city`, `cust_state`, `region_id`, `cust_payby`, `cust_phonenumber`, `cust_faxnumber`, `cust_mobilenumber`, `cust_emailaddress`, `cust_regdate`) VALUES
+(2, 'D', 'Ade Sutrisno', '4453343422452', 'Jl Ciledug Blok V/22', 'Jakarta Barat', 'DKI Jakarta', 1, 'I', '227627262', '', '', '', '2014-02-06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_price`
+--
+
+DROP TABLE IF EXISTS `customer_price`;
+CREATE TABLE IF NOT EXISTS `customer_price` (
+  `price_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cust_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `price` bigint(20) NOT NULL DEFAULT '0',
+  `disc1` float(5,2) NOT NULL,
+  `disc2` float(5,2) NOT NULL,
+  `disc3` float(5,2) NOT NULL,
+  `price_desc` text NOT NULL,
+  PRIMARY KEY (`price_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `customer_price`
+--
+
+INSERT INTO `customer_price` (`price_id`, `cust_id`, `product_id`, `price`, `disc1`, `disc2`, `disc3`, `price_desc`) VALUES
+(1, 2, 1, 15000, 1.00, 1.00, 1.00, '1');
 
 -- --------------------------------------------------------
 
@@ -117,11 +152,65 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `kemasan` enum('','Yes','No') NOT NULL,
-  `stock` int(11) NOT NULL DEFAULT '0',
-  `price` bigint(20) NOT NULL DEFAULT '0',
+  `product_kemasan` enum('','Yes','No') NOT NULL,
+  `product_stock` int(11) NOT NULL DEFAULT '0',
+  `unit_id` int(11) NOT NULL,
+  `product_price` bigint(20) NOT NULL DEFAULT '0',
+  `product_disc` float(5,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `product_kemasan`, `product_stock`, `unit_id`, `product_price`, `product_disc`) VALUES
+(1, 1, 'Bingo Manis', 'Yes', 100, 1, 15000, 0.00),
+(2, 1, 'Bingo asin', 'Yes', 100, 1, 250000, 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `region`
+--
+
+DROP TABLE IF EXISTS `region`;
+CREATE TABLE IF NOT EXISTS `region` (
+  `region_id` int(11) NOT NULL AUTO_INCREMENT,
+  `region_name` varchar(255) NOT NULL,
+  `region_desc` text NOT NULL,
+  PRIMARY KEY (`region_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `region`
+--
+
+INSERT INTO `region` (`region_id`, `region_name`, `region_desc`) VALUES
+(1, 'Jakarta', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unit`
+--
+
+DROP TABLE IF EXISTS `unit`;
+CREATE TABLE IF NOT EXISTS `unit` (
+  `unit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_name` varchar(255) NOT NULL,
+  `unit_desc` text,
+  PRIMARY KEY (`unit_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `unit`
+--
+
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_desc`) VALUES
+(1, 'Dus', NULL),
+(2, 'kubik', NULL),
+(3, 'Kg', NULL);
 
 -- --------------------------------------------------------
 
@@ -138,14 +227,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_lastlogindate` datetime NOT NULL,
   `group_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_pass`, `user_name`, `user_lastlogindate`, `group_id`) VALUES
-(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-01-28 22:28:22', 1);
+(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-02-06 11:41:56', 1),
+(2, 'lusiana27@yahoo.com', 'e85ca3eb7b80f152a776e22dbb6d8bee25f90020', 'Admin', '0000-00-00 00:00:00', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

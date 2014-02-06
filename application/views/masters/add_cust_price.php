@@ -50,7 +50,7 @@
 							<?php echo (form_error("price_desc",'<p class="help-block">','</p>'))?form_error("price_desc",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter description for this Pricw.</p>'; ?>		
 						</div>
 						
-						<button type="submit" class="btn btn-primary" name="editbtn" value="update">Update</button>
+						<button type="submit" class="btn btn-primary" name="addbtn" value="update">Add</button>
 					</form>
 <?php } else { ?>
 					<div class="alert alert-dismissable alert-success">

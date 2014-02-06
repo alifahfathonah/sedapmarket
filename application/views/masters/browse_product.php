@@ -9,16 +9,16 @@
 				</div>
 				<div class="panel-body info">
 					<div class="alert alert-dismissable alert-info">
-						Please choose product which you want. If there aren't exist, You can add new product on Master &raquol;   
+						Please choose product which you want. If there aren't exist, You can add new product on Master &raquo; Products   
 						
 					</div>	
 						<form role="form" method="post" action="<?php echo site_url('products/list') ?>" id="frm1">
 							<table class="table table-bordered table-hover tablesorter">
 								<thead>
 									<tr>
-										<th>&nbsp;</th>
 										<th>Product Name <i class="fa fa-sort"></i></th>
 										<th>Category Name <i class="fa fa-sort"></i></th>
+										<th>Price <i class="fa fa-sort"></i></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -28,11 +28,11 @@ if($prodlist) {
 	foreach($prodlist as $prod) {
 ?> 	
 								<tr>
-									<td>&nbsp;</td>
 									<td>
-										<a href="#" class="sendvalue" id="<?php echo $prod["product_id"] ?>##<?php echo $prod["product_name"] ?>"><?php echo $prod["product_name"] ?></a>
+										<a href="#" class="sendvalue" id="<?php echo $prod["product_id"]."##".$prod["product_name"]."##".$prod["product_price"] ?>"><?php echo $prod["product_name"] ?></a>
 									</td>
 									<td><?php echo $prod["category_name"] ?></td>
+									<td style="text-align:right"><?php echo number_format($prod["product_price"]) ?></td>
 								</tr>
 <?php 
 	}
