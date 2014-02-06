@@ -211,6 +211,22 @@ class MasterModel extends CI_Model {
         $this->error_message = "";
 	}
 	
+	/***
+	 * Get Unit Into form
+	 */
+	public function get_product_all() {
+		$this->db->select("a.*, b.category_name");
+		$this->db->from("products a");
+		$this->db->join("category b","b.category_id = a.category_id","left");
+		$r = $this->db->get(); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/*** Unit ***/
 	
 	/***

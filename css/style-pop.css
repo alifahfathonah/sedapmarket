@@ -1,0 +1,45 @@
+.errors {
+		color:#ff0000;
+}
+
+.empty {
+	text-align:center;
+	color:#ff0000;
+	font-weight:bold;
+}
+	
+@media (min-width:768px) {
+	/* Wrappers */
+	#page-wrapper {
+		margin: 5px;
+		padding: 5px;
+	}
+	
+	#wrapper-login {
+		padding-left: 0px;
+	}
+	
+	#wrapper-login  h1 {
+		text-align:center;
+	}
+	
+	#wrapper-login  .login {
+		width:33%;
+		margin: 0 auto 0 auto;
+	}
+	
+	#footer {
+		margin:20px;
+		border-top:1px solid;
+		padding:10px;
+		text-align: center;
+	}
+	
+	.info {
+	}
+	
+	.info  label {
+		display:inline-table;
+		width:150px;
+	}
+}

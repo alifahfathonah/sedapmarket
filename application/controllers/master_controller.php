@@ -10,6 +10,40 @@ class Master_Controller extends App_Controller {
 	
 	/*** Set Price ***/
 	/***
+	 * Get product for set price 
+	 */
+	public function get_product_list() {
+		$this->load->library("pagination");
+		$this->load->model("MasterModel");
+		
+		$limit = $this->siteconfig[2]["option_value"]; 
+		//echo debug($this->siteconfig);
+		$config['base_url'] 	= site_url('customer/browse/product');
+		$config['total_rows'] 	= $this->MasterModel->get_product_count($itm);
+		$config['per_page'] 	= $limit;
+		$config['uri_segment'] 	= 3;
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		//$config['anchor_class'] = "";	
+		$this->pagination->initialize($config);
+		
+		$this->viewdata["page_link"] = $this->pagination->create_links();
+		$this->viewdata["prodlist"] = $this->MasterModel->get_product_all();
+		
+		$this->load->view("masters/browse_product",$this->viewdata);
+	}
+	
+	/***
 	 * Add Set Price
 	 */
 	public function add_setprice($id) {

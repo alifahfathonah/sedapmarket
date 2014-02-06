@@ -37,7 +37,13 @@
 			case "edit": ?>
 		<link rel="stylesheet" href="<?php echo site_url("js/datepicker/jquery.datepick.css") ?>" type="text/css" />	
 		<script src="<?php echo site_url("js/datepicker/jquery.datepick.js") ?>"></script>
-<?php 	}
+<?php 		case "price": 
+				if($this->uri->segment(3)!="list") { ?>
+		<link rel="stylesheet" href="<?php echo site_url("css/colorbox.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/colorbox/jquery.colorbox.js") ?>"></script>	
+<?php 			}
+			break;
+		}
 	  }
 ?>
 		<script type="text/javascript">
@@ -64,16 +70,17 @@
 				
 <?php } 
 	  if($this->uri->segment(1)=="customer") {
-		switch($this->uri->segment(2)) {
-			case "add":
-			case "edit": ?>
+		if($this->uri->segment(2)=="add" || $this->uri->segment(2)=="edit") { ?>
 				$(".datef").datepick({
 					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
 				});
 			
-<?php 		break;
-				
-		}
+<?php 	}
+		else if ($this->uri->segment(2)=="price") { 
+			if($this->uri->segment(2)!="list") { ?>
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});	
+<?php   	}
+		}		
 	  } 
 	  else if($this->uri->segment(1)=="category") {
 ?>		

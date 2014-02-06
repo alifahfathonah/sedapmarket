@@ -16,12 +16,12 @@
 						  <?php echo $err ?>
 					</div>
 <?php   } ?>					
-					<form role="form" method="post" action="<?php echo site_url('customer/price/add') ?>">
+					<form role="form" method="post" action="<?php echo site_url('customer/price/add/'.$cust_id) ?>" name="frm1">
 						<div class="form-group">
 							<label>Product Name</label>
 							<input type="hidden" name="product_id" value="<?php echo set_value('product_id') ?>">
 							<input class="form-control product_name" name="product_name" value="<?php echo set_value('product_name') ?>">
-							<a href="#" title="Click here to choose product" ><img src="<?php echo site_url('images/static/browse.png') ?>"></a>
+							<a class="iframe" href="<?php echo site_url('customer/browse/product')?>" title="Click here to choose product" ><img src="<?php echo site_url('images/static/browse.png') ?>"></a>
 							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Name.</p>'; ?>		
 						</div>
 						<div class="form-group">
@@ -47,7 +47,7 @@
 						<div class="form-group">
 							<label>Description</label>
 							<textarea class="form-control" rows="3" name="price_desc"><?php echo set_value("price_desc")?></textarea>
-							<?php echo (form_error("price_desc",'<p class="help-block">','</p>'))?form_error("price_desc",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter description for this Region.</p>'; ?>		
+							<?php echo (form_error("price_desc",'<p class="help-block">','</p>'))?form_error("price_desc",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter description for this Pricw.</p>'; ?>		
 						</div>
 						
 						<button type="submit" class="btn btn-primary" name="editbtn" value="update">Update</button>
