@@ -74,7 +74,7 @@ class Master_Controller extends App_Controller {
                     //$this->session->unset_flashdata("error");
                     $this->session->set_flashdata("message",$this->OrderModel->message);
                 }
-				redirect('customer/price/add');
+				redirect('customer/price/add/'.$id);
 			}
 		}
 			
@@ -86,7 +86,7 @@ class Master_Controller extends App_Controller {
 	/***
 	 * Edit Set Price
 	 */
-	public function edit_setprice($id,$price_id) {
+	public function edit_setprice($cust_id,$price_id) {
 		$this->load->library("form_validation");
 		//echo debug($this->siteconfig[1]["option_value"]);
 		$this->load->model("OrderModel");
@@ -103,7 +103,7 @@ class Master_Controller extends App_Controller {
             {
 				$data = $this->input->post();
 				$data["price_id"] = $price_id;
-				$data["cust_id"] = $id; 
+				$data["cust_id"] = $cust_id; 
                 $this->OrderModel->edit_setprice($data);   
                 $this->viewdata["is_error"] = $this->OrderModel->is_error;
                 if($this->OrderModel->is_error==1) {
@@ -118,9 +118,10 @@ class Master_Controller extends App_Controller {
 				redirect('customer/price/edit/'.$id);
 			}
 		}
-			
-		$this->viewdata["price_id"] = $id;
-		$this->viewdata["price"] = $this->OrderModel->get_setprice_detail($id);
+		
+		$this->viewdata["cust_id"] = $cust_id;	
+		$this->viewdata["price_id"] = $price_id;
+		$this->viewdata["price"] = $this->OrderModel->get_setprice_detail($price_id);
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/edit_cust_price',$this->viewdata);
 	}
@@ -129,7 +130,7 @@ class Master_Controller extends App_Controller {
 	/***
 	 * Get Set Price List
 	 */
-	public function get_setprice_list($p=0) {
+	public function get_setprice_list($cust_id,$p=0) {
 		$this->load->library("pagination");
 		$this->load->model("OrderModel");
 		
@@ -157,7 +158,7 @@ class Master_Controller extends App_Controller {
 		$config['base_url'] 	= site_url('region/list');
 		$config['total_rows'] 	= $this->OrderModel->get_setprice_count($itm);
 		$config['per_page'] 	= $limit;
-		$config['uri_segment'] 	= 3;
+		$config['uri_segment'] 	= 5;
 		$config['prev_tag_open'] = '<li>';
 		$config['prev_tag_close'] = '</li>';
 		$config['first_tag_open'] = '<li>';
@@ -173,10 +174,11 @@ class Master_Controller extends App_Controller {
 		//$config['anchor_class'] = "";	
 		$this->pagination->initialize($config);
 		
+		$this->viewdata["cust_id"] = $cust_id;	
 		$this->viewdata["page_link"] = $this->pagination->create_links();
 		$this->viewdata["pricelist"] = $this->OrderModel->get_setprice_list($itm,$p,$limit);
-		//echo debug($this->viewdata["regionlist"]);
-		$this->load->view('masters/get_region_list',$this->viewdata);
+		//echo debug($this->viewdata["pricelist"]);
+		$this->load->view('masters/get_custprice_list',$this->viewdata);
 	}
 	
 	/*** Region ***/

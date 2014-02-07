@@ -41,7 +41,7 @@
 //Set Price
 $route["customer/browse/product/(:num)"] 	= "master_controller/get_product_list/$1";	
 $route["customer/browse/product"] 			= "master_controller/get_product_list";	
-$route["customer/price/edit/(:num)"] 		= "master_controller/edit_setprice/$1";
+$route["customer/price/edit/(:num)/(:num)"] = "master_controller/edit_setprice/$1/$2";
 $route["customer/price/add/(:num)"] 		= "master_controller/add_setprice/$1";
 $route["customer/price/list/(:num)"] 		= "master_controller/get_setprice_list/$1";
 $route["customer/price/list"] 				= "master_controller/get_setprice_list";

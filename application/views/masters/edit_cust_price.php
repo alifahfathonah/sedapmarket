@@ -16,7 +16,7 @@
 						  <?php echo $err ?>
 					</div>
 <?php   } ?>					
-					<form role="form" method="post" action="<?php echo site_url('customer/price/edit/'.$price_id) ?>">
+					<form role="form" method="post" action="<?php echo site_url('customer/price/edit/'.$cust_id.'/'.$price_id) ?>">
 						<div class="form-group">
 							<label>Product Name</label>
 							<input type="hidden" name="product_id" value="<?php echo $price['product_id'] ?>">

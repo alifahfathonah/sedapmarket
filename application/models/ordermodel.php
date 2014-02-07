@@ -50,7 +50,7 @@ class OrderModel extends CI_Model {
 	/***
 	 * Get Set Price List
 	 */
-	public function get_setprice_list($itm="",$p=0,$limit=10) {
+	public function get_setprice_list($p=0,$limit=10) {
 		if($itm) {
 			$this->db->where("product_name LIKE '%".$itm."%'");
 		}
@@ -58,7 +58,10 @@ class OrderModel extends CI_Model {
 		$limit=(!$limit)?10:$limit;
 		
 		$this->db->limit($limit,$p);
-		$r = $this->db->get('customer_price'); 
+		$this->db->select("a.*,b.product_name");
+		$this->db->from("customer_price a");
+		$this->db->join("products b","b.product_id=a.product_id","left");
+		$r = $this->db->get(); 
 		//echo debug($this->db->queries);
 		if($r) {
 			return $r->result_array();
@@ -94,7 +97,11 @@ class OrderModel extends CI_Model {
 	 */
 	public function get_setprice_detail($data) {
 		$this->db->where("price_id",$data);
-		$r = $this->db->get('region'); 
+		$this->db->select("a.*,b.product_name");
+		$this->db->from("customer_price a");
+		$this->db->join("products b","b.product_id=a.product_id","left");
+		$r = $this->db->get(); 
+		
 		if($r) {
 			return $r->row_array();
 		}
