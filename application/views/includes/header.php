@@ -51,7 +51,7 @@
 				$('#chkall').click(function () {    
 					 $('.chkbox').prop('checked', this.checked);    
 				});
-<?php if($this->uri->segment(2)=="list") { ?>				
+<?php if($this->uri->segment(2)=="list" || ($this->uri->segment(2)=="price" && $this->uri->segment(3)=="list")) { ?>				
 				$("#delbtn").click(function() {
 					var tmp = $(".chkbox:checked");
 					console.log(tmp);

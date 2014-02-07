@@ -2,7 +2,7 @@
 <div id="page-wrapper">	
 	<div class="row">
 		<div class="col-lg-12">
-			<h3>Customer</h3>
+			<h3>Customer <?php echo $cust_name; ?></h3>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Edit Set Price</h3>
@@ -20,8 +20,9 @@
 						<div class="form-group">
 							<label>Product Name</label>
 							<input type="hidden" name="product_id" value="<?php echo $price['product_id'] ?>">
-							<input class="form-control" name="region_name" value="<?php echo $price['product_name'] ?>">
-							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Name.</p>'; ?>		
+							<input class="form-control" name="product_name" value="<?php echo $price['product_name'] ?>">
+							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Name.</p>'; ?>
+							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):''; ?>							
 						</div>
 						<div class="form-group">
 							<label>Price</label>
@@ -55,7 +56,7 @@
 					<div class="alert alert-dismissable alert-success">
 						  <?php echo $msg ?>
 						  <script>
-							window.setTimeout('location.href="<?php echo site_url('region/list') ?>"',3000);
+							window.setTimeout('location.href="<?php echo site_url('customer/price/list/'.$cust_id) ?>"',3000);
 						  </script>
 					</div>
 <?php } ?>										

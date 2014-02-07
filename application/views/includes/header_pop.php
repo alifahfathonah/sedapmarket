@@ -27,6 +27,22 @@
 					parent.$.colorbox.close();
 					return false;
 				});
+				
+				$("#delbtn").click(function() {
+					var tmp = $(".chkbox:checked");
+					console.log(tmp);
+					if(tmp.length > 0) {
+						if(confirm("Are you sure to delete?")) {
+							$("#frm1").submit();
+							return true;
+						}
+						return false;
+					}
+					else {
+						alert("Please choose item that you will delete")
+						return false;
+					}					
+				});
 			});
 		</script>
 	</head>

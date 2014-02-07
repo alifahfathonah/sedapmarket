@@ -46,6 +46,24 @@ class OrderModel extends CI_Model {
         $this->error_message = "";
 	}
 	
+	/***
+	 * Get Customer Name
+	 */
+	public function get_customer_name($cust_id) {
+		$this->db->where("cust_id",$cust_id);
+		
+		$this->db->select("cust_fullname");
+		$this->db->from("customers");
+		$r = $this->db->get(); 
+		//echo debug($this->db->queries);
+		if($r) {
+			$tmp = $r->row_array();
+			return $tmp["cust_fullname"];
+		}
+		else {
+			return false;
+		}
+	}
 	
 	/***
 	 * Get Set Price List

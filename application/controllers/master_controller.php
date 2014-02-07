@@ -79,6 +79,7 @@ class Master_Controller extends App_Controller {
 		}
 			
 		$this->viewdata["cust_id"] = $id;
+		$this->viewdata["cust_name"] = $this->OrderModel->get_customer_name($id);
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/add_cust_price',$this->viewdata);
 	}
@@ -88,15 +89,15 @@ class Master_Controller extends App_Controller {
 	 */
 	public function edit_setprice($cust_id,$price_id) {
 		$this->load->library("form_validation");
-		//echo debug($this->siteconfig[1]["option_value"]);
+		//echo debug($this->input->post());
 		$this->load->model("OrderModel");
 		if($this->input->post("editbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('price', 'Price', 'required|integer|xss_clean');
-			$this->form_validation->set_rules('disc1', 'Discount 1', 'integer|xss_clean');
-			$this->form_validation->set_rules('disc2', 'Discount 2', 'integer|xss_clean');
-			$this->form_validation->set_rules('disc3', 'Discount 3', 'integer|xss_clean');
+			$this->form_validation->set_rules('disc1', 'Discount 1', 'decimal|xss_clean');
+			$this->form_validation->set_rules('disc2', 'Discount 2', 'decimal|xss_clean');
+			$this->form_validation->set_rules('disc3', 'Discount 3', 'decimal|xss_clean');
 			$this->form_validation->set_rules('region_desc', 'Description', 'trim|xss_clean');
 			
 			if ($this->form_validation->run() == TRUE)
@@ -104,7 +105,8 @@ class Master_Controller extends App_Controller {
 				$data = $this->input->post();
 				$data["price_id"] = $price_id;
 				$data["cust_id"] = $cust_id; 
-                $this->OrderModel->edit_setprice($data);   
+				//echo debug($data);
+                $this->OrderModel->edit_set_price($data);   
                 $this->viewdata["is_error"] = $this->OrderModel->is_error;
                 if($this->OrderModel->is_error==1) {
                     //echo $this->MasterModel->error_message;
@@ -115,11 +117,15 @@ class Master_Controller extends App_Controller {
                     //$this->session->unset_flashdata("error");
                     $this->session->set_flashdata("message",$this->OrderModel->message);
                 }
-				redirect('customer/price/edit/'.$id);
+				redirect('customer/price/edit/'.$cust_id."/".$price_id);
+			}
+			else {
+				echo validation_errors();
 			}
 		}
 		
 		$this->viewdata["cust_id"] = $cust_id;	
+		$this->viewdata["cust_name"] = $this->OrderModel->get_customer_name($cust_id);
 		$this->viewdata["price_id"] = $price_id;
 		$this->viewdata["price"] = $this->OrderModel->get_setprice_detail($price_id);
 		//echo debug($this->viewdata["catlist"]);
@@ -149,7 +155,7 @@ class Master_Controller extends App_Controller {
 				//$this->session->unset_flashdata("error");
 				$this->session->set_flashdata("message",$this->OrderModel->message);
 			}
-			redirect('customer/price/list');
+			redirect('customer/price/list/'.$cust_id);
 			
 		}
 		
@@ -175,6 +181,7 @@ class Master_Controller extends App_Controller {
 		$this->pagination->initialize($config);
 		
 		$this->viewdata["cust_id"] = $cust_id;	
+		$this->viewdata["cust_name"] = $this->OrderModel->get_customer_name($cust_id);
 		$this->viewdata["page_link"] = $this->pagination->create_links();
 		$this->viewdata["pricelist"] = $this->OrderModel->get_setprice_list($itm,$p,$limit);
 		//echo debug($this->viewdata["pricelist"]);
