@@ -121,7 +121,6 @@
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo site_url('customer/add') ?>">Add Customer</a></li>
 								<li><a href="<?php echo site_url('customer/list') ?>">Customer List</a></li>
-								<li><a href="<?php echo site_url('') ?>">Set Price</a></li>
 								<li><a href="<?php echo site_url('region/list') ?>">Region</a></li>
 							</ul>
 						</li>

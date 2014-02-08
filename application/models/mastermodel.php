@@ -6,6 +6,100 @@ class MasterModel extends CI_Model {
     var $error_message = "";
     var $message = "";
 	
+	/*** Production ***/
+	
+	/***
+	 * Add Production
+	 */
+	public function add_production($data) {
+		$d = array (
+			"production_date" 	=> $data["prodction_date"],
+			"product_id" 		=> $data["product_id"],
+			"begin_stock" 		=> $data["begin_stock"],
+			"stock" 			=> $data["stock"],
+			"end_stock" 		=> $data["end_stock"],
+			"production_desc" 	=> $data["production_desc"],
+		);
+		$this->db->insert("production",$d);
+		$this->is_error = 0;
+        $this->message = "Production has been added successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Edit Production
+	 */
+	public function edit_production($data) {
+		$this->db->where('production_id',$data['production_id']);
+		$d = array (
+			"product_id" 			=> $data["product_id"],
+			"begin_stock" 			=> $data["begin_stock"],
+			"stock" 				=> $data["stock"],
+			"end_stock" 			=> $data["end_stock"],
+			"production_desc" 		=> $data["production_desc"],
+		);
+		$this->db->update("production",$d);
+		$this->is_error = 0;
+        $this->message = "Production has been updated successfully";
+        $this->error_message = "";
+	}
+	
+	
+	/***
+	 * Get Production List
+	 */
+	public function get_production_list($p=0,$limit=10) {
+		// if($itm) {
+			// $this->db->where("region_name LIKE '%".$itm."%'");
+		// }
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$this->db->selct("a.*, b.product_name");
+		$this->db->from("production a");
+		$this->db->join("product b","b.product_id=a.product_id".'left');
+		$r = $this->db->get(); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}s
+	}
+	
+	/***
+	 * Get Production Count
+	 */
+	public function get_production_count($itm="") {
+		return $this->db->count_all('production');
+	}
+	
+	/***
+	 * Delete production
+	 */
+	public function delete_production($data) {
+		$this->db->where('production_id',$data);
+		$this->db->delete("production",$d);
+		$this->is_error = 0;
+        $this->message = "Production has been deleted successfully";
+        $this->error_message = "";
+	}
+
+	/***
+	 * Get Production detail
+	 */
+	public function get_production_detail($data) {
+		$this->db->where("production_id",$data);
+		$r = $this->db->get('production'); 
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
 	
 	/*** Region ***/
 	
@@ -205,7 +299,10 @@ class MasterModel extends CI_Model {
 	 */
 	public function delete_product($data) {
 		$this->db->where('product_id',$data);
-		$this->db->delete("products",$d);
+		$d = array(
+			"del" => 1
+		);
+		$this->db->update("products",$d);
 		$this->is_error = 0;
         $this->message = "Product has been deleted successfully";
         $this->error_message = "";
@@ -420,7 +517,10 @@ class MasterModel extends CI_Model {
 	 */
 	public function delete_category($data) {
 		$this->db->where('category_id',$data);
-		$this->db->delete("category",$d);
+		$d = array(
+			"del" => 1
+		);
+		$this->db->update("category",$d);
 		$this->is_error = 0;
         $this->message = "Category has been deleted successfully";
         $this->error_message = "";
@@ -540,7 +640,10 @@ class MasterModel extends CI_Model {
 	 */
 	public function delete_customer($data) {
 		$this->db->where('cust_id',$data);
-		$this->db->delete("customers",$d);
+		$d = array(
+			"del" 	=> 1
+		);
+		$this->db->update("customers",$d);
 		//echo debug($this->db->queries);
 		$this->is_error = 0;
         $this->message = "Customer has been deleted successfully";

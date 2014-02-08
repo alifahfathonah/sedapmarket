@@ -128,4 +128,11 @@ class OrderModel extends CI_Model {
 		}
 	}
 	
+	/***
+	 * Get Set Price Count
+	 */
+	public function get_setprice_count2($cust_id) {
+		return $this->db->count_all("customer_price WHERE cust_id='".$cust_id."'");
+		
+	}
 }	

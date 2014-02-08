@@ -44,6 +44,7 @@ if($custlist) {
 		else if($cust["cust_type"]=="M") {
 			$t = "Morden Market";
 		}
+		$p_count = $this->OrderModel->get_setprice_count2($cust["cust_id"]);
 ?> 	
 								<tr>
 									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cust["cust_id"] ?>"></td>
@@ -55,7 +56,7 @@ if($custlist) {
 									<td><?php echo $cust["cust_state"] ?></td>
 									<td><?php echo $cust["cust_phonenumber"] ?></td>
 									<td><?php echo $cust["region_name"] ?></td>
-									<td><a href ="<?php echo site_url('customer/price/list/'.$cust["cust_id"]) ?>" title="Set price and discount here"><img src="<?php echo site_url('images/static/set_price.png') ?>"></a></td>
+									<td><a href ="<?php echo site_url('customer/price/list/'.$cust["cust_id"]) ?>" title="Set price and discount here"><img src="<?php echo site_url('images/static/set_price.png') ?>"></a><sub><?php echo $p_count ?></sub></td>
 								</tr>
 <?php 
 	}

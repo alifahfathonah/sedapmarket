@@ -8,6 +8,138 @@ class Master_Controller extends App_Controller {
 		//$this->load->view('users/login');
 	}
 	
+	/*** Production ***/
+	/***
+	 * Add production
+	 */
+	public function add_production() {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("addbtn")) {
+			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|xss_clean');
+			$this->form_validation->set_rules('begin_stock', 'Beginning Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('stock', 'Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('end_stock', 'Ending Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('production_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+                $this->MasterModel->add_production($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('production/add');
+			}
+		}
+			
+		//echo debug($this->viewdata["catlist"]);
+		$this->load->view('masters/add_production',$this->viewdata);
+	}
+	
+	/***
+	 * Edit Production
+	 */
+	public function edit_production($id) {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("editbtn")) {
+			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|xss_clean');
+			$this->form_validation->set_rules('begin_stock', 'Beginning Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('stock', 'Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('end_stock', 'Ending Stock', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('production_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+				$data["region_id"] = $id;
+                $this->MasterModel->edit_region($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('production/edit/'.$id);
+			}
+		}
+			
+		$this->viewdata["region_id"] = $id;
+		$this->viewdata["production"] = $this->MasterModel->get_production_detail($id);
+		//echo debug($this->viewdata["catlist"]);
+		$this->load->view('masters/edit_production',$this->viewdata);
+	}
+	
+	
+	/***
+	 * Get Production List
+	 */
+	public function get_production_list($p=0) {
+		$this->load->library("pagination");
+		$this->load->model("MasterModel");
+		
+		if($this->input->post('region_delbtn')) {
+			$data = $this->input->post();
+			foreach($data["chkbox"] as $d) {
+				//echo debug($d);
+				$this->MasterModel->delete_unit($d);
+			}
+			if($this->MasterModel->is_error==1) {
+				//echo $this->MasterModel->error_message;
+				$this->session->set_flashdata("error",$this->MasterModel->error_message);
+				//$this->session->unset_flashdata("message");
+			}
+			else {
+				//$this->session->unset_flashdata("error");
+				$this->session->set_flashdata("message",$this->MasterModel->message);
+			}
+			redirect('production/list');
+			
+		}
+		
+		$limit = $this->siteconfig[2]["option_value"]; 
+		//echo debug($this->siteconfig);
+		$config['base_url'] 	= site_url('production/list');
+		$config['total_rows'] 	= $this->MasterModel->get_production_count($itm);
+		$config['per_page'] 	= $limit;
+		$config['uri_segment'] 	= 3;
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		//$config['anchor_class'] = "";	
+		$this->pagination->initialize($config);
+		
+		$this->viewdata["page_link"] = $this->pagination->create_links();
+		$this->viewdata["productionlist"] = $this->MasterModel->get_production_list($itm,$p,$limit);
+		//echo debug($this->viewdata["regionlist"]);
+		$this->load->view('masters/get_production_list',$this->viewdata);
+	}
+	
 	/*** Set Price ***/
 	/***
 	 * Get product for set price 
@@ -810,6 +942,7 @@ class Master_Controller extends App_Controller {
 	public function get_customers_list($p=0) {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
+		$this->load->model("OrderModel");
 		//echo debug($this->input->post());
 		if($this->input->post('cust_delbtn')) {
 			$data = $this->input->post();
