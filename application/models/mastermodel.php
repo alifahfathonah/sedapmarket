@@ -12,8 +12,10 @@ class MasterModel extends CI_Model {
 	 * Add Production
 	 */
 	public function add_production($data) {
+		$tmp = new DateTime($data["production_date"]);
+		$data["production_date"] = $tmp->format("Y-m-d");
 		$d = array (
-			"production_date" 	=> $data["prodction_date"],
+			"production_date" 	=> $data["production_date"],
 			"product_id" 		=> $data["product_id"],
 			"begin_stock" 		=> $data["begin_stock"],
 			"stock" 			=> $data["stock"],
@@ -30,8 +32,12 @@ class MasterModel extends CI_Model {
 	 * Edit Production
 	 */
 	public function edit_production($data) {
+		$tmp = new DateTime($data["production_date"]);
+		$data["production_date"] = $tmp->format("Y-m-d");
+		
 		$this->db->where('production_id',$data['production_id']);
 		$d = array (
+			"production_date" 		=> $data["production_date"],
 			"product_id" 			=> $data["product_id"],
 			"begin_stock" 			=> $data["begin_stock"],
 			"stock" 				=> $data["stock"],
@@ -39,6 +45,7 @@ class MasterModel extends CI_Model {
 			"production_desc" 		=> $data["production_desc"],
 		);
 		$this->db->update("production",$d);
+		//echo debug($this->db->queries);
 		$this->is_error = 0;
         $this->message = "Production has been updated successfully";
         $this->error_message = "";

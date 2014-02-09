@@ -56,7 +56,7 @@ class Master_Controller extends App_Controller {
 	 */
 	public function edit_production($id) {
 		$this->load->library("form_validation");
-		//echo debug($this->siteconfig[1]["option_value"]);
+		//echo debug($this->input->post());
 		$this->load->model("MasterModel");
 		if($this->input->post("editbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
@@ -70,8 +70,8 @@ class Master_Controller extends App_Controller {
 			if ($this->form_validation->run() == TRUE)
             {
 				$data = $this->input->post();
-				$data["region_id"] = $id;
-                $this->MasterModel->edit_region($data);   
+				$data["production_id"] = $id;
+                $this->MasterModel->edit_production($data);   
                 $this->viewdata["is_error"] = $this->MasterModel->is_error;
                 if($this->MasterModel->is_error==1) {
                     //echo $this->MasterModel->error_message;
@@ -84,6 +84,8 @@ class Master_Controller extends App_Controller {
                 }
 				redirect('production/edit/'.$id);
 			}
+			else
+				echo validation_errors();
 		}
 		
 		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
@@ -91,8 +93,8 @@ class Master_Controller extends App_Controller {
 		else
 			$tmp = substr($this->siteconfig[1]["option_value"],0,6);	
 		$this->viewdata["formatdate"] = $tmp;		
-		$this->viewdata["region_id"] = $id;
-		$this->viewdata["production"] = $this->MasterModel->get_production_detail($id);
+		$this->viewdata["prod_id"] = $id;
+		$this->viewdata["prod"] = $this->MasterModel->get_production_detail($id);
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/edit_production',$this->viewdata);
 	}

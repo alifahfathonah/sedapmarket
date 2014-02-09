@@ -10,6 +10,8 @@
 				<div class="panel-body info">
 <?php $msg = $this->session->flashdata('message');
 	  $err = $this->session->flashdata('error');
+	  $tmp = new DateTime($prod['production_date']);
+	  $prod['production_date'] = $tmp->format($formatdate);
       if(!$msg) { 
 		if($err) { ?>		
 					<div class="alert alert-dismissable alert-success">
@@ -25,8 +27,13 @@
 							<?php echo (form_error("product_name",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):''; ?>							
 						</div>
 						<div class="form-group">
+							<label>Production Date</label>
+							<input class="form-control datef" name="production_date" value="<?php echo $prod['production_date'] ?>">
+							<?php echo (form_error("production_date",'<p class="help-block">','</p>'))?form_error("production_date",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Begining Stock.</p>'; ?>		
+						</div>
+						<div class="form-group">
 							<label>Begining Stock</label>
-							<input class="form-control" name="price" value="<?php echo $prod['begin_stock'] ?>">
+							<input class="form-control" name="begin_stock" value="<?php echo $prod['begin_stock'] ?>">
 							<?php echo (form_error("begin_stock",'<p class="help-block">','</p>'))?form_error("begin_stock",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Beginning Stock.</p>'; ?>		
 						</div>
 						<div class="form-group">
@@ -36,7 +43,7 @@
 						</div>
 						<div class="form-group">
 							<label>Ending Stock</label>
-							<input class="form-control" name="disc2" value="<?php echo $prod['disc2'] ?>">
+							<input class="form-control" name="end_stock" value="<?php echo $prod['end_stock'] ?>">
 							<?php echo (form_error("end_stock",'<p class="help-block">','</p>'))?form_error("end_stock",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>		
 						</div>
 						<div class="form-group">
@@ -51,7 +58,7 @@
 					<div class="alert alert-dismissable alert-success">
 						  <?php echo $msg ?>
 						  <script>
-							window.setTimeout('location.href="<?php echo site_url('customer/price/list/'.$cust_id) ?>"',3000);
+							window.setTimeout('location.href="<?php echo site_url('production/list/'.$cust_id) ?>"',3000);
 						  </script>
 					</div>
 <?php } ?>										

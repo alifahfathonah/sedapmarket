@@ -57,7 +57,7 @@
 					<div class="alert alert-dismissable alert-success">
 						  <?php echo $msg ?>
 						  <script>
-							window.setTimeout('location.href="<?php echo site_url('production/list) ?>"',3000);
+							window.setTimeout('location.href="<?php echo site_url('production/list') ?>"',3000);
 						  </script>
 					</div>
 <?php } ?>										

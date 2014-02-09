@@ -147,6 +147,7 @@
 								<li><a href="<?php echo site_url('unit/list') ?>">Unit</a></li>
 							</ul>
 						</li>
+						<li <?php echo ($this->uri->segment(1)=="production")?'class="active"':'' ?>><a href="<?php echo site_url('production/list') ?>"><i class="fa fa-dashboard"></i> Production</a></li>
 						<!--<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>
 						<li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
 						<li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>
