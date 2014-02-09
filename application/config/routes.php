@@ -40,11 +40,17 @@
 
 //Set Price
 $route["customer/browse/product/(:num)"] 	= "master_controller/get_product_list/$1";	
-$route["customer/browse/product"] 			= "master_controller/get_product_list";	
+
 $route["customer/price/edit/(:num)/(:num)"] = "master_controller/edit_setprice/$1/$2";
 $route["customer/price/add/(:num)"] 		= "master_controller/add_setprice/$1";
 $route["customer/price/list/(:num)"] 		= "master_controller/get_setprice_list/$1";
 $route["customer/price/list"] 				= "master_controller/get_setprice_list";
+
+//Production
+$route["production/edit/(:num)"] 				= "master_controller/edit_production/$1";
+$route["production/add"] 						= "master_controller/add_production";
+$route["production/list/(:num)"] 				= "master_controller/get_production_list/$1";
+$route["production/list"] 						= "master_controller/get_production_list";
 
 //Region
 $route["region/edit/(:num)"] 				= "master_controller/edit_region/$1";
@@ -77,6 +83,8 @@ $route["customer/list/(:num)"] 				= "master_controller/get_customers_list/$1";
 $route["customer/list"] 					= "master_controller/get_customers_list";
 
 //General
+$route["browse/product/(:num)/(:num)"] 		= "master_controller/get_product_list/$1/$2";	
+$route["browse/product/(:num)"] 			= "master_controller/get_product_list/$1";	
 $route["setup"] 							= "option_controller/edit_setup";
 $route["profile/edit"] 						= "user_controller/editprofile";
 $route["home"] 								= "user_controller/home";

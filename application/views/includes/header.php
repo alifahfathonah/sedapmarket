@@ -31,7 +31,7 @@
 		
 		<!-- DatePicker Plugins -->
 <?php   
-		if($this->uri->segment(1)=="customer") {
+	  if($this->uri->segment(1)=="customer") {
 		switch($this->uri->segment(2)) {
 			case "add":
 			case "edit": ?>
@@ -44,6 +44,17 @@
 <?php 			}
 			break;
 		}
+	  }
+	  else if($this->uri->segment(1)=="production") {
+		switch($this->uri->segment(2)) {
+			case "add":
+			case "edit": ?>
+		<link rel="stylesheet" href="<?php echo site_url("css/colorbox.css") ?>" type="text/css" />		
+		<link rel="stylesheet" href="<?php echo site_url("js/datepicker/jquery.datepick.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/datepicker/jquery.datepick.js") ?>"></script>
+		<script src="<?php echo site_url("js/colorbox/jquery.colorbox.js") ?>"></script>	
+<?php 		break;
+		}		
 	  }
 ?>
 		<script type="text/javascript">
@@ -82,10 +93,14 @@
 <?php   	}
 		}		
 	  } 
-	  else if($this->uri->segment(1)=="category") {
-?>		
-
-<?php } ?>
+	  else if($this->uri->segment(1)=="production") {
+		if($this->uri->segment(2)=="add" || $this->uri->segment(2)=="edit") { ?>		
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});	
+				$(".datef").datepick({
+					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
+				});
+<?php 	}
+	  } ?>
 
 			});
 		</script>

@@ -56,9 +56,9 @@ class MasterModel extends CI_Model {
 		$limit=(!$limit)?10:$limit;
 		
 		$this->db->limit($limit,$p);
-		$this->db->selct("a.*, b.product_name");
+		$this->db->select("a.*, b.product_name");
 		$this->db->from("production a");
-		$this->db->join("product b","b.product_id=a.product_id".'left');
+		$this->db->join("products b","b.product_id=a.product_id",'left');
 		$r = $this->db->get(); 
 		//echo debug($this->db->queries);
 		if($r) {
@@ -66,7 +66,7 @@ class MasterModel extends CI_Model {
 		}
 		else {
 			return false;
-		}s
+		}
 	}
 	
 	/***
@@ -92,7 +92,10 @@ class MasterModel extends CI_Model {
 	 */
 	public function get_production_detail($data) {
 		$this->db->where("production_id",$data);
-		$r = $this->db->get('production'); 
+		$this->db->select('a.*, b.product_name'); 
+		$this->db->from('production a'); 
+		$this->db->join('products b', 'b.product_id=a.product_id','left'); 
+		$r = $this->db->get(); 
 		if($r) {
 			return $r->row_array();
 		}

@@ -16,13 +16,13 @@
 						  <?php echo $err ?>
 					</div>
 <?php   } ?>					
-					<form role="form" method="post" action="<?php echo site_url('production/edit/'.$cust_id.'/'.$price_id) ?>">
+					<form role="form" method="post" action="<?php echo site_url('production/edit/'.$prod_id) ?>">
 						<div class="form-group">
 							<label>Product Name</label>
 							<input type="hidden" name="product_id" value="<?php echo $prod['product_id'] ?>">
 							<input class="form-control" name="product_name" value="<?php echo $prod['product_name'] ?>">
 							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Name.</p>'; ?>
-							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):''; ?>							
+							<?php echo (form_error("product_name",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):''; ?>							
 						</div>
 						<div class="form-group">
 							<label>Begining Stock</label>
@@ -30,24 +30,19 @@
 							<?php echo (form_error("begin_stock",'<p class="help-block">','</p>'))?form_error("begin_stock",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Beginning Stock.</p>'; ?>		
 						</div>
 						<div class="form-group">
-							<label>Discount 1</label>
-							<input class="form-control" name="disc1" value="<?php echo $prod['disc1'] ?>">
-							<?php echo (form_error("disc1",'<p class="help-block">','</p>'))?form_error("disc1",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>		
+							<label>Stock</label>
+							<input class="form-control" name="stock" value="<?php echo $prod['stock'] ?>">
+							<?php echo (form_error("stock",'<p class="help-block">','</p>'))?form_error("stock",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>		
 						</div>
 						<div class="form-group">
-							<label>Discount 2</label>
+							<label>Ending Stock</label>
 							<input class="form-control" name="disc2" value="<?php echo $prod['disc2'] ?>">
-							<?php echo (form_error("disc2",'<p class="help-block">','</p>'))?form_error("disc2",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>		
-						</div>
-						<div class="form-group">
-							<label>Discount 3</label>
-							<input class="form-control" name="disc3" value="<?php echo $prod['disc3'] ?>">
-							<?php echo (form_error("disc3",'<p class="help-block">','</p>'))?form_error("disc3",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>		
+							<?php echo (form_error("end_stock",'<p class="help-block">','</p>'))?form_error("end_stock",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>		
 						</div>
 						<div class="form-group">
 							<label>Description</label>
-							<textarea class="form-control" rows="3" name="price_desc"><?php echo $prod["price_desc"]?></textarea>
-							<?php echo (form_error("price_desc",'<p class="help-block">','</p>'))?form_error("price_desc",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter description for this Region.</p>'; ?>		
+							<textarea class="form-control" rows="3" name="production_desc"><?php echo $prod["production_desc"]?></textarea>
+							<?php echo (form_error("production_desc",'<p class="help-block">','</p>'))?form_error("production_desc",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter description for this Region.</p>'; ?>		
 						</div>
 							
 						<button type="submit" class="btn btn-primary" name="editbtn" value="update">Update</button>

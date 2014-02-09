@@ -5,7 +5,7 @@
 			<h3>Production</h3>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Production</h3>
+					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Production List</h3>
 				</div>
 				<div class="panel-body info">
 <?php $msg = $this->session->flashdata("message");
@@ -22,33 +22,31 @@
 									<tr>
 										<th><input type="checkbox" name="chkall" id="chkall" value="1"> <i class="fa fa-sort"></i></th>
 										<th>Product Name <i class="fa fa-sort"></i></th>
-										<th>Price <i class="fa fa-sort"></i></th>
-										<th>Discount 1 (%) <i class="fa fa-sort"></i></th>
-										<th>Discount 2 (%) <i class="fa fa-sort"></i></th>
-										<th>Discount 3 (%) <i class="fa fa-sort"></i></th>
+										<th>Beginuing Stock <i class="fa fa-sort"></i></th>
+										<th>Stock <i class="fa fa-sort"></i></th>
+										<th>Ending Stock <i class="fa fa-sort"></i></th>
 									</tr>
 								</thead>
 								<tbody>
 								
 <?php 
-if($pricelist) {
-	//echo debug($pricelist);
-	foreach($pricelist as $price) {
+if($productionlist) {
+	//echo debug($productionlist);
+	foreach($productionlist as $production) {
 ?> 	
 								<tr>
-									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $price["price_id"] ?>"></td>
-									<td><a href="<?php echo site_url('customer/price/edit/'.$cust_id.'/'.$price["price_id"]) ?>"><?php echo $price["product_name"] ?></a></td>
-									<td style="text-align:right"><?php echo number_format($price["price"]) ?></td>
-									<td style="text-align:right"><?php echo $price["disc1"] ?></td>
-									<td style="text-align:right"><?php echo $price["disc2"] ?></td>
-									<td style="text-align:right"><?php echo $price["disc3"] ?></td>
+									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $production["price_id"] ?>"></td>
+									<td><a href="<?php echo site_url('production/edit/'.$production["production_id"]) ?>"><?php echo $production["product_name"] ?></a></td>
+									<td style="text-align:right"><?php echo number_format($production["begin_stock"]) ?></td>
+									<td style="text-align:right"><?php echo number_format($production["stock"]) ?></td>
+									<td style="text-align:right"><?php echo number_format($production["end_stock"]) ?></td>
 								</tr>
 <?php 
 	}
 } 
 else { ?>
 								<tr>
-									<td colspan="6" class="empty">Not Found</td>
+									<td colspan="5" class="empty">Not Found</td>
 								</tr>
 <?php 
 	}	
@@ -56,7 +54,7 @@ else { ?>
 							</tbody>
 							</table>
 							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="price_addbtn" value="add" onclick="location.href='<?php echo site_url("customer/price/add/".$price["cust_id"])?>'">Add</button>
+								<button type="button" class="btn btn-primary" name="price_addbtn" value="add" onclick="location.href='<?php echo site_url("production/add")?>'">Add</button>
 								<button type="submit" class="btn btn-primary" name="price_delbtn" id="delbtn" value="delete">Delete</button>
 							</div>
 							<div class="col-lg-6 hal">	
