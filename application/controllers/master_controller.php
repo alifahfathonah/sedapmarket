@@ -18,8 +18,7 @@ class Master_Controller extends App_Controller {
 		$this->load->model("MasterModel");
 		if($this->input->post("addbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('production_date','Product Name', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('product_name','Product Name', 'trim|xss_clean');
+			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|xss_clean');
 			$this->form_validation->set_rules('begin_stock', 'Beginning Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('stock', 'Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('end_stock', 'Ending Stock', 'required|trim|integer|xss_clean');
@@ -42,11 +41,7 @@ class Master_Controller extends App_Controller {
 				redirect('production/add');
 			}
 		}
-		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
-			$tmp = substr($this->siteconfig[1]["option_value"],0,7);
-		else
-			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
-		$this->viewdata["formatdate"] = $tmp;			
+			
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/add_production',$this->viewdata);
 	}
@@ -56,11 +51,10 @@ class Master_Controller extends App_Controller {
 	 */
 	public function edit_production($id) {
 		$this->load->library("form_validation");
-		//echo debug($this->input->post());
+		//echo debug($this->siteconfig[1]["option_value"]);
 		$this->load->model("MasterModel");
 		if($this->input->post("editbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('production_date','Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|xss_clean');
 			$this->form_validation->set_rules('begin_stock', 'Beginning Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('stock', 'Stock', 'required|trim|integer|xss_clean');
@@ -70,8 +64,8 @@ class Master_Controller extends App_Controller {
 			if ($this->form_validation->run() == TRUE)
             {
 				$data = $this->input->post();
-				$data["production_id"] = $id;
-                $this->MasterModel->edit_production($data);   
+				$data["region_id"] = $id;
+                $this->MasterModel->edit_region($data);   
                 $this->viewdata["is_error"] = $this->MasterModel->is_error;
                 if($this->MasterModel->is_error==1) {
                     //echo $this->MasterModel->error_message;
@@ -84,17 +78,10 @@ class Master_Controller extends App_Controller {
                 }
 				redirect('production/edit/'.$id);
 			}
-			else
-				echo validation_errors();
 		}
-		
-		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
-			$tmp = substr($this->siteconfig[1]["option_value"],0,7);
-		else
-			$tmp = substr($this->siteconfig[1]["option_value"],0,6);	
-		$this->viewdata["formatdate"] = $tmp;		
-		$this->viewdata["prod_id"] = $id;
-		$this->viewdata["prod"] = $this->MasterModel->get_production_detail($id);
+			
+		$this->viewdata["region_id"] = $id;
+		$this->viewdata["production"] = $this->MasterModel->get_production_detail($id);
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/edit_production',$this->viewdata);
 	}
@@ -107,7 +94,7 @@ class Master_Controller extends App_Controller {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
-		if($this->input->post('production_delbtn')) {
+		if($this->input->post('region_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
 				//echo debug($d);
@@ -157,7 +144,7 @@ class Master_Controller extends App_Controller {
 	/***
 	 * Get product for set price 
 	 */
-	public function get_product_list($op=0,$p=0) {
+	public function get_product_list() {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
@@ -182,9 +169,8 @@ class Master_Controller extends App_Controller {
 		//$config['anchor_class'] = "";	
 		$this->pagination->initialize($config);
 		
-		$this->viewdata["op"] = $op;
 		$this->viewdata["page_link"] = $this->pagination->create_links();
-		$this->viewdata["prodlist"] = $this->MasterModel->get_product_all($p,$limit);
+		$this->viewdata["prodlist"] = $this->MasterModel->get_product_all();
 		
 		$this->load->view("masters/browse_product",$this->viewdata);
 	}
@@ -616,7 +602,7 @@ class Master_Controller extends App_Controller {
 			}
 		}
 			
-			
+		$this->viewdata["formatdate"] = $tmp;
 		$this->viewdata["catlist"] = $this->MasterModel->get_category();
 		$this->viewdata["unitlist"] = $this->MasterModel->get_unit();
 		//echo debug($this->viewdata["catlist"]);

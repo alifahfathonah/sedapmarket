@@ -26,17 +26,10 @@
 <?php 
 if($prodlist) {
 	foreach($prodlist as $prod) {
-		switch($op) {
-			case 1:
-				$isi=$prod["product_id"]."##".$prod["product_name"]."##".$prod["product_price"];
-			break;
-			case 2:
-				$isi=$prod["product_id"]."##".$prod["product_name"];
-		}
 ?> 	
 								<tr>
 									<td>
-										<a href="#" class="sendvalue" id="<?php echo $isi ?>"><?php echo $prod["product_name"] ?></a>
+										<a href="#" class="sendvalue" id="<?php echo $prod["product_id"]."##".$prod["product_name"]."##".$prod["product_price"] ?>"><?php echo $prod["product_name"] ?></a>
 									</td>
 									<td><?php echo $prod["category_name"] ?></td>
 									<td style="text-align:right"><?php echo number_format($prod["product_price"]) ?></td>

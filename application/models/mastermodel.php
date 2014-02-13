@@ -12,10 +12,8 @@ class MasterModel extends CI_Model {
 	 * Add Production
 	 */
 	public function add_production($data) {
-		$tmp = new DateTime($data["production_date"]);
-		$data["production_date"] = $tmp->format("Y-m-d");
 		$d = array (
-			"production_date" 	=> $data["production_date"],
+			"production_date" 	=> $data["prodction_date"],
 			"product_id" 		=> $data["product_id"],
 			"begin_stock" 		=> $data["begin_stock"],
 			"stock" 			=> $data["stock"],
@@ -32,12 +30,8 @@ class MasterModel extends CI_Model {
 	 * Edit Production
 	 */
 	public function edit_production($data) {
-		$tmp = new DateTime($data["production_date"]);
-		$data["production_date"] = $tmp->format("Y-m-d");
-		
 		$this->db->where('production_id',$data['production_id']);
 		$d = array (
-			"production_date" 		=> $data["production_date"],
 			"product_id" 			=> $data["product_id"],
 			"begin_stock" 			=> $data["begin_stock"],
 			"stock" 				=> $data["stock"],
@@ -45,7 +39,6 @@ class MasterModel extends CI_Model {
 			"production_desc" 		=> $data["production_desc"],
 		);
 		$this->db->update("production",$d);
-		//echo debug($this->db->queries);
 		$this->is_error = 0;
         $this->message = "Production has been updated successfully";
         $this->error_message = "";
@@ -63,9 +56,9 @@ class MasterModel extends CI_Model {
 		$limit=(!$limit)?10:$limit;
 		
 		$this->db->limit($limit,$p);
-		$this->db->select("a.*, b.product_name");
+		$this->db->selct("a.*, b.product_name");
 		$this->db->from("production a");
-		$this->db->join("products b","b.product_id=a.product_id",'left');
+		$this->db->join("product b","b.product_id=a.product_id".'left');
 		$r = $this->db->get(); 
 		//echo debug($this->db->queries);
 		if($r) {
@@ -73,7 +66,7 @@ class MasterModel extends CI_Model {
 		}
 		else {
 			return false;
-		}
+		}s
 	}
 	
 	/***
@@ -99,10 +92,7 @@ class MasterModel extends CI_Model {
 	 */
 	public function get_production_detail($data) {
 		$this->db->where("production_id",$data);
-		$this->db->select('a.*, b.product_name'); 
-		$this->db->from('production a'); 
-		$this->db->join('products b', 'b.product_id=a.product_id','left'); 
-		$r = $this->db->get(); 
+		$r = $this->db->get('production'); 
 		if($r) {
 			return $r->row_array();
 		}

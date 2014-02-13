@@ -2,10 +2,10 @@
 <div id="page-wrapper">	
 	<div class="row">
 		<div class="col-lg-12">
-			<h3>Production</h3>
+			<h3>Special Price</h3>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Production</h3>
+					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Special Price List for <?php echo $cust_name; ?></h3>
 				</div>
 				<div class="panel-body info">
 <?php $msg = $this->session->flashdata("message");
