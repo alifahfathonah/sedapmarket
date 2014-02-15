@@ -6,14 +6,117 @@ class MasterModel extends CI_Model {
     var $error_message = "";
     var $message = "";
 	
+	/*** Shipping ***/
+	
+	/***
+	 * Add Shipper
+	 */
+	public function add_shipper($data) {
+		$d = array (
+			"ship_name" 		=> $data["ship_name"],
+			"ship_desc" 		=> $data["ship_desc"],
+		);
+		$this->db->insert("shipper",$d);
+		$this->is_error = 0;
+        $this->message = "Shipper has been added successfully";
+        $this->error_message = "";
+	}
+	
+	/***
+	 * Edit shipper
+	 */
+	public function edit_shipper($data) {
+		$this->db->where('shipper_id',$data['shipper_id']);
+		$d = array (
+			"ship_name" 			=> $data["ship_name"],
+			"ship_desc" 			=> $data["ship_desc"],
+		);
+		$this->db->update("shipper",$d);
+		$this->is_error = 0;
+        $this->message = "Shipper has been updated successfully";
+        $this->error_message = "";
+	}
+	
+	
+	/***
+	 * Get Shipper List
+	 */
+	public function get_shipper_list($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("ship_name LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$r = $this->db->get('shipper'); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get Shipping Count
+	 */
+	public function get_shipper_count($itm="") {
+		if($itm) {
+			$where =" WHERE ship_name LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('shipper '.$where);
+	}
+	
+	/***
+	 * Delete Shipping
+	 */
+	public function delete_shipper($data) {
+		$this->db->where('ship_id',$data);
+		$this->db->delete("shipper",$d);
+		$this->is_error = 0;
+        $this->message = "Shipper has been deleted successfully";
+        $this->error_message = "";
+	}
+
+	/***
+	 * Get Shipping detail
+	 */
+	public function get_shipper_detail($data) {
+		$this->db->where("ship_id",$data);
+		$r = $this->db->get('shipper'); 
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get shipping Into form
+	 */
+	public function get_shipper() {
+		$r = $this->db->get('shipper'); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/*** Production ***/
 	
 	/***
 	 * Add Production
 	 */
 	public function add_production($data) {
+		$tmp = new DateTime($data["production_date"]);
+		$data["production_date"] = $tmp->format("Y-m-d");
 		$d = array (
-			"production_date" 	=> $data["prodction_date"],
+			"production_date" 	=> $data["production_date"],
 			"product_id" 		=> $data["product_id"],
 			"begin_stock" 		=> $data["begin_stock"],
 			"stock" 			=> $data["stock"],
@@ -30,8 +133,12 @@ class MasterModel extends CI_Model {
 	 * Edit Production
 	 */
 	public function edit_production($data) {
+		$tmp = new DateTime($data["production_date"]);
+		$data["production_date"] = $tmp->format("Y-m-d");
+		
 		$this->db->where('production_id',$data['production_id']);
 		$d = array (
+			"production_date" 		=> $data["production_date"],
 			"product_id" 			=> $data["product_id"],
 			"begin_stock" 			=> $data["begin_stock"],
 			"stock" 				=> $data["stock"],
@@ -39,6 +146,7 @@ class MasterModel extends CI_Model {
 			"production_desc" 		=> $data["production_desc"],
 		);
 		$this->db->update("production",$d);
+		//echo debug($this->db->queries);
 		$this->is_error = 0;
         $this->message = "Production has been updated successfully";
         $this->error_message = "";
@@ -56,9 +164,9 @@ class MasterModel extends CI_Model {
 		$limit=(!$limit)?10:$limit;
 		
 		$this->db->limit($limit,$p);
-		$this->db->selct("a.*, b.product_name");
+		$this->db->select("a.*, b.product_name");
 		$this->db->from("production a");
-		$this->db->join("product b","b.product_id=a.product_id".'left');
+		$this->db->join("products b","b.product_id=a.product_id",'left');
 		$r = $this->db->get(); 
 		//echo debug($this->db->queries);
 		if($r) {
@@ -66,7 +174,7 @@ class MasterModel extends CI_Model {
 		}
 		else {
 			return false;
-		}s
+		}
 	}
 	
 	/***
@@ -92,7 +200,10 @@ class MasterModel extends CI_Model {
 	 */
 	public function get_production_detail($data) {
 		$this->db->where("production_id",$data);
-		$r = $this->db->get('production'); 
+		$this->db->select('a.*, b.product_name'); 
+		$this->db->from('production a'); 
+		$this->db->join('products b', 'b.product_id=a.product_id','left'); 
+		$r = $this->db->get(); 
 		if($r) {
 			return $r->row_array();
 		}

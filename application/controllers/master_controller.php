@@ -8,6 +8,132 @@ class Master_Controller extends App_Controller {
 		//$this->load->view('users/login');
 	}
 	
+	/*** Shipping ***/
+	/***
+	 * Add Shipping
+	 */
+	public function add_shipper() {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		
+		if($this->input->post("addbtn")) {
+			$this->load->model("MasterModel");
+			$this->form_validation->set_rules('shipper_name', 'Shipper Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('shipper_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				 $data = $this->input->post();
+                
+                $this->MasterModel->add_shipper($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('category/add');
+			}
+		}
+		
+		$this->viewdata["formatdate"] = $tmp;
+		$this->load->view('masters/add_shipper',$this->viewdata);
+	}
+	
+	/***
+	 * Edit Shipping
+	 */
+	public function edit_shipper($id) {
+		$this->load->library("form_validation");
+		//echo debug($this->siteconfig[1]["option_value"]);
+		$this->load->model("MasterModel");
+		if($this->input->post("editbtn")) {
+			
+			$this->form_validation->set_rules('shipper_name', 'Shipper Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('shipper_desc', 'Description', 'trim|xss_clean');
+			
+			if ($this->form_validation->run() == TRUE)
+            {
+				$data = $this->input->post();
+				$data["shipper_id"] = $id;	
+                $this->MasterModel->edit_shipper($data);   
+                $this->viewdata["is_error"] = $this->MasterModel->is_error;
+                if($this->MasterModel->is_error==1) {
+                    //echo $this->MasterModel->error_message;
+                    $this->session->set_flashdata("error",$this->MasterModel->error_message);
+                    //$this->session->unset_flashdata("message");
+                }
+                else {
+                    //$this->session->unset_flashdata("error");
+                    $this->session->set_flashdata("message",$this->MasterModel->message);
+                }
+				redirect('shipper/edit/'.$id);
+			}
+		}
+			
+		$this->viewdata["formatdate"] = $tmp;
+		$this->viewdata["shipper_id"] = $id;
+		$this->viewdata["shipper"] = $this->MasterModel->get_shipper_detail($id);
+		//echo debug($this->viewdata["cat"]);
+		$this->load->view('masters/edit_shipper',$this->viewdata);
+	}
+	
+	/***
+	 * Get Shipper List
+	 */
+	public function get_shipper_list($p=0) {
+		$this->load->library("pagination");
+		$this->load->model("MasterModel");
+		
+		if($this->input->post('shipper_delbtn')) {
+			$data = $this->input->post();
+			foreach($data["chkbox"] as $d) {
+				//echo debug($d);
+				$this->MasterModel->delete_shipper($d);
+			}
+			if($this->MasterModel->is_error==1) {
+				//echo $this->MasterModel->error_message;
+				$this->session->set_flashdata("error",$this->MasterModel->error_message);
+				//$this->session->unset_flashdata("message");
+			}
+			else {
+				//$this->session->unset_flashdata("error");
+				$this->session->set_flashdata("message",$this->MasterModel->message);
+			}
+			redirect('shipper/list');
+			
+		}
+		
+		$limit = $this->siteconfig[2]["option_value"]; 
+		
+		$config['base_url'] 	= site_url('shipper/list');
+		$config['total_rows'] 	= $this->MasterModel->get_shipper_count($itm);
+		$config['per_page'] 	= $limit;
+		$config['uri_segment'] 	= 3;
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		//$config['anchor_class'] = "";	
+		$this->pagination->initialize($config);
+		
+		$this->viewdata["page_link"] = $this->pagination->create_links();
+		$this->viewdata["shiplist"] = $this->MasterModel->get_shipper_list($itm,$p,$limit);
+		$this->load->view('masters/get_shipper_list',$this->viewdata);
+	}
+	
 	/*** Production ***/
 	/***
 	 * Add production
@@ -18,7 +144,8 @@ class Master_Controller extends App_Controller {
 		$this->load->model("MasterModel");
 		if($this->input->post("addbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|xss_clean');
+			$this->form_validation->set_rules('production_date','Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('product_name','Product Name', 'trim|xss_clean');
 			$this->form_validation->set_rules('begin_stock', 'Beginning Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('stock', 'Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('end_stock', 'Ending Stock', 'required|trim|integer|xss_clean');
@@ -41,7 +168,11 @@ class Master_Controller extends App_Controller {
 				redirect('production/add');
 			}
 		}
-			
+		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
+			$tmp = substr($this->siteconfig[1]["option_value"],0,7);
+		else
+			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
+		$this->viewdata["formatdate"] = $tmp;			
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/add_production',$this->viewdata);
 	}
@@ -51,10 +182,11 @@ class Master_Controller extends App_Controller {
 	 */
 	public function edit_production($id) {
 		$this->load->library("form_validation");
-		//echo debug($this->siteconfig[1]["option_value"]);
+		//echo debug($this->input->post());
 		$this->load->model("MasterModel");
 		if($this->input->post("editbtn")) {
 			$this->form_validation->set_rules('product_id', 'Product Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('production_date','Product Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|xss_clean');
 			$this->form_validation->set_rules('begin_stock', 'Beginning Stock', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('stock', 'Stock', 'required|trim|integer|xss_clean');
@@ -64,8 +196,8 @@ class Master_Controller extends App_Controller {
 			if ($this->form_validation->run() == TRUE)
             {
 				$data = $this->input->post();
-				$data["region_id"] = $id;
-                $this->MasterModel->edit_region($data);   
+				$data["production_id"] = $id;
+                $this->MasterModel->edit_production($data);   
                 $this->viewdata["is_error"] = $this->MasterModel->is_error;
                 if($this->MasterModel->is_error==1) {
                     //echo $this->MasterModel->error_message;
@@ -78,10 +210,17 @@ class Master_Controller extends App_Controller {
                 }
 				redirect('production/edit/'.$id);
 			}
+			else
+				echo validation_errors();
 		}
-			
-		$this->viewdata["region_id"] = $id;
-		$this->viewdata["production"] = $this->MasterModel->get_production_detail($id);
+		
+		if ($this->siteconfig[1]["option_value"]=="M d Y H:i:s")
+			$tmp = substr($this->siteconfig[1]["option_value"],0,7);
+		else
+			$tmp = substr($this->siteconfig[1]["option_value"],0,6);	
+		$this->viewdata["formatdate"] = $tmp;		
+		$this->viewdata["prod_id"] = $id;
+		$this->viewdata["prod"] = $this->MasterModel->get_production_detail($id);
 		//echo debug($this->viewdata["catlist"]);
 		$this->load->view('masters/edit_production',$this->viewdata);
 	}
@@ -94,7 +233,7 @@ class Master_Controller extends App_Controller {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
-		if($this->input->post('region_delbtn')) {
+		if($this->input->post('production_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
 				//echo debug($d);
@@ -142,9 +281,9 @@ class Master_Controller extends App_Controller {
 	
 	/*** Set Price ***/
 	/***
-	 * Get product for set price 
+	 * Get product for set price and Production 
 	 */
-	public function get_product_list() {
+	public function get_product_list($op=0,$p=0) {
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
@@ -169,8 +308,9 @@ class Master_Controller extends App_Controller {
 		//$config['anchor_class'] = "";	
 		$this->pagination->initialize($config);
 		
+		$this->viewdata["op"] = $op;
 		$this->viewdata["page_link"] = $this->pagination->create_links();
-		$this->viewdata["prodlist"] = $this->MasterModel->get_product_all();
+		$this->viewdata["prodlist"] = $this->MasterModel->get_product_all($p,$limit);
 		
 		$this->load->view("masters/browse_product",$this->viewdata);
 	}

@@ -18,6 +18,7 @@
 <?php   } ?>					
 					<form role="form" method="post" action="<?php echo site_url('setup') ?>" enctype="multipart/form-data">
 <?php 	if($setuplist) {
+			$j=0;
 			foreach($setuplist as $setup) {
 				switch($setup["option_name"]) {
 					case "SITETITLE":
@@ -25,37 +26,50 @@
 					case "PAGEITEM":?>	
 						<div class="form-group">
 							<label>
-								<input type="hidden" name="option_name[]" value="<?php echo $setup["option_name"]?>">
+								<input type="hidden" name="option_name[<?php echo $j ?>]" value="<?php echo $setup["option_name"]?>">
 								<?php echo $setup["option_title"]?>
 							</label>
-							<input class="form-control" name="option_value[]" type="text"  value="<?php echo $setup["option_value"] ?>">
-							<?php echo (form_error("option_value[]",'<p class="help-block">','</p>'))?form_error("option_value[]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
+							<input class="form-control" name="option_value[<?php echo $j ?>]" type="text"  value="<?php echo $setup["option_value"] ?>">
+							<?php echo (form_error("option_value[".$j."]",'<p class="help-block">','</p>'))?form_error("option_value[".$j."]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
 						</div>
 <?php 				break;
-					//case "FAVICON": ?>
-					<!--	<div class="form-group">
+					case "FAVICON": 
+						if($setup["option_name"]=="FAVICON") { 
+							if($setup["option_value"]) { 
+								$v=$setup["option_value"];
+								$gbr="images/".$setup["option_value"];
+							} else { 
+								$v="";
+								$gbr="images/static/noimage.png";
+							}
+						}	  					
+?>
+						<div class="form-group">
 							<label>
-								<input type="hidden" name="option_name[]" value="<?php echo $setup["option_name"]?>">
+								<input type="hidden" name="option_name[<?php echo $j ?>]" value="<?php echo $setup["option_name"]?>">
 								<?php echo $setup["option_title"]?>
+								<br><img src="<?php echo site_url($gbr) ?>">
 							</label>
-							<input name="option_value[]" type="file"  value="">
-							<?php echo (form_error("option_value[]",'<p class="help-block">','</p>'))?form_error("option_value[]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
-						</div> -->
-<?php				//break;	
+							<input name="backfile1" type="hidden"  value="<?php echo $setup["option_value"]?>">
+							<input name="filegmb2" type="file"  value="">
+							<?php echo (form_error("filegmb2",'<p class="help-block">','</p>'))?form_error("filegmb2",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
+						</div>
+<?php				break;	
 					case "FORMATDATE": ?>
 						<div class="form-group">
 							<label>
-								<input type="hidden" name="option_name[]" value="<?php echo $setup["option_name"]?>">
+								<input type="hidden" name="option_name[<?php echo $j ?>]" value="<?php echo $setup["option_name"]?>">
 								<?php echo $setup["option_title"]?>
 							</label>
-							<select class="form-control" name="option_value[]">
+							<select class="form-control" name="option_value[<?php echo $j ?>]">
 							  <option value="M d, Y H:i:s" <?php echo ($setup["option_value"]=="M d, Y H:i:s")?"selected='seklected'":"" ?> ><?php echo date("M d, Y H:i:s") ?></option>
 								<option value="Y-m-d H:i:s" <?php echo ($setup["option_value"]=="Y-m-d H:i:s")?"selected='seklected'":"" ?>><?php echo date("Y-m-d H:i:s") ?></option>
 							</select>
-							<?php echo (form_error("option_value[]",'<p class="help-block">','</p>'))?form_error("option_value[]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
+							<?php echo (form_error("option_value[".$j."]",'<p class="help-block">','</p>'))?form_error("option_value[".$j."]",'<p class="help-block errors">','</p>'):'<p class="help-block">'.$setup["option_desc"].'</p>'; ?>
 						</div>
 <?php				break;	
 				}
+				$j++;
 			}
 		} ?>			
 						<button type="submit" class="btn btn-primary" value="Update" name="editbtn">Update</button>			

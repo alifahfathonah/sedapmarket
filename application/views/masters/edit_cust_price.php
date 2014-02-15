@@ -16,13 +16,14 @@
 						  <?php echo $err ?>
 					</div>
 <?php   } ?>					
-					<form role="form" method="post" action="<?php echo site_url('customer/price/edit/'.$cust_id.'/'.$price_id) ?>">
+					<form role="form" method="post" action="<?php echo site_url('customer/price/edit/'.$cust_id.'/'.$price_id) ?>" name="frm1">
 						<div class="form-group">
 							<label>Product Name</label>
 							<input type="hidden" name="product_id" value="<?php echo $price['product_id'] ?>">
-							<input class="form-control" name="product_name" value="<?php echo $price['product_name'] ?>">
+							<input class="form-control product_name" name="product_name" value="<?php echo $price['product_name'] ?>">
+							<a class="iframe" href="<?php echo site_url('browse/product/1')?>" title="Click here to choose product" ><img src="<?php echo site_url('images/static/browse.png') ?>"></a>
 							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Name.</p>'; ?>
-							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):''; ?>							
+							<?php echo (form_error("product_name",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):''; ?>							
 						</div>
 						<div class="form-group">
 							<label>Price</label>

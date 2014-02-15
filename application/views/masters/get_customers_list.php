@@ -63,7 +63,7 @@ if($custlist) {
 } 
 else { ?>
 								<tr>
-									<td colspan="9" class="empty">Not Found</td>
+									<td colspan="10" class="empty">Not Found</td>
 								</tr>
 <?php 
 	}	
