@@ -16,7 +16,7 @@
 						  <?php echo $err ?>
 					</div>
 <?php   } ?>					
-					<form role="form" method="post" action="<?php echo site_url('shipper/edit/'.$shipper_id) ?>">
+					<form role="form" method="post" action="<?php echo site_url('shipper/edit/'.$ship_id) ?>">
 						<div class="form-group">
 							<label>Shipper Name</label>
 							<input class="form-control" name="ship_name" value="<?php echo $shipper['ship_name'] ?>">

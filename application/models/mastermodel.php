@@ -26,7 +26,7 @@ class MasterModel extends CI_Model {
 	 * Edit shipper
 	 */
 	public function edit_shipper($data) {
-		$this->db->where('shipper_id',$data['shipper_id']);
+		$this->db->where('ship_id',$data['shipper_id']);
 		$d = array (
 			"ship_name" 			=> $data["ship_name"],
 			"ship_desc" 			=> $data["ship_desc"],

@@ -18,8 +18,8 @@ class Master_Controller extends App_Controller {
 		
 		if($this->input->post("addbtn")) {
 			$this->load->model("MasterModel");
-			$this->form_validation->set_rules('shipper_name', 'Shipper Name', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('shipper_desc', 'Description', 'trim|xss_clean');
+			$this->form_validation->set_rules('ship_name', 'Shipper Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('ship_desc', 'Description', 'trim|xss_clean');
 			
 			if ($this->form_validation->run() == TRUE)
             {
@@ -36,7 +36,7 @@ class Master_Controller extends App_Controller {
                     //$this->session->unset_flashdata("error");
                     $this->session->set_flashdata("message",$this->MasterModel->message);
                 }
-				redirect('category/add');
+				redirect('shipper/add');
 			}
 		}
 		
@@ -53,8 +53,8 @@ class Master_Controller extends App_Controller {
 		$this->load->model("MasterModel");
 		if($this->input->post("editbtn")) {
 			
-			$this->form_validation->set_rules('shipper_name', 'Shipper Name', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('shipper_desc', 'Description', 'trim|xss_clean');
+			$this->form_validation->set_rules('ship_name', 'Shipper Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('ship_desc', 'Description', 'trim|xss_clean');
 			
 			if ($this->form_validation->run() == TRUE)
             {
@@ -76,7 +76,7 @@ class Master_Controller extends App_Controller {
 		}
 			
 		$this->viewdata["formatdate"] = $tmp;
-		$this->viewdata["shipper_id"] = $id;
+		$this->viewdata["ship_id"] = $id;
 		$this->viewdata["shipper"] = $this->MasterModel->get_shipper_detail($id);
 		//echo debug($this->viewdata["cat"]);
 		$this->load->view('masters/edit_shipper',$this->viewdata);
@@ -130,7 +130,7 @@ class Master_Controller extends App_Controller {
 		$this->pagination->initialize($config);
 		
 		$this->viewdata["page_link"] = $this->pagination->create_links();
-		$this->viewdata["shiplist"] = $this->MasterModel->get_shipper_list($itm,$p,$limit);
+		$this->viewdata["shipperlist"] = $this->MasterModel->get_shipper_list($itm,$p,$limit);
 		$this->load->view('masters/get_shipper_list',$this->viewdata);
 	}
 	

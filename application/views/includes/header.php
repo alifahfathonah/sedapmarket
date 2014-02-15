@@ -145,6 +145,7 @@
 								<li><a href="<?php echo site_url('category/list') ?>">Category</a></li>
 								<li><a href="<?php echo site_url('products/list') ?>">Products</a></li>
 								<li><a href="<?php echo site_url('unit/list') ?>">Unit</a></li>
+								<li><a href="<?php echo site_url('shipper/list') ?>">Shipping</a></li>
 							</ul>
 						</li>
 						<li <?php echo ($this->uri->segment(1)=="production")?'class="active"':'' ?>><a href="<?php echo site_url('production/list') ?>"><i class="fa fa-dashboard"></i> Production</a></li>

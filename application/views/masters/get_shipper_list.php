@@ -2,10 +2,10 @@
 <div id="page-wrapper">	
 	<div class="row">
 		<div class="col-lg-12">
-			<h3>Shipper</h3>
+			<h3>Shipping</h3>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Shipper List</h3>
+					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Shipping List</h3>
 				</div>
 				<div class="panel-body info">
 <?php $msg = $this->session->flashdata("message");
@@ -33,8 +33,8 @@ if($shipperlist) {
 ?> 	
 								<tr>
 									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cat["shipper_id"] ?>"></td>
-									<td><a href="<?php echo site_url('shipper/edit/'.$shipper["shipper_id"]) ?>"><?php echo $shipper["shipper_name"] ?></a></td>
-									<td><?php echo $shipper["shipper_desc"] ?></td>
+									<td><a href="<?php echo site_url('shipper/edit/'.$shipper["ship_id"]) ?>"><?php echo $shipper["ship_name"] ?></a></td>
+									<td><?php echo $shipper["ship_desc"] ?></td>
 									
 								</tr>
 <?php 

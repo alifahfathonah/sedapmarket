@@ -52,6 +52,12 @@ $route["production/add"] 						= "master_controller/add_production";
 $route["production/list/(:num)"] 				= "master_controller/get_production_list/$1";
 $route["production/list"] 						= "master_controller/get_production_list";
 
+//Shipping
+$route["shipper/edit/(:num)"] 				= "master_controller/edit_shipper/$1";
+$route["shipper/add"] 						= "master_controller/add_shipper";
+$route["shipper/list/(:num)"] 				= "master_controller/get_shipper_list/$1";
+$route["shipper/list"] 						= "master_controller/get_shipper_list";
+
 //Region
 $route["region/edit/(:num)"] 				= "master_controller/edit_region/$1";
 $route["region/add"] 						= "master_controller/add_region";
