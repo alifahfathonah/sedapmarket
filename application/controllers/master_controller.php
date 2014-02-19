@@ -86,9 +86,11 @@ class Master_Controller extends App_Controller {
 	 * Get Shipper List
 	 */
 	public function get_shipper_list($p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
+		$itm = $this->input->post("itm");
 		if($this->input->post('shipper_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
@@ -230,9 +232,11 @@ class Master_Controller extends App_Controller {
 	 * Get Production List
 	 */
 	public function get_production_list($p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
+		$itm = $this->input->post("itm");
 		if($this->input->post('production_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
@@ -284,8 +288,11 @@ class Master_Controller extends App_Controller {
 	 * Get product for set price and Production 
 	 */
 	public function get_product_list($op=0,$p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
+		
+		$itm = $this->input->post("itm");
 		
 		$limit = $this->siteconfig[2]["option_value"]; 
 		//echo debug($this->siteconfig);
@@ -409,9 +416,11 @@ class Master_Controller extends App_Controller {
 	 * Get Set Price List
 	 */
 	public function get_setprice_list($cust_id,$p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("OrderModel");
 		
+		$itm = $this->input->post("itm");
 		if($this->input->post('price_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
@@ -535,9 +544,11 @@ class Master_Controller extends App_Controller {
 	 * Get Region List
 	 */
 	public function get_regions_list($p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		
+		$itm = $this->input->post("itm");
 		if($this->input->post('region_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {
@@ -660,8 +671,11 @@ class Master_Controller extends App_Controller {
 	 * Get Unit List
 	 */
 	public function get_units_list($p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
+		
+		$itm = $this->input->post("itm");
 		
 		if($this->input->post('unit_delbtn')) {
 			$data = $this->input->post();
@@ -796,8 +810,11 @@ class Master_Controller extends App_Controller {
 	 * Get Products List
 	 */
 	public function get_products_list($p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
+		
+		$itm = $this->input->post("itm");
 		
 		if($this->input->post('product_delbtn')) {
 			$data = $this->input->post();
@@ -923,8 +940,11 @@ class Master_Controller extends App_Controller {
 	 * Get Category List
 	 */
 	public function get_category_list($p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
+		
+		$itm = $this->input->post("itm");
 		
 		if($this->input->post('category_delbtn')) {
 			$data = $this->input->post();
@@ -1080,10 +1100,14 @@ class Master_Controller extends App_Controller {
 	 * Get Customer List
 	 */
 	public function get_customers_list($p=0) {
+		$this->load->library("form_validation");
 		$this->load->library("pagination");
 		$this->load->model("MasterModel");
 		$this->load->model("OrderModel");
 		//echo debug($this->input->post());
+		
+		$itm = $this->input->post("itm");
+		
 		if($this->input->post('cust_delbtn')) {
 			$data = $this->input->post();
 			foreach($data["chkbox"] as $d) {

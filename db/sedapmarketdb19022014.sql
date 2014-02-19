@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2014 at 12:16 PM
+-- Generation Time: Feb 19, 2014 at 05:15 PM
 -- Server version: 5.5.34
 -- PHP Version: 5.4.22
 
@@ -31,16 +31,17 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(255) NOT NULL,
   `category_desc` text NOT NULL,
+  `del` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`category_id`, `category_name`, `category_desc`) VALUES
-(1, 'Kecap', ''),
-(2, 'sambal', '');
+INSERT INTO `category` (`category_id`, `category_name`, `category_desc`, `del`) VALUES
+(1, 'Kecap', '', 0),
+(2, 'sambal', '', 0);
 
 -- --------------------------------------------------------
 
@@ -56,15 +57,15 @@ CREATE TABLE IF NOT EXISTS `configuration` (
   `option_desc` text NOT NULL,
   `urut` int(11) NOT NULL,
   PRIMARY KEY (`option_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `configuration`
 --
 
 INSERT INTO `configuration` (`option_name`, `option_title`, `option_value`, `option_desc`, `urut`) VALUES
-('FAVICON', 'File favicon icon', 'favicon.ico', 'File name of your favicon icon', 3),
-('FORMATDATE', 'Format Date', 'Y-m-d H:i:s', 'Format Date', 5),
+('FAVICON', 'File favicon icon', '', 'File name of your favicon icon', 3),
+('FORMATDATE', 'Format Date', 'M d, Y H:i:s', 'Format Date', 5),
 ('PAGEITEM', 'Amount Item', '10', 'Amount item per 1 page.', 4),
 ('SITEDESC', 'Site Description', 'Marketing Application', 'Explain your website', 2),
 ('SITETITLE', 'Site Title', 'Sedap Market', 'Web site Name/Application Name', 1);
@@ -91,15 +92,17 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `cust_mobilenumber` varchar(50) NOT NULL,
   `cust_emailaddress` varchar(100) NOT NULL,
   `cust_regdate` date NOT NULL,
+  `del` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cust_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`cust_id`, `cust_type`, `cust_fullname`, `cust_npwp`, `cust_address`, `cust_city`, `cust_state`, `region_id`, `cust_payby`, `cust_phonenumber`, `cust_faxnumber`, `cust_mobilenumber`, `cust_emailaddress`, `cust_regdate`) VALUES
-(2, 'D', 'Ade Sutrisno', '4453343422452', 'Jl Ciledug Blok V/22', 'Jakarta Barat', 'DKI Jakarta', 1, 'I', '227627262', '', '', '', '2014-02-06');
+INSERT INTO `customers` (`cust_id`, `cust_type`, `cust_fullname`, `cust_npwp`, `cust_address`, `cust_city`, `cust_state`, `region_id`, `cust_payby`, `cust_phonenumber`, `cust_faxnumber`, `cust_mobilenumber`, `cust_emailaddress`, `cust_regdate`, `del`) VALUES
+(2, 'D', 'Ade Sutrisno', '4453343422452', 'Jl Ciledug Blok V/22', 'Jakarta Barat', 'DKI Jakarta', 1, 'I', '227627262', '', '', '', '2014-02-06', 0),
+(3, 'D', 'Adi', '676768', 'aaaa', 'aaa', 'aaa', 1, 'C', 'aaa', '', '', '', '2014-02-15', 0);
 
 -- --------------------------------------------------------
 
@@ -118,14 +121,14 @@ CREATE TABLE IF NOT EXISTS `customer_price` (
   `disc3` float(5,2) NOT NULL,
   `price_desc` text NOT NULL,
   PRIMARY KEY (`price_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `customer_price`
 --
 
 INSERT INTO `customer_price` (`price_id`, `cust_id`, `product_id`, `price`, `disc1`, `disc2`, `disc3`, `price_desc`) VALUES
-(1, 2, 1, 15000, 1.00, 1.00, 1.00, '1');
+(1, 2, 1, 25000, 1.00, 2.00, 3.00, '1');
 
 -- --------------------------------------------------------
 
@@ -144,6 +147,74 @@ CREATE TABLE IF NOT EXISTS `groups` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `po`
+--
+
+DROP TABLE IF EXISTS `po`;
+CREATE TABLE IF NOT EXISTS `po` (
+  `po_id` int(11) NOT NULL AUTO_INCREMENT,
+  `po_date` date NOT NULL,
+  `po_no` varchar(255) NOT NULL,
+  `cust_id` int(11) NOT NULL,
+  `ship_id` int(11) NOT NULL DEFAULT '0',
+  `po_desc` text NOT NULL,
+  PRIMARY KEY (`po_id`),
+  UNIQUE KEY `po_no` (`po_no`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `po`
+--
+
+INSERT INTO `po` (`po_id`, `po_date`, `po_no`, `cust_id`, `ship_id`, `po_desc`) VALUES
+(2, '2014-02-20', 'swwwss', 2, 1, 'as');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `po_detail`
+--
+
+DROP TABLE IF EXISTS `po_detail`;
+CREATE TABLE IF NOT EXISTS `po_detail` (
+  `detail_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `unit_id` int(11) NOT NULL,
+  `price` bigint(20) NOT NULL,
+  `disc` float(5,2) NOT NULL DEFAULT '0.00',
+  `subtotal` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `production`
+--
+
+DROP TABLE IF EXISTS `production`;
+CREATE TABLE IF NOT EXISTS `production` (
+  `production_id` int(11) NOT NULL AUTO_INCREMENT,
+  `production_date` date NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `begin_stock` int(11) NOT NULL DEFAULT '0',
+  `stock` int(11) NOT NULL DEFAULT '0',
+  `end_stock` int(11) NOT NULL DEFAULT '0',
+  `production_desc` text,
+  PRIMARY KEY (`production_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `production`
+--
+
+INSERT INTO `production` (`production_id`, `production_date`, `product_id`, `begin_stock`, `stock`, `end_stock`, `production_desc`) VALUES
+(1, '2014-02-14', 2, 10, 10, 10, '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -157,16 +228,17 @@ CREATE TABLE IF NOT EXISTS `products` (
   `unit_id` int(11) NOT NULL,
   `product_price` bigint(20) NOT NULL DEFAULT '0',
   `product_disc` float(5,2) NOT NULL DEFAULT '0.00',
+  `del` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `product_kemasan`, `product_stock`, `unit_id`, `product_price`, `product_disc`) VALUES
-(1, 1, 'Bingo Manis', 'Yes', 100, 1, 15000, 0.00),
-(2, 1, 'Bingo asin', 'Yes', 100, 1, 250000, 0.00);
+INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `product_kemasan`, `product_stock`, `unit_id`, `product_price`, `product_disc`, `del`) VALUES
+(1, 1, 'Bingo Manis', 'Yes', 100, 1, 15000, 0.00, 0),
+(2, 1, 'Bingo asin', 'Yes', 100, 1, 250000, 0.00, 0);
 
 -- --------------------------------------------------------
 
@@ -180,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `region` (
   `region_name` varchar(255) NOT NULL,
   `region_desc` text NOT NULL,
   PRIMARY KEY (`region_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `region`
@@ -188,6 +260,63 @@ CREATE TABLE IF NOT EXISTS `region` (
 
 INSERT INTO `region` (`region_id`, `region_name`, `region_desc`) VALUES
 (1, 'Jakarta', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipper`
+--
+
+DROP TABLE IF EXISTS `shipper`;
+CREATE TABLE IF NOT EXISTS `shipper` (
+  `ship_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ship_name` varchar(255) NOT NULL,
+  `ship_desc` text NOT NULL,
+  PRIMARY KEY (`ship_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `shipper`
+--
+
+INSERT INTO `shipper` (`ship_id`, `ship_name`, `ship_desc`) VALUES
+(1, 'aaaa2', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transcation`
+--
+
+DROP TABLE IF EXISTS `transcation`;
+CREATE TABLE IF NOT EXISTS `transcation` (
+  `transcation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trans_date` date NOT NULL,
+  `no_sj` varchar(255) NOT NULL,
+  `no_mobil` varchar(255) NOT NULL,
+  `no_container` varchar(255) NOT NULL,
+  `no_seal` varchar(255) NOT NULL,
+  PRIMARY KEY (`transcation_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transcation_detail`
+--
+
+DROP TABLE IF EXISTS `transcation_detail`;
+CREATE TABLE IF NOT EXISTS `transcation_detail` (
+  `detail_id` int(11) NOT NULL AUTO_INCREMENT,
+  `transcation_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL DEFAULT '0',
+  `unit_id` int(11) NOT NULL,
+  `product_extra_id` int(11) NOT NULL,
+  `qty_extra` int(11) NOT NULL DEFAULT '0',
+  `unit_extra_id` int(11) NOT NULL,
+  PRIMARY KEY (`detail_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -201,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `unit` (
   `unit_name` varchar(255) NOT NULL,
   `unit_desc` text,
   PRIMARY KEY (`unit_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `unit`
@@ -234,7 +363,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_pass`, `user_name`, `user_lastlogindate`, `group_id`) VALUES
-(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-02-06 11:41:56', 1),
+(1, 'andre@asutarko.com', 'e158843af981dc589768882974440a59a90c616d', 'Admin', '2014-02-19 18:16:43', 1),
 (2, 'lusiana27@yahoo.com', 'e85ca3eb7b80f152a776e22dbb6d8bee25f90020', 'Admin', '0000-00-00 00:00:00', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

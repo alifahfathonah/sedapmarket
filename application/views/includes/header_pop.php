@@ -21,11 +21,25 @@
 				$(".sendvalue").click(function() { 
 					var tmp = $(this).attr('id');
 					t = tmp.split("##");
+<?php switch($this->uri->segment(2)) { 
+		case "product":
+?>
 					parent.frm1.product_id.value=t[0];
 					parent.frm1.product_name.value=t[1];
-<?php if($op==1) { ?>					
+<?php 		if($op==1) { ?>					
 					parent.frm1.price.value=t[2];
-<?php } ?>					
+<?php 		} 
+		break;
+		case "customers": ?>
+					parent.frm1.cust_id.value=t[0];
+					parent.frm1.cust_fullname.value=t[1];	
+<?php	break;
+		case "ship": ?>
+					parent.frm1.ship_id.value=t[0];
+					parent.frm1.ship_name.value=t[1];	
+<?php	break;
+	 }	
+?>					
 					parent.$.colorbox.close();
 					return false;
 				});

@@ -58,7 +58,23 @@
 	display:inline-block;
 }
 
-.product_name {
+.Inputhidden,
+.Inputhidden:focus {
+	display:inline-block;
+	border:none!important;
+	background:#fff!important;
+	box-shadow:none!important;
+	transition:none!important;
+}
+
+.searchitm {
+	width:50%;
+	display:inline;
+}
+
+.product_name,
+.cust_name,
+.ship_name {
 	width:90%;
 	display:inline;
 }

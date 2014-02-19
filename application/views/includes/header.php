@@ -56,6 +56,22 @@
 <?php 		break;
 		}		
 	  }
+	  else if($this->uri->segment(1)=="po") {
+		switch($this->uri->segment(2)) {
+			case "add":
+			case "edit": ?>
+		<link rel="stylesheet" href="<?php echo site_url("js/datepicker/jquery.datepick.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/datepicker/jquery.datepick.js") ?>"></script>
+		<link rel="stylesheet" href="<?php echo site_url("css/colorbox.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/colorbox/jquery.colorbox.js") ?>"></script>
+<?php 		case "detail": 
+				if($this->uri->segment(3)!="list") { ?>
+		<link rel="stylesheet" href="<?php echo site_url("css/colorbox.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/colorbox/jquery.colorbox.js") ?>"></script>	
+<?php 			}
+			break;
+		}
+	  }
 ?>
 		<script type="text/javascript">
 			$(function() {
@@ -100,7 +116,23 @@
 					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
 				});
 <?php 	}
-	  } ?>
+	  } 
+	  else if($this->uri->segment(1)=="po") {
+		if($this->uri->segment(2)=="add" || $this->uri->segment(2)=="edit") { ?>
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+				$(".datef").datepick({
+					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
+				});
+			
+<?php 	}
+		else if($this->uri->segment(2)=="detail") { 
+			if($this->uri->segment(3)=="add" || $this->uri->segment(3)=="edit") { ?>
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+				
+<?php		}
+		}
+	  }
+?>
 
 			});
 		</script>
@@ -149,6 +181,7 @@
 							</ul>
 						</li>
 						<li <?php echo ($this->uri->segment(1)=="production")?'class="active"':'' ?>><a href="<?php echo site_url('production/list') ?>"><i class="fa fa-dashboard"></i> Production</a></li>
+						<li <?php echo ($this->uri->segment(1)=="po")?'class="active"':'' ?>><a href="<?php echo site_url('po/list') ?>"><i class="fa fa-dashboard"></i> Purchase Order</a></li>
 						<!--<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>
 						<li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
 						<li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>

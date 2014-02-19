@@ -8,6 +8,15 @@
 					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Customer List</h3>
 				</div>
 				<div class="panel-body info">
+					<form role="form" method="post" action="<?php echo site_url('customer/list') ?>" id="frm2" name="frm2">
+						<div class="form-group">
+							<label>Customer Name</label>
+							<input class="form-control smallInput searchitm" name="itm" value="<?php echo set_value('itm') ?>"> <button type="submit" class="btn btn-primary" name="cust_search" id="searchbtn" value="searchbtn">Search</button>
+							<?php echo (form_error("itm",'<p class="help-block">','</p>'))?form_error("itm",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Customer.</p>'; ?>		
+						</div>
+					</form>
+				</div>
+				<div class="panel-body info">
 <?php $msg = $this->session->flashdata("message");
 	  if($msg) { ?>					
 					<div class="alert alert-dismissable alert-success">
@@ -16,6 +25,7 @@
 						
 					</div>	
 <?php } ?>					
+						
 						<form role="form" method="post" action="<?php echo site_url('customer/list') ?>" id="frm1">
 							<table class="table table-bordered table-hover tablesorter">
 								<thead>
@@ -46,18 +56,18 @@ if($custlist) {
 		}
 		$p_count = $this->OrderModel->get_setprice_count2($cust["cust_id"]);
 ?> 	
-								<tr>
-									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cust["cust_id"] ?>"></td>
-									<td><?php echo $t ?></td>
-									<td><?php echo $cust["cust_npwp"] ?></td>
-									<td><a href="<?php echo site_url('customer/edit/'.$cust["cust_id"]) ?>"><?php echo $cust["cust_fullname"] ?></a></td>
-									<td><?php echo $cust["cust_address"] ?></td>
-									<td><?php echo $cust["cust_city"] ?></td>
-									<td><?php echo $cust["cust_state"] ?></td>
-									<td><?php echo $cust["cust_phonenumber"] ?></td>
-									<td><?php echo $cust["region_name"] ?></td>
-									<td><a href ="<?php echo site_url('customer/price/list/'.$cust["cust_id"]) ?>" title="Set price and discount here"><img src="<?php echo site_url('images/static/set_price.png') ?>"></a><sub><?php echo $p_count ?></sub></td>
-								</tr>
+									<tr>
+										<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $cust["cust_id"] ?>"></td>
+										<td><?php echo $t ?></td>
+										<td><?php echo $cust["cust_npwp"] ?></td>
+										<td><a href="<?php echo site_url('customer/edit/'.$cust["cust_id"]) ?>"><?php echo $cust["cust_fullname"] ?></a></td>
+										<td><?php echo $cust["cust_address"] ?></td>
+										<td><?php echo $cust["cust_city"] ?></td>
+										<td><?php echo $cust["cust_state"] ?></td>
+										<td><?php echo $cust["cust_phonenumber"] ?></td>
+										<td><?php echo $cust["region_name"] ?></td>
+										<td><a href ="<?php echo site_url('customer/price/list/'.$cust["cust_id"]) ?>" title="Set price and discount here"><img src="<?php echo site_url('images/static/set_price.png') ?>"></a><sub><?php echo $p_count ?></sub></td>
+									</tr>
 <?php 
 	}
 } 
@@ -69,23 +79,23 @@ else { ?>
 	}	
 ?>	
 							</tbody>
-							</table>
-							<div class="col-lg-6">
-								<button type="button" class="btn btn-primary" name="cust_addbtnid" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
-								<button type="submit" class="btn btn-primary" name="cust_delbtn" id="delbtn" value="delete">Delete</button>
-							</div>
-							<div class="col-lg-6 hal">	
-								
-									<ul class="pagination pagination-sm">
-									<?php echo $page_link ?>
-									</ul>
-								</div>
+						</table>
+						<div class="col-lg-6">
+							<button type="button" class="btn btn-primary" name="cust_addbtnid" value="add" onclick="location.href='<?php echo site_url("customer/add")?>'">Add</button>
+							<button type="submit" class="btn btn-primary" name="cust_delbtn" id="delbtn" value="delete">Delete</button>
+						</div>
+						<div class="col-lg-6 hal">	
+							
+							<ul class="pagination pagination-sm">
+							<?php echo $page_link ?>
+							</ul>
+						</div>
 			
-						</form>	
-					</div>
+					</form>	
 				</div>
-            </div>
+			</div>
 		</div>
-	</div>  
-</div>
+	</div>
+</div>  
+
 <?php $this->load->view('includes/footer'); ?>

@@ -37,6 +37,26 @@ class MasterModel extends CI_Model {
         $this->error_message = "";
 	}
 	
+	/***
+	 * Get Shipper Into Form
+	 */
+	public function get_shipper_all($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("ship_name LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$r = $this->db->get('shipper'); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
 	
 	/***
 	 * Get Shipper List
@@ -156,17 +176,17 @@ class MasterModel extends CI_Model {
 	/***
 	 * Get Production List
 	 */
-	public function get_production_list($p=0,$limit=10) {
-		// if($itm) {
-			// $this->db->where("region_name LIKE '%".$itm."%'");
-		// }
+	public function get_production_list($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("b.product_name LIKE '%".$itm."%'");
+		}
 		$p=(!$p)?0:$p;
 		$limit=(!$limit)?10:$limit;
 		
 		$this->db->limit($limit,$p);
 		$this->db->select("a.*, b.product_name");
 		$this->db->from("production a");
-		$this->db->join("products b","b.product_id=a.product_id",'left');
+		$this->db->join("products b","b.product_id=a.product_id");
 		$r = $this->db->get(); 
 		//echo debug($this->db->queries);
 		if($r) {
@@ -181,7 +201,10 @@ class MasterModel extends CI_Model {
 	 * Get Production Count
 	 */
 	public function get_production_count($itm="") {
-		return $this->db->count_all('production');
+		if($itm) {
+			$where ="WHERE b.product_name LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('production a INNER JOIN products b ON b.product_id=a.product_id '.$where);
 	}
 	
 	/***
@@ -358,7 +381,7 @@ class MasterModel extends CI_Model {
 	 */
 	public function get_products_list($itm="",$p=0,$limit=10) {
 		if($itm) {
-			$this->db->where("product_name LIKE '%".$itm."%'");
+			$this->db->where("a.product_name LIKE '%".$itm."%'");
 		}
 		$p=(!$p)?0:$p;
 		$limit=(!$limit)?10:$limit;
@@ -641,6 +664,28 @@ class MasterModel extends CI_Model {
 	/*** Customer ***/
 	
 	/***
+	 * Get customers into Form
+	 */
+	public function get_customers_all($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("cust_fullname LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$this->db->select("cust_id, cust_fullname");
+		$this->db->from('customers'); 
+		$r = $this->db->get(); 
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
 	 * Get customers list
 	 */
 	public function get_customers_list($itm="",$p=0,$limit=10) {
@@ -655,6 +700,7 @@ class MasterModel extends CI_Model {
 		$this->db->from('customers a'); 
 		$this->db->join('region b','a.region_id=b.region_id','left'); 
 		$r = $this->db->get(); 
+		//echo debug($this->db->queries);
 		if($r) {
 			return $r->result_array();
 		}
