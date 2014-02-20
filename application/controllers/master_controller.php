@@ -296,10 +296,10 @@ class Master_Controller extends App_Controller {
 		
 		$limit = $this->siteconfig[2]["option_value"]; 
 		//echo debug($this->siteconfig);
-		$config['base_url'] 	= site_url('customer/browse/product');
+		$config['base_url'] 	= site_url('browse/product/'.$op);
 		$config['total_rows'] 	= $this->MasterModel->get_product_count($itm);
 		$config['per_page'] 	= $limit;
-		$config['uri_segment'] 	= 3;
+		$config['uri_segment'] 	= 4;
 		$config['prev_tag_open'] = '<li>';
 		$config['prev_tag_close'] = '</li>';
 		$config['first_tag_open'] = '<li>';
@@ -317,7 +317,7 @@ class Master_Controller extends App_Controller {
 		
 		$this->viewdata["op"] = $op;
 		$this->viewdata["page_link"] = $this->pagination->create_links();
-		$this->viewdata["prodlist"] = $this->MasterModel->get_product_all($p,$limit);
+		$this->viewdata["prodlist"] = $this->MasterModel->get_product_all($itm,$p,$limit);
 		
 		$this->load->view("masters/browse_product",$this->viewdata);
 	}

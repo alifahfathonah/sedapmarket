@@ -21,7 +21,7 @@
 							<label>Product Name</label>
 							<input type="hidden" name="product_id" value="<?php echo set_value('product_id') ?>">
 							<input class="form-control product_name" name="product_name" value="<?php echo set_value('product_name') ?>">
-							<a class="iframe" href="<?php echo site_url('browse/product/2')?>" title="Click here to choose product" ><img src="<?php echo site_url('images/static/browse.png') ?>"></a>
+							<a class="iframe" href="<?php echo site_url('browse/product/3')?>" title="Click here to choose product" ><img src="<?php echo site_url('images/static/browse.png') ?>"></a>
 							<?php echo (form_error("product_id",'<p class="help-block">','</p>'))?form_error("product_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Product Name.</p>'; ?>		
 							<?php echo (form_error("product_name",'<p class="help-block">','</p>'))?form_error("product_name",'<p class="help-block errors">','</p>'):''; ?>		
 						</div>

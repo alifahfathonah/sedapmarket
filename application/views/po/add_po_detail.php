@@ -2,7 +2,7 @@
 <div id="page-wrapper">	
 	<div class="row">
 		<div class="col-lg-12">
-			<h3>PO</h3>
+			<h3>Purchase Order <?php echo $po_no ?></h3>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Add PO Detail</h3>
@@ -38,9 +38,9 @@
 							<?php echo (form_error("price",'<p class="help-block">','</p>'))?form_error("price",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Price.</p>'; ?>		
 						</div>
 						<div class="form-group">
-							<label>Discount</label>
-							<input class="form-control" name="disc" value="<?php echo set_value('disc') ?>">
-							<?php echo (form_error("ship_id",'<p class="help-block">','</p>'))?form_error("ship_id",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>				
+							<label>Discount</label><br>
+							<input class="form-control smallInput InputLine" name="disc" value="<?php echo set_value('disc') ?>"> %
+							<?php echo (form_error("disc",'<p class="help-block">','</p>'))?form_error("disc",'<p class="help-block errors">','</p>'):'<p class="help-block">Enter Discount.</p>'; ?>				
 						</div>
 						<button type="submit" class="btn btn-primary" name="addbtn" value="add">Add</button>
 					</form>
@@ -48,7 +48,7 @@
 					<div class="alert alert-dismissable alert-success">
 						  <?php echo $msg ?>
 						  <script>
-							window.setTimeout('location.href="<?php echo site_url('po/list') ?>"',3000);
+							window.setTimeout('location.href="<?php echo site_url('po/detail/list/'.$po_id) ?>"',3000);
 						  </script>
 					</div>
 <?php } ?>										

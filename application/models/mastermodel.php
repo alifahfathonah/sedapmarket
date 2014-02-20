@@ -445,10 +445,14 @@ class MasterModel extends CI_Model {
 	/***
 	 * Get Unit Into form
 	 */
-	public function get_product_all() {
-		$this->db->select("a.*, b.category_name");
-		$this->db->from("products a");
-		$this->db->join("category b","b.category_id = a.category_id","left");
+	public function get_product_all($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("a.product_name LIKE '%".$itm."%'");
+		}
+		$this->db->select('a.*,b.category_name, c.unit_name'); 
+		$this->db->from('products a'); 
+		$this->db->join('category b','b.category_id = a.category_id','left'); 
+		$this->db->join('unit c','c.unit_id = a.unit_id','left'); 
 		$r = $this->db->get(); 
 		if($r) {
 			return $r->result_array();

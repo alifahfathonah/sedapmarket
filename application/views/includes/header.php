@@ -105,13 +105,13 @@
 <?php 	}
 		else if ($this->uri->segment(2)=="price") { 
 			if($this->uri->segment(2)!="list") { ?>
-				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});	
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"90%"});	
 <?php   	}
 		}		
 	  } 
 	  else if($this->uri->segment(1)=="production") {
 		if($this->uri->segment(2)=="add" || $this->uri->segment(2)=="edit") { ?>		
-				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});	
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"90%"});	
 				$(".datef").datepick({
 					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
 				});
@@ -119,7 +119,7 @@
 	  } 
 	  else if($this->uri->segment(1)=="po") {
 		if($this->uri->segment(2)=="add" || $this->uri->segment(2)=="edit") { ?>
-				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"90%"});
 				$(".datef").datepick({
 					dateFormat:'<?php echo ($formatdate=='M d, Y')?"M dd, yyyy":"yyyy-mm-dd" ?>'
 				});

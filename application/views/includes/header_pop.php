@@ -29,6 +29,11 @@
 <?php 		if($op==1) { ?>					
 					parent.frm1.price.value=t[2];
 <?php 		} 
+			else if($op==2) { ?>
+					parent.frm1.price.value=t[2];
+					parent.frm1.unit_id.value=t[3];
+					parent.frm1.unit_name.value=t[4];
+<?php		}
 		break;
 		case "customers": ?>
 					parent.frm1.cust_id.value=t[0];

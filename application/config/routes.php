@@ -48,10 +48,10 @@ $route["transcation/list/(:num)"] 			= "transcation_controller/get_transcation_l
 $route["transcation/list"] 					= "transcation_controller/get_transcation_list";
 
 //PO
-$route["po/detail/edit/(:num)"] 			= "po_controller/edit_po/$1";
+$route["po/detail/edit/(:num)/(:num)"] 		= "po_controller/edit_po_detail/$1/$2";
 $route["po/detail/add/(:num)"] 				= "po_controller/add_po_detail/$1";
-$route["po/detail/list/(:num)"] 			= "po_controller/get_po_list/$1";
-$route["po/detail/list"] 					= "po_controller/get_po_list";
+$route["po/detail/list/(:num)"] 			= "po_controller/get_podetail_list/$1";
+$route["po/detail/list"] 					= "po_controller/get_podetail_list";
 $route["po/edit/(:num)"] 					= "po_controller/edit_po/$1";
 $route["po/add"] 							= "po_controller/add_po";
 $route["po/list/(:num)"] 					= "po_controller/get_po_list/$1";
