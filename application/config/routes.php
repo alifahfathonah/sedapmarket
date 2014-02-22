@@ -37,15 +37,15 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-//PO
-$route["transcation/detail/edit/(:num)"] 	= "transcation_controller/edit_transcation/$1";
-$route["transcation/detail/add/(:num)"] 	= "transcation_controller/add_transcation_detail/$1";
-$route["transcation/detail/list/(:num)"] 	= "transcation_controller/get_transcation_list/$1";
-$route["transcation/detail/list"] 			= "transcation_controller/get_transcation_list";
-$route["transcation/edit/(:num)"] 			= "transcation_controller/edit_transcation/$1";
-$route["transcation/add"] 					= "transcation_controller/add_transcation";
-$route["transcation/list/(:num)"] 			= "transcation_controller/get_transcation_list/$1";
-$route["transcation/list"] 					= "transcation_controller/get_transcation_list";
+//Transcation
+$route["transcation/detail/edit/(:num)"] 	= "po_controller/edit_transcation_detail/$1";
+$route["transcation/detail/add/(:num)"] 	= "po_controller/add_transcation_detail/$1";
+$route["transcation/detail/list/(:num)"] 	= "po_controller/get_transdetail_list/$1";
+$route["transcation/detail/list"] 			= "po_controller/get_transdetail_list";
+$route["transcation/edit/(:num)"] 			= "po_controller/edit_transcation/$1";
+$route["transcation/add"] 					= "po_controller/add_transcation";
+$route["transcation/list/(:num)"] 			= "po_controller/get_transcation_list/$1";
+$route["transcation/list"] 					= "po_controller/get_transcation_list";
 
 //PO
 $route["po/detail/edit/(:num)/(:num)"] 		= "po_controller/edit_po_detail/$1/$2";

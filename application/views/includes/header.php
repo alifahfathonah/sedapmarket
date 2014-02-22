@@ -72,7 +72,22 @@
 			break;
 		}
 	  }
-?>
+	  else if($this->uri->segment(1)=="transcation") {
+		switch($this->uri->segment(2)) {
+			case "add":
+			case "edit": ?>
+		<link rel="stylesheet" href="<?php echo site_url("js/datepicker/jquery.datepick.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/datepicker/jquery.datepick.js") ?>"></script>
+		<link rel="stylesheet" href="<?php echo site_url("css/colorbox.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/colorbox/jquery.colorbox.js") ?>"></script>
+<?php 		case "detail": 
+				if($this->uri->segment(3)!="list") { ?>
+		<link rel="stylesheet" href="<?php echo site_url("css/colorbox.css") ?>" type="text/css" />	
+		<script src="<?php echo site_url("js/colorbox/jquery.colorbox.js") ?>"></script>	
+<?php 			}
+			break;
+		}
+	  } ?>
 		<script type="text/javascript">
 			$(function() {
 				$('#chkall').click(function () {    
@@ -117,7 +132,7 @@
 				});
 <?php 	}
 	  } 
-	  else if($this->uri->segment(1)=="po") {
+	  else if($this->uri->segment(1)=="po" || $this->uri->segment(1)=="transcation") {
 		if($this->uri->segment(2)=="add" || $this->uri->segment(2)=="edit") { ?>
 				$(".iframe").colorbox({iframe:true, width:"80%", height:"90%"});
 				$(".datef").datepick({
@@ -182,6 +197,7 @@
 						</li>
 						<li <?php echo ($this->uri->segment(1)=="production")?'class="active"':'' ?>><a href="<?php echo site_url('production/list') ?>"><i class="fa fa-dashboard"></i> Production</a></li>
 						<li <?php echo ($this->uri->segment(1)=="po")?'class="active"':'' ?>><a href="<?php echo site_url('po/list') ?>"><i class="fa fa-dashboard"></i> Purchase Order</a></li>
+						<li <?php echo ($this->uri->segment(1)=="transcation")?'class="active"':'' ?>><a href="<?php echo site_url('transcation/list') ?>"><i class="fa fa-dashboard"></i> Transcation</a></li>
 						<!--<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>
 						<li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
 						<li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>

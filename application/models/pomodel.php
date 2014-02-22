@@ -6,6 +6,254 @@ class PoModel extends CI_Model {
     var $error_message = "";
     var $message = "";
 	
+	/***
+	 * Add Transcation Detail
+	 */
+	public function add_transdetail($data) {
+		$d = array(
+			"product_id"			=> $data["product_id"],
+			"qty"					=> $data["qty"],
+			"unit_id"				=> $data["unit_id"],
+			"product_extra_id"		=> $data["product_extra_id"],
+			"qty_extra"				=> $data["qty_extra"],
+			"unit_extra_id"			=> $data["unit_extra_id"]
+		);
+		$this->db->insert('transcation_detail',$d);
+		$this->is_error = 0;
+		$this->error_message ="";
+		$this->message ="Transcation detail has been added successfully";
+		
+	}	
+	
+	/***
+	 * Edit Transcation
+	 */
+	public function edit_transdetail($data) {
+		$this->db->where("detail_id",$data["detail_id"]);
+		
+		$d = array(
+			"product_id"			=> $data["product_id"],
+			"qty"					=> $data["qty"],
+			"unit_id"				=> $data["unit_id"],
+			"product_extra_id"		=> $data["product_extra_id"],
+			"qty_extra"				=> $data["qty_extra"],
+			"unit_extra_id"			=> $data["unit_extra_id"]
+		);
+		
+		$this->db->update('transcation_detail',$d);
+		$this->is_error = 0;
+		$this->error_message ="";
+		$this->message ="Transcation has been updated successfully";
+		
+	}	
+	
+	/***
+	 * Delete Transcation
+	 */
+	public function delete_transdetail($data) {
+		$this->db->where("detail_id",$data["detail_id"]);
+		
+		$this->db->delete('transcation');
+		$this->is_error = 0;
+		$this->error_message ="";
+		$this->message ="Transcation has been deleted successfully";
+		
+	}	
+	
+	/***
+	 * Get Transcation Count
+	 */
+	public function get_transdetail_count($trans_id,$itm="") {
+		if($itm) {
+			$where.=" WHERE product_name LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('transcation_detail '.$where);
+	}
+	
+	/***
+	 * Get transcation detail List
+	 */
+	public function get_transdetail_list($trans_id,$itm="",$p=0,$limit=10) {
+		$this->db->where("transcation_id",$trans_id);
+		if($itm) {
+			$this->db->where("product_name LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$this->db->select("a.*, b.product_name,c.unit_name,d.product_name product_extra_name,e.unit_name unit_extra_name");
+		$this->db->from("transcation_detail a");
+		$this->db->join("products b","b.product_id=a.product_id","left");
+		$this->db->join("unit c","c.unit_id=a.unit_id","left");
+		$this->db->join("products d","d.product_id=a.product_extra_id","left");
+		$this->db->join("unit e","e.unit_id=a.unit_extra_id","left");
+		
+		$r = $this->db->get(); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get transcation detail
+	 */
+	public function get_transdetail_detail($data) {
+		$this->db->where("detail_id", $data);
+		
+		$this->db->select("a.*, b.product_name,c.unit_name,d.product_name product_extra_name,e.unit_name unit_extra_name");
+		$this->db->from("transcation_detail a");
+		$this->db->join("products b","b.product_id=a.product_id","left");
+		$this->db->join("unit c","c.unit_id=a.unit_id","left");
+		$this->db->join("products d","d.product_id=a.product_extra_id","left");
+		$this->db->join("unit e","e.unit_id=e.unit_extra_id","left");
+		$r = $this->db->get(); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/*** Transcation ***/
+	/***
+	 * Add Transcation
+	 */
+	public function add_transcation($data) {
+		if($data["trans_date"]) {
+			$tmp = new DateTime($data["trans_date"]);
+			$data["trans_date"] = $tmp->format("Y-m-d");
+		}
+		
+		$d = array(
+			"trans_date"			=> $data["trans_date"],
+			"no_sj"					=> $data["no_sj"],
+			"no_mobil"				=> $data["no_mobil"],
+			"no_container"			=> $data["no_container"],
+			"no_seal"				=> $data["no_seal"],
+			"trans_desc"			=> $data["trans_desc"]
+		);
+		$this->db->insert('transcation',$d);
+		$this->is_error = 0;
+		$this->error_message ="";
+		$this->message ="Transcation has been added successfully";
+		
+	}	
+	
+	/***
+	 * Edit Transcation
+	 */
+	public function edit_transcation($data) {
+		$this->db->where("transcation_id",$data["transcation_id"]);
+		
+		if($data["trans_date"]) {
+			$tmp = new DateTime($data["trans_date"]);
+			$data["trans_date"] = $tmp->format("Y-m-d");
+		}
+		
+		$d = array(
+			"trans_date"			=> $data["trans_date"],
+			"no_sj"					=> $data["no_sj"],
+			"no_mobil"				=> $data["no_mobil"],
+			"no_container"			=> $data["no_container"],
+			"no_seal"				=> $data["no_seal"],
+			"trans_desc"			=> $data["trans_desc"]
+		);
+		
+		$this->db->update('transcation',$d);
+		//echo debug($this->db->queries);
+		$this->is_error = 0;
+		$this->error_message ="";
+		$this->message ="Transcation has been updated successfully";
+		
+	}	
+	
+	/***
+	 * Delete Transcation
+	 */
+	public function delete_transcation($data) {
+		$this->db->where("transcation_id",$data["transcation_id"]);
+		
+		$this->db->delete('transcation');
+		$this->is_error = 0;
+		$this->error_message ="";
+		$this->message ="Transcation has been deleted successfully";
+		
+	}	
+	
+	/***
+	 * Get Transcation Count
+	 */
+	public function get_transcation_count($po_id,$itm="") {
+		if($itm) {
+			$where.=" WHERE no_sj LIKE '%".$itm."%'";
+		}
+		return $this->db->count_all('transcation '.$where);
+	}
+	
+	/***
+	 * Get Delivery Order Number
+	 */
+	public function get_do_num($trans_id) {
+		$this->db->where("transcation_id",$trans_id);
+		$r = $this->db->get("transcation");
+		
+		if($r) {
+			$d = $r->row_array();
+			//echo debug($d);
+			return $d["no_sj"];
+		}	
+		else
+			return false;
+	}
+	
+	/***
+	 * Get transcation List
+	 */
+	public function get_transcation_list($itm="",$p=0,$limit=10) {
+		if($itm) {
+			$this->db->where("no_sj LIKE '%".$itm."%'");
+		}
+		$p=(!$p)?0:$p;
+		$limit=(!$limit)?10:$limit;
+		
+		$this->db->limit($limit,$p);
+		$this->db->select("*");
+		$this->db->from("transcation");
+		$r = $this->db->get(); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->result_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/***
+	 * Get transcation detail
+	 */
+	public function get_transcation_detail($data) {
+		$this->db->where("transcation_id", $data);
+		
+		$this->db->select("*");
+		$this->db->from("transcation");
+		$r = $this->db->get(); 
+		//echo debug($this->db->queries);
+		if($r) {
+			return $r->row_array();
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/*** PO Detail ***/
 	/***
 	 * Add PO Detail
@@ -30,7 +278,7 @@ class PoModel extends CI_Model {
 	}	
 	
 	/***
-	 * Edit PO
+	 * Edit PO Detail
 	 */
 	public function edit_podetail($data) {
 		$bruto = $data["qty"] * $data["price"];
