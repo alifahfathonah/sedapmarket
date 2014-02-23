@@ -51,7 +51,7 @@ if($translist) {
 			$trans["trans_date"] = "";
 		}
 
-		//$n = $this->PoModel->get_podetail_count($po["po_id"])											
+		$n = $this->PoModel->get_transdetail_count($trans["transcation_id"]);																					
 ?> 	
 								<tr>
 									<td><input type="checkbox" name="chkbox[]" class="chkbox" value="<?php echo $trans["transcation_id"] ?>"></td>
@@ -67,7 +67,7 @@ if($translist) {
 } 
 else { ?>
 								<tr>
-									<td colspan="5" class="empty">Not Found</td>
+									<td colspan="7" class="empty">Not Found</td>
 								</tr>
 <?php 
 	}	

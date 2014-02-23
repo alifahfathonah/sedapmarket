@@ -43,7 +43,8 @@ if($prodlist) {
 				$isi=$prod["product_id"]."##".$prod["product_name"]."##".$prod["product_price"]."##".$prod["unit_id"]."##".$prod["unit_name"];
 			break;
 			case 3:
-				$isi=$prod["product_id"]."##".$prod["product_name"];	
+			case 4:
+				$isi=$prod["product_id"]."##".$prod["product_name"]."##".$prod["unit_id"]."##".$prod["unit_name"];	
 		}
 ?> 	
 								<tr>

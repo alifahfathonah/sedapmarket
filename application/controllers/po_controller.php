@@ -22,12 +22,15 @@ class Po_Controller extends App_Controller {
 			$this->form_validation->set_rules('qty', 'Quantity', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('unit_id', 'Unit', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('unit_name', 'Unit', 'trim|xss_clean');
-			$this->form_validation->set_rules('price', 'Price', 'required|trim|integer|xss_clean');
-			$this->form_validation->set_rules('disc', 'Discount', 'required|trim|decimal|xss_clean');
+			$this->form_validation->set_rules('product_extra_id', 'Product Extra Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('product_extra_name', 'Product Extra Name', 'trim|xss_clean');
+			$this->form_validation->set_rules('qty_extra', 'Quantity Extra', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('unit_extra_id', 'Unit Extra', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('unit_extra_name', 'Unit Extra', 'trim|xss_clean');
 		
 			if ($this->form_validation->run() == TRUE) {
 				$data = $this->input->post(); 
-				$data["po_id"] = $po_id;
+				$data["transcation_id"] = $trans_id;
 				$this->PoModel->add_transdetail($data);	
 				$this->viewdata["is_error"] = $this->PoModel->is_error;
                 if($this->PoModel->is_error==1) {
@@ -39,7 +42,7 @@ class Po_Controller extends App_Controller {
                     //$this->session->unset_flashdata("error");
                     $this->session->set_flashdata("message",$this->PoModel->message);
                 }
-				redirect('transcation/detail/add/'.$po_id);
+				redirect('transcation/detail/add/'.$trans_id);
 			}
 		}
 		
@@ -48,17 +51,17 @@ class Po_Controller extends App_Controller {
 		else
 			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
 		
-		$this->viewdata["transcation_id"] = $transcation_id;	
-		$this->viewdata["po_no"] = $this->PoModel->get_transcations_num($po_id);	
+		$this->viewdata["trans_id"] = $trans_id;	
+		$this->viewdata["do_no"] = $this->PoModel->get_do_num($trans_id);	
 		$this->viewdata["unitlist"] = $this->MasterModel->get_unit();	
 		$this->viewdata["formatdate"] = $tmp;	
-		$this->load->view('transcation/add_transcation_detail',$this->viewdata);
+		$this->load->view('transcation/add_transdetail',$this->viewdata);
 	}
 	
 	/***
 	 * Edit Transcation Detail
 	 */
-	public function edit_transcation_detail($po_id,$detail_id) {
+	public function edit_transcation_detail($trans_id,$detail_id) {
 		$this->load->model("PoModel");
 		$this->load->model("MasterModel");
 		$this->load->library('form_validation');
@@ -68,14 +71,17 @@ class Po_Controller extends App_Controller {
 			$this->form_validation->set_rules('qty', 'Quantity', 'required|trim|integer|xss_clean');
 			$this->form_validation->set_rules('unit_id', 'Unit', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('unit_name', 'Unit', 'trim|xss_clean');
-			$this->form_validation->set_rules('price', 'Price', 'required|trim|integer|xss_clean');
-			$this->form_validation->set_rules('disc', 'Discount', 'required|trim|decimal|xss_clean');
+			$this->form_validation->set_rules('product_extra_id', 'Product Extra Name', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('product_extra_name', 'Product Extra Name', 'trim|xss_clean');
+			$this->form_validation->set_rules('qty_extra', 'Quantity Extra', 'required|trim|integer|xss_clean');
+			$this->form_validation->set_rules('unit_extra_id', 'Unit Extra', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('unit_extra_name', 'Unit Extra', 'trim|xss_clean');
 		
 			if ($this->form_validation->run() == TRUE) {
 				$data = $this->input->post(); 
-				$data["po_id"] = $po_id;
+				$data["transcation_id"] = $trans_id;
 				$data["detail_id"] = $detail_id;
-				$this->PoModel->edit_podetail($data);	
+				$this->PoModel->edit_transdetail($data);	
 				$this->viewdata["is_error"] = $this->PoModel->is_error;
                 if($this->PoModel->is_error==1) {
                     //echo $this->MasterModel->error_message;
@@ -86,7 +92,7 @@ class Po_Controller extends App_Controller {
                     //$this->session->unset_flashdata("error");
                     $this->session->set_flashdata("message",$this->PoModel->message);
                 }
-				redirect('transcation/detail/edit/'.$po_id."/".$detail_id);
+				redirect('transcation/detail/edit/'.$trans_id."/".$detail_id);
 			}
 		}
 		
@@ -95,14 +101,14 @@ class Po_Controller extends App_Controller {
 		else
 			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
 		
-		$this->viewdata["po_id"] = $po_id;	
 		$this->viewdata["detail_id"] = $detail_id;	
-		$this->viewdata["po_no"] = $this->PoModel->get_po_num($po_id);	
-		$this->viewdata["po"] = $this->PoModel->get_podetail_detail($detail_id);
+		$this->viewdata["trans_id"] = $trans_id;	
+		$this->viewdata["do_no"] = $this->PoModel->get_do_num($trans_id);	
+		$this->viewdata["trans"] = $this->PoModel->get_transdetail_detail($detail_id);
 		//echo debug($this->viewdata["po"]);
 		$this->viewdata["unitlist"] = $this->MasterModel->get_unit();	
 		$this->viewdata["formatdate"] = $tmp;	
-		$this->load->view('po/edit_transcation_detail',$this->viewdata);
+		$this->load->view('transcation/edit_transdetail',$this->viewdata);
 	}
 	
 	/***
@@ -159,11 +165,11 @@ class Po_Controller extends App_Controller {
 			$tmp = substr($this->siteconfig[1]["option_value"],0,6);
 		
 		$this->viewdata["trans_id"] = $trans_id;	
-		$this->viewdata["do_num"] = $this->PoModel->get_do_num($trans_id);
-		//$this->viewdata["po_no"] = $this->PoModel->get_po_num($trans_id);		
+		$this->viewdata["do_no"] = $this->PoModel->get_do_num($trans_id);		
 		$this->viewdata["formatdate"] = $tmp;
 		$this->viewdata["page_link"] = $this->pagination->create_links();
 		$this->viewdata["transdetaillist"] = $this->PoModel->get_transdetail_list($trans_id,$itm,$p,$limit);
+		//echo debug($this->viewdata);
 		$this->load->view('transcation/get_transdetail_list',$this->viewdata);
 	}
 	

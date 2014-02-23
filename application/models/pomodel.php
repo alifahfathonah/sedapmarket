@@ -12,6 +12,7 @@ class PoModel extends CI_Model {
 	public function add_transdetail($data) {
 		$d = array(
 			"product_id"			=> $data["product_id"],
+			"transcation_id"		=> $data["transcation_id"],
 			"qty"					=> $data["qty"],
 			"unit_id"				=> $data["unit_id"],
 			"product_extra_id"		=> $data["product_extra_id"],
@@ -26,7 +27,7 @@ class PoModel extends CI_Model {
 	}	
 	
 	/***
-	 * Edit Transcation
+	 * Edit Transcation Detail
 	 */
 	public function edit_transdetail($data) {
 		$this->db->where("detail_id",$data["detail_id"]);
@@ -64,19 +65,20 @@ class PoModel extends CI_Model {
 	 * Get Transcation Count
 	 */
 	public function get_transdetail_count($trans_id,$itm="") {
+		$where=" WHERE transcation_id = ".$trans_id;
 		if($itm) {
-			$where.=" WHERE product_name LIKE '%".$itm."%'";
+			$where.=" AND (b.product_name LIKE '%".$itm."%')";
 		}
-		return $this->db->count_all('transcation_detail '.$where);
+		return $this->db->count_all('transcation_detail a LEFT JOIN products b ON b.product_id=a.product_id LEFT JOIN products c ON c.product_id=a.product_extra_id '.$where);
 	}
 	
 	/***
 	 * Get transcation detail List
 	 */
 	public function get_transdetail_list($trans_id,$itm="",$p=0,$limit=10) {
-		$this->db->where("transcation_id",$trans_id);
+		$this->db->where("a.transcation_id",$trans_id);
 		if($itm) {
-			$this->db->where("product_name LIKE '%".$itm."%'");
+			$this->db->where("b.product_name LIKE '%".$itm."%'");
 		}
 		$p=(!$p)?0:$p;
 		$limit=(!$limit)?10:$limit;
@@ -110,7 +112,7 @@ class PoModel extends CI_Model {
 		$this->db->join("products b","b.product_id=a.product_id","left");
 		$this->db->join("unit c","c.unit_id=a.unit_id","left");
 		$this->db->join("products d","d.product_id=a.product_extra_id","left");
-		$this->db->join("unit e","e.unit_id=e.unit_extra_id","left");
+		$this->db->join("unit e","e.unit_id=a.unit_extra_id","left");
 		$r = $this->db->get(); 
 		//echo debug($this->db->queries);
 		if($r) {

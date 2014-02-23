@@ -23,16 +23,30 @@
 					t = tmp.split("##");
 <?php switch($this->uri->segment(2)) { 
 		case "product":
-?>
+
+			if($op==1) { ?>					
 					parent.frm1.product_id.value=t[0];
 					parent.frm1.product_name.value=t[1];
-<?php 		if($op==1) { ?>					
 					parent.frm1.price.value=t[2];
 <?php 		} 
 			else if($op==2) { ?>
+					parent.frm1.product_id.value=t[0];
+					parent.frm1.product_name.value=t[1];
 					parent.frm1.price.value=t[2];
 					parent.frm1.unit_id.value=t[3];
 					parent.frm1.unit_name.value=t[4];
+<?php		}
+			else if($op==3) { ?>
+					parent.frm1.product_id.value=t[0];
+					parent.frm1.product_name.value=t[1];
+					parent.frm1.unit_id.value=t[2];
+					parent.frm1.unit_name.value=t[3];
+<?php		}
+			else if($op==4) { ?>
+					parent.frm1.product_extra_id.value=t[0];
+					parent.frm1.product_extra_name.value=t[1];
+					parent.frm1.unit_extra_id.value=t[2];
+					parent.frm1.unit_extra_name.value=t[3];
 <?php		}
 		break;
 		case "customers": ?>

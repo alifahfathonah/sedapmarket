@@ -38,42 +38,42 @@
 |
 */
 //Transcation
-$route["transcation/detail/edit/(:num)"] 	= "po_controller/edit_transcation_detail/$1";
-$route["transcation/detail/add/(:num)"] 	= "po_controller/add_transcation_detail/$1";
-$route["transcation/detail/list/(:num)"] 	= "po_controller/get_transdetail_list/$1";
-$route["transcation/detail/list"] 			= "po_controller/get_transdetail_list";
-$route["transcation/edit/(:num)"] 			= "po_controller/edit_transcation/$1";
-$route["transcation/add"] 					= "po_controller/add_transcation";
-$route["transcation/list/(:num)"] 			= "po_controller/get_transcation_list/$1";
-$route["transcation/list"] 					= "po_controller/get_transcation_list";
+$route["transcation/detail/edit/(:num)/(:num)"] 	= "po_controller/edit_transcation_detail/$1/$2";
+$route["transcation/detail/add/(:num)"] 			= "po_controller/add_transcation_detail/$1";
+$route["transcation/detail/list/(:num)"] 			= "po_controller/get_transdetail_list/$1";
+$route["transcation/detail/list"] 					= "po_controller/get_transdetail_list";
+$route["transcation/edit/(:num)"] 					= "po_controller/edit_transcation/$1";
+$route["transcation/add"] 							= "po_controller/add_transcation";
+$route["transcation/list/(:num)"] 					= "po_controller/get_transcation_list/$1";
+$route["transcation/list"] 							= "po_controller/get_transcation_list";
 
 //PO
-$route["po/detail/edit/(:num)/(:num)"] 		= "po_controller/edit_po_detail/$1/$2";
-$route["po/detail/add/(:num)"] 				= "po_controller/add_po_detail/$1";
-$route["po/detail/list/(:num)"] 			= "po_controller/get_podetail_list/$1";
-$route["po/detail/list"] 					= "po_controller/get_podetail_list";
-$route["po/edit/(:num)"] 					= "po_controller/edit_po/$1";
-$route["po/add"] 							= "po_controller/add_po";
-$route["po/list/(:num)"] 					= "po_controller/get_po_list/$1";
-$route["po/list"] 							= "po_controller/get_po_list";
+$route["po/detail/edit/(:num)/(:num)"] 				= "po_controller/edit_po_detail/$1/$2";
+$route["po/detail/add/(:num)"] 						= "po_controller/add_po_detail/$1";
+$route["po/detail/list/(:num)"] 					= "po_controller/get_podetail_list/$1";
+$route["po/detail/list"] 							= "po_controller/get_podetail_list";
+$route["po/edit/(:num)"] 							= "po_controller/edit_po/$1";
+$route["po/add"] 									= "po_controller/add_po";
+$route["po/list/(:num)"] 							= "po_controller/get_po_list/$1";
+$route["po/list"] 									= "po_controller/get_po_list";
 
 
 //Set Price
-$route["customer/browse/product/(:num)"] 	= "master_controller/get_product_list/$1";	
-$route["customer/price/edit/(:num)/(:num)"] = "master_controller/edit_setprice/$1/$2";
-$route["customer/price/add/(:num)"] 		= "master_controller/add_setprice/$1";
-$route["customer/price/list/(:num)"] 		= "master_controller/get_setprice_list/$1";
-$route["customer/price/list"] 				= "master_controller/get_setprice_list";
+$route["customer/browse/product/(:num)"] 			= "master_controller/get_product_list/$1";	
+$route["customer/price/edit/(:num)/(:num)"] 		= "master_controller/edit_setprice/$1/$2";
+$route["customer/price/add/(:num)"] 				= "master_controller/add_setprice/$1";
+$route["customer/price/list/(:num)"] 				= "master_controller/get_setprice_list/$1";
+$route["customer/price/list"] 						= "master_controller/get_setprice_list";
 
 //Production
-$route["production/edit/(:num)"] 			= "master_controller/edit_production/$1";
-$route["production/add"] 					= "master_controller/add_production";
-$route["production/list/(:num)"] 			= "master_controller/get_production_list/$1";
-$route["production/list"] 					= "master_controller/get_production_list";
+$route["production/edit/(:num)"] 					= "master_controller/edit_production/$1";
+$route["production/add"] 							= "master_controller/add_production";
+$route["production/list/(:num)"] 					= "master_controller/get_production_list/$1";
+$route["production/list"] 							= "master_controller/get_production_list";
 
 //Shipping
-$route["shipper/edit/(:num)"] 				= "master_controller/edit_shipper/$1";
-$route["shipper/add"] 						= "master_controller/add_shipper";
+$route["shipper/edit/(:num)"] 						= "master_controller/edit_shipper/$1";
+$route["shipper/add"] 								= "master_controller/add_shipper";
 $route["shipper/list/(:num)"] 				= "master_controller/get_shipper_list/$1";
 $route["shipper/list"] 						= "master_controller/get_shipper_list";
 
